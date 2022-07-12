@@ -1,0 +1,20 @@
+{
+  "name": "simple-adventure",
+  "version": "1.0.0",
+  "description": "Simple MMO RPG pixel game based on websocket.",
+  "scripts": {
+    "client:serve": "cd ./client && npm run serve",
+    "server:serve": "cd ./server && npm run serve",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Adsel/simple-adventure.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Adsel/simple-adventure/issues"
+  },
+  "homepage": "https://github.com/Adsel/simple-adventure#readme"
+}
