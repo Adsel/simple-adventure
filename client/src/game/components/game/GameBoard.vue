@@ -4,7 +4,7 @@
 <script lang="ts">
 import {onMounted, ref} from "vue";
 import {GAME_CONFIG} from "@/config/game.config";
-import {loadBackgroundImage} from "@/game/helpers/drawing.helper";
+import {loadBackgroundImage, loadCharacterImage} from "@/game/helpers/drawing.helper";
 import {prepareAndGetContext} from "@/game/helpers/board.helper";
 
 export default {
@@ -17,26 +17,46 @@ export default {
       loadGame();
     });
 
-    const loadBackground = () => {
-      const imageSource = require('../../../assets/backgrounds/background-grass-01.png');
+    const drawBackground = () => {
+      // TODO:
+      // split into location object
+      const imageSource = 'backgrounds/Sprite-background-0001.png';
 
       loadBackgroundImage(gameContext, imageSource);
     };
 
+    const drawCharacter = () => {
+      // TODO:
+      // split into character object
+      const imageSource = 'characters/Sprite-character-0001.png';
+
+      // TODO:
+      // read coordinates
+      loadCharacterImage(gameContext, imageSource, 32, 32);
+    };
+
     const loadGame = () => {
       gameContext = prepareAndGetContext(gameBoardRef.value);
-      loadBackground();
+      drawBackground();
+      drawCharacter();
     };
     return {GAME_CONFIG, gameBoardRef};
   }
 }
 </script>
 <style lang="scss">
+@import 'game-board-definitions';
+
+body {
+  background-color: $colorBackgroundBoard;
+  margin: 0;
+}
+
 canvas {
-  // TODO:
-  // adjust width and height to FULL HD ratio
-  width: 1280px;
-  height: 1280px;
+  display: block;
+  width: $gameBoardX;
+  height: $gameBoardY;
+  margin: auto;
   image-rendering: -moz-crisp-edges;
   image-rendering: -webkit-crisp-edges;
   image-rendering: pixelated;
