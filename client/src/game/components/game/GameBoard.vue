@@ -31,3 +31,15 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+canvas {
+  // TODO:
+  // adjust width and height to FULL HD ratio
+  width: 1280px;
+  height: 1280px;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+</style>
