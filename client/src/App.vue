@@ -1,14 +1,14 @@
 <template>
-  <GameBoard></GameBoard>
+    <GameBoard></GameBoard>
 </template>
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
 import GameBoard from './game/components/game/GameBoard.vue';
 
 @Options({
-  components: {
-    GameBoard,
-  },
+    components: {
+        GameBoard,
+    }
 })
 export default class App extends Vue {
 }

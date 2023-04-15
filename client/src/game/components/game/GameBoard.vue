@@ -1,47 +1,50 @@
 <template>
-  <canvas ref="gameBoardRef" :width="GAME_CONFIG.width" :height="GAME_CONFIG.height"></canvas>
+    <canvas ref="gameBoardRef" :width="GAME_CONFIG.width" :height="GAME_CONFIG.height"></canvas>
 </template>
 <script lang="ts">
 import {onMounted, ref} from "vue";
 import {GAME_CONFIG} from "@/config/game.config";
 import {loadBackgroundImage, loadCharacterImage} from "@/game/helpers/drawing.helper";
 import {prepareAndGetContext} from "@/game/helpers/board.helper";
+import {getSocketClientInstance} from "@/socket/shared/instance";
 
 export default {
-  name: 'GameBoard',
-  setup() {
-    let gameContext: any = null;
-    const gameBoardRef = ref(null);
+    name: 'GameBoard',
+    setup() {
+        let gameContext: any = null;
+        const gameBoardRef = ref(null);
 
-    onMounted(() => {
-      loadGame();
-    });
+        onMounted(() => {
+            // const clientInstance = getSocketClientInstance();
+            // console.log(clientInstance);
+            loadGame();
+        });
 
-    const drawBackground = () => {
-      // TODO:
-      // split into location object
-      const imageSource = 'backgrounds/Sprite-background-0001.png';
+        const drawBackground = () => {
+            // TODO:
+            // split into location object
+            const imageSource = 'backgrounds/Sprite-background-0001.png';
 
-      loadBackgroundImage(gameContext, imageSource);
-    };
+            loadBackgroundImage(gameContext, imageSource);
+        };
 
-    const drawCharacter = () => {
-      // TODO:
-      // split into character object
-      const imageSource = 'characters/Sprite-character-0001.png';
+        const drawCharacter = () => {
+            // TODO:
+            // split into character object
+            const imageSource = 'characters/Sprite-character-0001.png';
 
-      // TODO:
-      // read coordinates
-      loadCharacterImage(gameContext, imageSource, 32, 32);
-    };
+            // TODO:
+            // read coordinates
+            loadCharacterImage(gameContext, imageSource, 32, 32);
+        };
 
-    const loadGame = () => {
-      gameContext = prepareAndGetContext(gameBoardRef.value);
-      drawBackground();
-      drawCharacter();
-    };
-    return {GAME_CONFIG, gameBoardRef};
-  }
+        const loadGame = () => {
+            gameContext = prepareAndGetContext(gameBoardRef.value);
+            drawBackground();
+            drawCharacter();
+        };
+        return {GAME_CONFIG, gameBoardRef};
+    }
 }
 </script>
 <style lang="scss">
