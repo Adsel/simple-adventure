@@ -4,8 +4,8 @@
 <script lang="ts">
 import {onMounted, ref} from "vue";
 import {GAME_CONFIG} from "@/config/game.config";
-import {loadBackgroundImage, loadCharacterImage} from "@/game/helpers/drawing.helper";
-import {prepareAndGetContext} from "@/game/helpers/board.helper";
+import {loadBackgroundImage, loadCharacterImage} from "@/pages/game/helpers/drawing.helper";
+import {prepareAndGetContext} from "@/pages/game/helpers/board.helper";
 import {getSocketClientInstance} from "@/socket/shared/instance";
 
 export default {
@@ -15,8 +15,7 @@ export default {
         const gameBoardRef = ref(null);
 
         onMounted(() => {
-            // const clientInstance = getSocketClientInstance();
-            // console.log(clientInstance);
+            getSocketClientInstance();
             loadGame();
         });
 

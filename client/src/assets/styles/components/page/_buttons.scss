@@ -1,0 +1,27 @@
+@import '../../definitions/colors';
+
+.button {
+  &__wrapper {
+    border: 3px solid $color-black;
+    background-color: $color-primary-3;
+    font-weight: 600;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    border-radius: 10px;
+    min-width: 200px;
+    cursor: pointer;
+  }
+
+  &__btn {
+    background: inherit;
+    border: none;
+    font-family: inherit;
+    padding: 0;
+    color: $color-black;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+    width: 100%;
+    cursor: inherit;
+  }
+}

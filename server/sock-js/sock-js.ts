@@ -9,9 +9,6 @@ class SockJSServer extends SocketServer {
             return;
         }
 
-        // this.io.on('connection', (socket: any) => {
-        //
-        // });
         this.io.on('connection', function(conn: any) {
             conn.on('data', function(message: string) {
                 conn.write(message);
@@ -23,14 +20,8 @@ class SockJSServer extends SocketServer {
     }
 
     protected loadSocket = () => {
-        // this.io = new Server(this.httpServer, {
-        //     cors: {
-        //         origin: '*',
-        //     }
-        // });
         this.io = createServer({prefix: '/ws'});
         this.io.installHandlers(this.httpServer);
-        // this.io.attach(this.httpServer);
     };
 
     public start = (port: number) => {
@@ -38,6 +29,11 @@ class SockJSServer extends SocketServer {
             this.loadSocket();
             this.loadRoutes();
             console.log(`[sock-js] Now listening on port ${port}`);
+        });
+
+        this.appServer.get('/', (req: any, res: any) => {
+            console.log('req', req);
+            res.send('GET request to the homepage')
         });
     };
 }
