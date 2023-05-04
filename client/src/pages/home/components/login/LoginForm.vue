@@ -17,6 +17,8 @@
 import {ref} from "vue";
 import {apiMethodLogin} from "@/api/auth/auth.api";
 import {IAuthLoginResponse} from "@/interfaces/api/auth.interface";
+import {saveIntoLocalStorage} from "@/pages/game/helpers/local-storage.helper";
+import {LocalStorageKeyEnum} from "@/enums/local-storage-key.enum";
 
 export default {
     name: 'LoginForm',
@@ -27,6 +29,11 @@ export default {
         const login = (event: Event) => {
             event.preventDefault();
             apiMethodLogin(nicknameInput.value).then((response: IAuthLoginResponse) => {
+                if (!response.summoner_id) {
+                    throw new Error('Missing data error');
+                }
+
+                saveIntoLocalStorage(LocalStorageKeyEnum.SummonerIdentifier, response.summoner_id);
                 context.emit('login-success', response);
             }).catch((error: any) => {
                 context.emit('login-error', error)

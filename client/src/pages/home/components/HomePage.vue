@@ -1,13 +1,6 @@
 <template>
     <div class="page__wrapper">
-        <h1 class="page__title">
-            <img src="@/assets/logotype.png"
-                 width="32"
-                 height="32"
-                 alt="Simple Adventure logotype"
-                 class="pixel-image__img">
-            Simple Adventure
-        </h1>
+        <GameTitle></GameTitle>
         <LoginForm @login-success="onLoginSuccess" @login-error="onLoginError"/>
     </div>
 </template>
@@ -20,10 +13,11 @@ import {toast} from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import {useRouter} from "vue-router";
 import {IAuthLoginResponse} from "@/interfaces/api/auth.interface";
+import GameTitle from "@/pages/shared/game-title/GameTitle.vue";
 
 export default {
     name: 'HomePage',
-    components: {LoginForm},
+    components: {GameTitle, LoginForm},
     setup() {
         const router = useRouter();
 
@@ -39,7 +33,6 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "../../../assets/styles/components/page/pixeled-image";
 @import "../../../assets/styles/definitions/toastify";
 @import "../../../assets/styles/definitions/colors";
 
@@ -49,12 +42,6 @@ export default {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-  }
-
-  &__title {
-    display: flex;
-    gap: 10px;
-    align-items: center;
   }
 }
 </style>

@@ -4,5 +4,7 @@ export interface IGameConfig {
     contextType: string;
     tileHeight: number;
     tileWidth: number;
+    canvasWidth: number;
+    canvasHeight: number;
 }
 

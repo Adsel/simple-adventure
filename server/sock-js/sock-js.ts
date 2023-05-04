@@ -9,13 +9,38 @@ class SockJSServer extends SocketServer {
             return;
         }
 
-        this.io.on('connection', function(conn: any) {
-            conn.on('data', function(message: string) {
-                conn.write(message);
-            });
-            conn.on('close', function() {});
+        this.io.on('connection', function (conn: any) {
+            conn.on('data',
+                function (message: string) {
+                    const value: any = JSON.parse(message);
+                    if (!value || !value.type) {
+                        return;
+                    }
 
-            conn.emit('hello', 'world');
+                    if (value.type === 'initial-data') {
+                        if (!value.summonerId) {
+                            return;
+                        }
+                        conn.write(JSON.stringify({
+                            type: value.type,
+                            location: {
+                                backgroundImage: 'backgrounds/Sprite-background-0001.png',
+                            },
+                            summoner: {
+                                // TODO: read from db
+                                characterImage: 'characters/Sprite-character-0001.png',
+                                x: 32,
+                                y: 32
+                            }
+                        }));
+                    }
+                }
+            );
+
+            conn.on('close', function () {
+            });
+
+            // conn.emit('hello', 'world');
         });
     }
 
