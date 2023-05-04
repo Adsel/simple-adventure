@@ -94,11 +94,16 @@ export class Character {
     protected moveCharacter(deltaX: number, deltaY: number, direction: number): boolean {
         let moved: boolean = false;
 
-        if (this.positionX + deltaX > 0 && this.positionX + CHARACTER_CONFIG.width + deltaX < GAME_CONFIG.width) {
+        if (direction === MovementFacingEnum.Left && this.positionX + deltaX >= 0 ) {
             this.positionX += deltaX;
             moved = true;
-        }
-        if (this.positionY + deltaY > 0 && this.positionY + CHARACTER_CONFIG.height + deltaY < GAME_CONFIG.height) {
+        } else if (direction === MovementFacingEnum.Right && this.positionX + CHARACTER_CONFIG.width + deltaX < GAME_CONFIG.width) {
+            this.positionX += deltaX;
+            moved = true;
+        } else if (direction === MovementFacingEnum.Up && this.positionY + deltaY >= 0) {
+            this.positionY += deltaY;
+            moved = true;
+        } else if (direction === MovementFacingEnum.Down  && this.positionY + CHARACTER_CONFIG.height + deltaY < GAME_CONFIG.height) {
             this.positionY += deltaY;
             moved = true;
         }
