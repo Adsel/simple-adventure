@@ -3,12 +3,12 @@ import {ICharacterConfig} from "@/interfaces/character/character.interface";
 
 export const GAME_CONFIG: IGameConfig = {
     width: 320,
-    height: 320,
+    height: 240,
     contextType: '2d',
     tileWidth: 16,
     tileHeight: 16,
     canvasWidth: 960,
-    canvasHeight: 960,
+    canvasHeight: 720,
 };
 
 export const CHARACTER_CONFIG: ICharacterConfig = {

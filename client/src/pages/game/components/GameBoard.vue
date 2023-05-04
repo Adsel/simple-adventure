@@ -2,7 +2,14 @@
     <GameBoardLoader v-if="isLoadingState"
                      :progress-value="loadingProgress"
                      :loading-stage="loadingStage"></GameBoardLoader>
-    <canvas ref="gameBoardRef" :width="GAME_CONFIG.width" :height="GAME_CONFIG.height"></canvas>
+    <div class="game-board__overlay">
+        <div class="game-board__wrapper">
+            <canvas ref="gameBoardRef"
+                    :width="GAME_CONFIG.width"
+                    :height="GAME_CONFIG.height"
+                    class="game-board__canvas"></canvas>
+        </div>
+    </div>
 </template>
 <script lang="ts">
 import {ref} from "vue";
@@ -13,13 +20,15 @@ import {getSocketClientInstance} from "@/socket/shared/instance";
 import GameBoardLoader from "@/pages/game/components/game-loaders/GameBoardLoader.vue";
 import {Character} from "@/models/character.class";
 
+let socketInstance: any;
+
 export default {
     name: 'GameBoard',
     components: {
         GameBoardLoader
     },
     mounted() {
-        getSocketClientInstance(this);
+        socketInstance = getSocketClientInstance(this);
     },
     setup() {
         let gameContext: any = null;
@@ -53,7 +62,7 @@ export default {
             // loadingStage.value = 1;
             // drawBackground(data.backgroundImage);
             const characterImage = await loadImage(data.characterImage);
-            character = new Character(gameContext, characterImage);
+            character = new Character(gameContext, characterImage, socketInstance);
             loadingProgress.value = 50;
             // loadingStage.value = 2;
 
@@ -74,20 +83,36 @@ export default {
 </script>
 <style lang="scss">
 @import '../../../assets/styles/definitions/game-board-definitions';
+@import '../../../assets/styles/definitions/colors';
 
-body {
-  background-color: $colorBackgroundBoard;
-  margin: 0;
-}
+.game-board {
+  &__overlay {
+    background-color: $color-background;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+  }
 
-canvas {
-  display: block;
-  width: $gameBoardX;
-  height: $gameBoardY;
-  margin: auto;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: -webkit-crisp-edges;
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
+  &__wrapper {
+    background-color: $color-primary-2;
+    border: 3px solid $color-black;
+    padding: $gamePadding;
+    border-radius: 10px;
+    width: calc(#{$gameBoardX} + (2 * #{$gamePadding}));
+    height: calc(#{$gameBoardY} + (2 * #{$gamePadding}));
+  }
+
+  &__canvas {
+    display: block;
+    width: $gameBoardX;
+    height: $gameBoardY;
+    margin: $gamePadding;
+    outline: 3px solid $color-black;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
 }
 </style>

@@ -11,11 +11,22 @@ export class Character {
     protected positionX: number = 0;
     protected positionY: number = 0;
     protected imageSource: HTMLImageElement;
-    protected ctx: any;
+    protected ctx: CanvasRenderingContext2D;
+    protected socketInstance: any;
 
-    constructor(ctx: any, characterImage: HTMLImageElement) {
+    constructor(
+        ctx: CanvasRenderingContext2D,
+        characterImage: HTMLImageElement,
+        socketInstance: any
+    ) {
         this.ctx = ctx;
         this.imageSource = characterImage;
+        this.socketInstance = socketInstance;
+
+        this.loadEventListeners();
+    }
+
+    protected loadEventListeners(): void {
         window.addEventListener(EventTypeEnum.KeyDown, (event: KeyboardEvent) => this.keyDownListener(event));
         window.addEventListener(EventTypeEnum.KeyUp, (event: KeyboardEvent) => this.keyUpListener(event));
     }
@@ -52,17 +63,13 @@ export class Character {
             const currentDirection = this.movementQueue[this.movementQueue.length - 1];
 
             if (currentDirection === MovementDirectionEnum.Up) {
-                this.moveCharacter(0, -movementSpeed, MovementFacingEnum.Up);
-                hasMoved = true;
+                hasMoved = this.moveCharacter(0, -movementSpeed, MovementFacingEnum.Up);
             } else if (currentDirection === MovementDirectionEnum.Down) {
-                this.moveCharacter(0, movementSpeed, MovementFacingEnum.Down);
-                hasMoved = true;
+                hasMoved = this.moveCharacter(0, movementSpeed, MovementFacingEnum.Down);
             } else if (currentDirection === MovementDirectionEnum.Left) {
-                this.moveCharacter(-movementSpeed, 0, MovementFacingEnum.Left);
-                hasMoved = true;
+                hasMoved = this.moveCharacter(-movementSpeed, 0, MovementFacingEnum.Left);
             } else if (currentDirection === MovementDirectionEnum.Right) {
-                this.moveCharacter(movementSpeed, 0, MovementFacingEnum.Right);
-                hasMoved = true;
+                hasMoved = this.moveCharacter(movementSpeed, 0, MovementFacingEnum.Right);
             }
         }
 
@@ -84,14 +91,25 @@ export class Character {
         this.drawFrame(CHARACTER_CONFIG.movementAnimationLoop[this.currentLoopIndex], this.currentDirection, this.positionX, this.positionY);
     }
 
-    protected moveCharacter(deltaX: number, deltaY: number, direction: number): void {
+    protected moveCharacter(deltaX: number, deltaY: number, direction: number): boolean {
+        let moved: boolean = false;
+
         if (this.positionX + deltaX > 0 && this.positionX + CHARACTER_CONFIG.width + deltaX < GAME_CONFIG.width) {
             this.positionX += deltaX;
+            moved = true;
         }
         if (this.positionY + deltaY > 0 && this.positionY + CHARACTER_CONFIG.height + deltaY < GAME_CONFIG.height) {
             this.positionY += deltaY;
+            moved = true;
         }
 
+        if (!moved) {
+            return moved;
+        }
+
+        this.socketInstance.moveCharacter(this.positionX, this.positionY);
         this.currentDirection = direction;
+
+        return moved;
     }
 }

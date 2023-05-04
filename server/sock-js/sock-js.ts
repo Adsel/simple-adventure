@@ -33,6 +33,24 @@ class SockJSServer extends SocketServer {
                                 y: 32
                             }
                         }));
+                    } else if (value.type === 'movement') {
+                        if (!value.summonerId) {
+                            return;
+                        }
+                        conn.write(JSON.stringify({
+                            type: value.type,
+                            // TODO:
+                            // save to db
+                            // location: {
+                            //     backgroundImage: 'backgrounds/Sprite-background-0001.png',
+                            // },
+                            // summoner: {
+                            //     // TODO: read from db
+                            //     characterImage: 'characters/Sprite-character-0001.png',
+                            //     x: 32,
+                            //     y: 32
+                            // }
+                        }));
                     }
                 }
             );
