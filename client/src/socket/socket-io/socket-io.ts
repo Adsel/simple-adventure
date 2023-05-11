@@ -5,13 +5,15 @@ export class SocketIOClient extends SocketClient {
     constructor(context: any) {
         super(context);
         this.socket = io(process.env.VUE_APP_WS_URL);
-        this.onConnected();
+        this.connect();
     }
 
-    onConnected() {
-        // this.socket.emit('chat message', 'testy');
-        // this.socket.on("hello", (arg: any) => console.log(arg));
-        // this.socket.emit('howdy', 'stranger');
+    protected connect() {
+        this.socket.on('connection', () => this.onConnected());
+
+        this.socket.on('message', (event: any) => this.onMessage(event));
+
+        this.socket.on('disconnect', () => this.closeConnection());
     }
 
     protected send(type: string, data: object): void {

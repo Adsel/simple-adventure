@@ -7,7 +7,7 @@ class SocketIOServer extends SocketGameServerAbstract {
     private io: any = null;
 
     protected send(conn: any, data: any): void {
-        conn.emit(data.type, data);
+        conn.emit('message', data);
     }
 
     protected broadcastMessage(message: any, skipPlayerId = 0): void {

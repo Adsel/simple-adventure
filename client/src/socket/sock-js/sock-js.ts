@@ -8,39 +8,15 @@ export class SocketJSClient extends SocketClient {
     constructor(context: any) {
         super(context);
         this.socket = new SockJS(process.env.VUE_APP_WS_URL);
-        this.onConnected();
+        this.connect();
     }
 
-    onConnected() {
-        this.socket.onopen = () => {
-            this.send('initial-data', {
-                summonerId: getFromLocalStorage(LocalStorageKeyEnum.SummonerIdentifier)
-            });
-        };
+    protected connect() {
+        this.socket.onopen = () => this.onConnected();
 
-        this.socket.onmessage = (e: any) => {
-            const data = JSON.parse(e.data);
-            if (!data || !data.type) {
-                return '';
-            }
+        this.socket.onmessage = (event: any) => this.onMessage(event);
 
-            console.log(data);
-            if (data.type === 'initial-data') {
-                this.handler.onInitialDataLoaded(data);
-            } else if (data.type === 'movement') {
-                this.handler.onPlayersMovement(data);
-            } else if (data.type === 'another-player-connected') {
-                this.handler.onAnotherPlayerConnected(data);
-            } else if (data.type === 'another-player-movement') {
-                this.handler.onAnotherPlayerMoved(data);
-            } else if (data.type === 'another-player-disconnected') {
-                this.handler.onAnotherPlayerDisconnected(data);
-            }
-        };
-
-        this.socket.onclose = function() {
-            console.log('close');
-        };
+        this.socket.onclose = () => this.closeConnection();
     }
 
     protected send(type: string, data: object): void {
