@@ -1,6 +1,6 @@
 import {EventTypeEnum} from "@/enums/event-type.enum";
 import {CHARACTER_CONFIG, GAME_CONFIG} from "@/config/game.config";
-import {drawImage} from "@/pages/game/helpers/drawing.helper";
+import {drawImage, getSourceImage} from "@/pages/game/helpers/drawing.helper";
 import {MovementDirectionEnum, MovementFacingEnum} from "@/enums/character/movement-direction.enum";
 
 export class Character {
@@ -11,19 +11,32 @@ export class Character {
     protected positionX: number = 0;
     protected positionY: number = 0;
     protected imageSource: HTMLImageElement;
+    protected imagePlaceholder: HTMLImageElement;
     protected ctx: CanvasRenderingContext2D;
     protected socketInstance: any;
+    protected loadedImage = false;
 
     constructor(
         ctx: CanvasRenderingContext2D,
-        characterImage: HTMLImageElement,
-        socketInstance: any
+        characterImage: string,
+        characterPlaceholder: HTMLImageElement,
+        socketInstance: any,
+        positionX: number,
+        positionY: number,
+        isMainCharacter = true
     ) {
         this.ctx = ctx;
-        this.imageSource = characterImage;
+        this.imagePlaceholder = characterPlaceholder;
         this.socketInstance = socketInstance;
+        this.imageSource = new Image();
+        this.positionX = positionX;
+        this.positionY = positionY;
 
-        this.loadEventListeners();
+        this.loadCharacterImage(characterImage);
+
+        if (isMainCharacter) {
+            this.loadEventListeners();
+        }
     }
 
     protected loadEventListeners(): void {
@@ -45,10 +58,11 @@ export class Character {
         }
     }
 
-    protected drawFrame(frameX: number, frameY: number, posX: number, posY: number): void {
-        drawImage(this.ctx, this.imageSource, {
-            posX,
-            posY,
+    protected drawFrame(frameX: number, frameY: number, x: number, y: number): void {
+        const image: HTMLImageElement = this.loadedImage ? this.imageSource : this.imagePlaceholder;
+        drawImage(this.ctx, image, {
+            x,
+            y,
             frameX,
             frameY,
             width: CHARACTER_CONFIG.width,
@@ -116,5 +130,18 @@ export class Character {
         this.currentDirection = direction;
 
         return moved;
+    }
+
+    protected loadCharacterImage(characterImage: string): void {
+        this.imageSource.src = getSourceImage(characterImage);
+        this.imageSource.onload = () => this.loadedImage = true;
+    }
+
+    public setPositionX(x: number): void {
+        this.positionX = x;
+    }
+
+    public setPositionY(y: number): void {
+        this.positionY = y;
     }
 }

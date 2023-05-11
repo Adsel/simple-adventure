@@ -12,11 +12,11 @@ export abstract class SocketClient {
         this.handler = context;
     }
 
-    public moveCharacter(posX: number, posY: number) {
+    public moveCharacter(x: number, y: number) {
         this.send('movement', {
             summonerId: getFromLocalStorage(LocalStorageKeyEnum.SummonerIdentifier),
-            x: posX,
-            y: posY
+            x: x,
+            y: y
         });
     }
 }

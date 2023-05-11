@@ -1,7 +1,7 @@
 export interface IDrawingImage {
     width: number;
     height: number;
-    posX: number;
-    posY: number;
+    x: number;
+    y: number;
     imagePath: string;
 }

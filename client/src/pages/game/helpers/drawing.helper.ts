@@ -1,6 +1,6 @@
 import {ProtocolTypeEnum} from "@/enums/network/protocol-type.enum";
 
-const getSourceImage = (imagePath: string): string => require(`@/assets/${imagePath}`);
+export const getSourceImage = (imagePath: string): string => require(`@/assets/${imagePath}`);
 
 export const drawImage = (gameContext: CanvasRenderingContext2D, drawingImage: HTMLImageElement, drawingImageOptions: any) => {
     gameContext.drawImage(
@@ -9,8 +9,8 @@ export const drawImage = (gameContext: CanvasRenderingContext2D, drawingImage: H
         drawingImageOptions.frameY ? drawingImageOptions.width * drawingImageOptions.frameY : drawingImageOptions.width,
         drawingImageOptions.width,
         drawingImageOptions.height,
-        drawingImageOptions.posX,
-        drawingImageOptions.posY,
+        drawingImageOptions.x,
+        drawingImageOptions.y,
         drawingImageOptions.width,
         drawingImageOptions.height,
     );
@@ -19,8 +19,8 @@ export const drawImage = (gameContext: CanvasRenderingContext2D, drawingImage: H
 export const drawBackgroundImage = (gameContext: CanvasRenderingContext2D, drawingImage: HTMLImageElement, drawingImageOptions: any): void => {
     gameContext.drawImage(
         drawingImage,
-        drawingImageOptions.posX,
-        drawingImageOptions.posY,
+        drawingImageOptions.x,
+        drawingImageOptions.y,
         drawingImageOptions.width,
         drawingImageOptions.height
     );

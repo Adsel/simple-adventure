@@ -20,20 +20,22 @@ export class SocketJSClient extends SocketClient {
 
         this.socket.onmessage = (e: any) => {
             const data = JSON.parse(e.data);
-            if (!data) {
+            if (!data || !data.type) {
                 return '';
             }
 
-            if (data?.type === 'initial-data') {
-                console.log(data);
-                this.handler.onInitialDataLoaded({
-                    backgroundImage: data.location.backgroundImage,
-                    xPos: data.summoner.x,
-                    yPos: data.summoner.y,
-                    characterImage: data.summoner.characterImage,
-                });
+            console.log(data);
+            if (data.type === 'initial-data') {
+                this.handler.onInitialDataLoaded(data);
+            } else if (data.type === 'movement') {
+                this.handler.onPlayersMovement(data);
+            } else if (data.type === 'another-player-connected') {
+                this.handler.onAnotherPlayerConnected(data);
+            } else if (data.type === 'another-player-movement') {
+                this.handler.onAnotherPlayerMoved(data);
+            } else if (data.type === 'another-player-disconnected') {
+                this.handler.onAnotherPlayerDisconnected(data);
             }
-        //    this.socket.close();
         };
 
         this.socket.onclose = function() {

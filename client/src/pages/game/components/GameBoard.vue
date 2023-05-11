@@ -36,14 +36,67 @@ export default {
         const isLoadingState = ref(true);
         const loadingProgress = ref(0);
         const loadingStage = ref(0);
+        let characterPlaceholderImg: HTMLImageElement;
         let character: Character;
         let bgImage: HTMLImageElement;
+        // const graphicsMap = new Map<string, HTMLImageElement>();
+        const playersMap = new Map<string, Character>();
 
         const onInitialDataLoaded = (data: any) => loadGame(data);
+        const onPlayersMovement = (data: any) => {
+            if (!data || !data.players) {
+                return;
+            }
+
+            data.players.forEach((player: any) => {
+                if (playersMap.has(player.summonerId)) {
+                    let playerData = playersMap.get(player.summonerId);
+                    if (!playerData) {
+                        return;
+                    }
+                }
+            });
+        };
+        const onAnotherPlayerConnected = (data: any) => {
+            if (!data || !data.player) {
+                return;
+            }
+
+            const anotherPlayer = data.player;
+            const summonerId = data.summonerId;
+            if (!playersMap.has(summonerId)) {
+                playersMap.set(summonerId, new Character(gameContext, anotherPlayer.characterImage, characterPlaceholderImg, socketInstance, anotherPlayer.x, anotherPlayer.y, false));
+            }
+        };
+
+        const onAnotherPlayerMoved = (data: any) => {
+            if (!data || !data.anotherPlayer) {
+                return;
+            }
+
+            const anotherPlayer = data.anotherPlayer;
+
+            const anotherPlayerData = playersMap.get(anotherPlayer.summonerId);
+            if (!anotherPlayerData) {
+                return;
+            }
+
+            anotherPlayerData.setPositionX(anotherPlayer.x);
+            anotherPlayerData.setPositionY(anotherPlayer.y);
+        };
+
+        const onAnotherPlayerDisconnected = (data: any) => {
+            if (!data || !data.summonerId) {
+                return;
+            }
+
+            playersMap.delete(data.summonerId);
+        };
+
         const drawBackground = () => {
             drawBackgroundImage(gameContext, bgImage, {
-                posX: 0,
-                posY: 0,
+                x: 0,
+                y: 0,
                 width: GAME_CONFIG.width,
                 height: GAME_CONFIG.height,
             });
@@ -53,20 +106,25 @@ export default {
             gameContext.clearRect(0, 0, GAME_CONFIG.width, GAME_CONFIG.height);
             drawBackground();
             character.animationFrame();
+            playersMap.forEach((character: Character) => character.animationFrame());
             window.requestAnimationFrame(() => gameLoop(data));
         };
 
         const loadGame = async (data: any) => {
+            const characterImage = data.summoner.characterImage;
+            const backgroundImage = data.location.backgroundImage;
             gameContext = prepareAndGetContext(gameBoardRef.value);
             loadingProgress.value = 25;
             // loadingStage.value = 1;
             // drawBackground(data.backgroundImage);
-            const characterImage = await loadImage(data.characterImage);
-            character = new Character(gameContext, characterImage, socketInstance);
+            characterPlaceholderImg = await loadImage('characters/Sprite-character-placeholder.png');
+            character = new Character(gameContext, characterImage, characterPlaceholderImg, socketInstance, data.summoner.x, data.summoner.y);
             loadingProgress.value = 50;
             // loadingStage.value = 2;
-
-            bgImage = await loadImage(data.backgroundImage);
+            data.players.forEach((player: any) => playersMap.set(player.summonerId, new Character(
+                gameContext, player.characterImage, characterPlaceholderImg, socketInstance, player.x, player.y, false
+            )));
+            bgImage = await loadImage(backgroundImage);
             // drawCharacter(data.characterImage, data.xPos, data.yPos);
             loadingProgress.value = 75;
             // loadingStage.value = 3;
@@ -77,7 +135,18 @@ export default {
             window.requestAnimationFrame(() => gameLoop(data));
         };
 
-        return {GAME_CONFIG, gameBoardRef, isLoadingState, loadingStage, loadingProgress, onInitialDataLoaded};
+        return {
+            GAME_CONFIG,
+            gameBoardRef,
+            isLoadingState,
+            loadingStage,
+            loadingProgress,
+            onAnotherPlayerConnected,
+            onAnotherPlayerDisconnected,
+            onAnotherPlayerMoved,
+            onInitialDataLoaded,
+            onPlayersMovement
+        };
     }
 }
 </script>
@@ -88,10 +157,10 @@ export default {
 .game-board {
   &__overlay {
     background-color: $color-background;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
   }
 
   &__wrapper {
