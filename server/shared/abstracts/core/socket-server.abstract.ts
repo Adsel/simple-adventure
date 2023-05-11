@@ -1,25 +1,25 @@
-import {API_METHOD_LOGIN} from "../api/auth/login";
-import {JSON_PARSER} from "../constants/json-parser";
-import {IConnectedPlayer} from "../interfaces/players/connected-player.interface";
+import {API_METHOD_LOGIN} from "../../api/auth/login";
+import {JSON_PARSER} from "../../constants/json-parser";
+import {IConnectedPlayer} from "../../interfaces/players/connected-player.interface";
 
-export abstract class SocketServer {
+export abstract class SocketServerAbstract {
     protected httpServer: any;
     protected appServer: any;
     protected connectedPlayers: IConnectedPlayer[] = [];
 
-    constructor(httpServer: any, appServer: any) {
+    protected constructor(httpServer: any, appServer: any) {
         this.httpServer = httpServer;
         this.appServer = appServer;
         this.loadApiRoutes();
     }
 
-    protected abstract broadcastMessage(message: object): void;
-    protected abstract loadRoutes(): void;
-    protected abstract loadSocket(): void;
+    protected abstract send(conn: any, data: any): void;
 
-    protected abstract handlePlayerConnected(conn: any, data: any): void;
-    protected abstract handleCommunication(conn: any, data: any): void;
-    protected abstract handlePlayerMovement(conn: any, data: any): void;
+    protected abstract broadcastMessage(message: object, skipPlayerId: number): void;
+
+    protected abstract loadRoutes(): void;
+
+    protected abstract loadSocket(): void;
 
     public abstract start(port: number): void;
 

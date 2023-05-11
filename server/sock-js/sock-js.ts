@@ -1,9 +1,13 @@
-import {SocketServer} from "../shared/abstracts/socket-server.abstract";
 import {createServer, Server} from 'sockjs';
 import {IConnectedPlayer} from "../shared/interfaces/players/connected-player.interface";
+import {SocketGameServerAbstract} from "../shared/abstracts/socket-game-server.abstract";
 
-class SockJSServer extends SocketServer {
+class SockJSServer extends SocketGameServerAbstract {
     private io: Server | null = null;
+
+    protected send(conn: any, data: any): void {
+        conn.write(JSON.stringify(data));
+    }
 
     protected broadcastMessage(message: object, skipPlayerId = 0): void {
         this.connectedPlayers.forEach((client: IConnectedPlayer) => {
