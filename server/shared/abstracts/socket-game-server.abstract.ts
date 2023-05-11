@@ -7,6 +7,7 @@ export abstract class SocketGameServerAbstract extends SocketServerAbstract {
     }
 
     protected handleCommunication(conn: any, message: string): void {
+        console.log(message);
         const value: any = JSON.parse(message);
         if (!value || !value.type) {
             return;

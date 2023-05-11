@@ -8,22 +8,28 @@ export class SocketIOClient extends SocketClient {
         this.connect();
     }
 
-    protected connect() {
-        this.socket.on('connection', () => this.onConnected());
+    protected connect(): void {
+        this.onConnected();
 
         this.socket.on('message', (event: any) => this.onMessage(event));
-
         this.socket.on('disconnect', () => this.closeConnection());
     }
 
+    protected parseMessageData(event: string): any {
+        return event ? JSON.parse(event) : null;
+    }
+
     protected send(type: string, data: object): void {
-        this.socket.send(JSON.stringify({
+        console.log('[CLIENT - SEND]', type, data);
+        this.socket.emit('data', JSON.stringify({
             type,
             ...data
         }));
     }
 
-    public closeConnection() {
-        this.socket.close();
+    public closeConnection(): void {
+        console.log('[CLIENT - PLAYER EXIT]');
+        this.socket.disconnect();
     }
+
 }

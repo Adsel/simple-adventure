@@ -8,6 +8,7 @@ export abstract class SocketClient {
     protected abstract connect(): void;
 
     protected abstract closeConnection(): void;
+    protected abstract parseMessageData(event: any): any;
 
     protected abstract send(type: string, data: any): void;
 
@@ -30,11 +31,10 @@ export abstract class SocketClient {
     }
 
     protected onMessage(event: any): void {
-        const data = JSON.parse(event.data);
+        const data = this.parseMessageData(event);
         if (!data || !data.type) {
             return;
         }
-
 
         if (data.type === 'initial-data') {
             this.handler.onInitialDataLoaded(data);

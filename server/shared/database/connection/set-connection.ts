@@ -6,5 +6,5 @@ export const databaseConnection = mysql.createConnection(CONNECTION_CONFIGURATIO
 
 databaseConnection.connect(function (err: any) {
     if (err) throw err;
-    console.log("Connected!");
+    console.log("Connected with database!");
 });

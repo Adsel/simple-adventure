@@ -20,13 +20,14 @@ export abstract class SocketServerAbstract {
     protected abstract loadRoutes(): void;
 
     protected abstract loadSocket(): void;
+    protected abstract disconnectPlayer(player: IConnectedPlayer): void;
 
     public abstract start(port: number): void;
 
     protected rememberConnectedPlayer(player: any, socket: any): void {
         const isAlreadyConnected = this.connectedPlayers.find(connectedPlayer => connectedPlayer.summonerId === player.summonerId);
         if (isAlreadyConnected) {
-            isAlreadyConnected.socket.close();
+            this.disconnectPlayer(isAlreadyConnected);
             this.forgetConnectedPlayer(isAlreadyConnected);
         }
 
@@ -39,6 +40,18 @@ export abstract class SocketServerAbstract {
 
     protected forgetConnectedPlayer(player: IConnectedPlayer): void {
         this.connectedPlayers = this.connectedPlayers.filter(connectedPlayer => connectedPlayer.summonerId !== player.summonerId);
+    }
+
+    protected handleCloseConnection(conn: any): void {
+        this.connectedPlayers = this.connectedPlayers.filter((connectionData: any) => {
+            if (connectionData.socket.id === conn.id) {
+                connectionData.socket.write(JSON.stringify({
+                    summonerId: connectionData.summonerId,
+                    type: 'another-player-disconnected'
+                }));
+            }
+            return connectionData.socket.id !== conn.id;
+        })
     }
 
     public loadApiRoutes(): void {

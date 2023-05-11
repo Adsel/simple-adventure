@@ -1,7 +1,5 @@
 import {SocketClient} from "@/socket/shared/socket-client.abstract";
 import SockJS from "sockjs-client";
-import {getFromLocalStorage} from "@/pages/game/helpers/local-storage.helper";
-import {LocalStorageKeyEnum} from "@/enums/local-storage-key.enum";
 
 export class SocketJSClient extends SocketClient {
 
@@ -20,6 +18,7 @@ export class SocketJSClient extends SocketClient {
     }
 
     protected send(type: string, data: object): void {
+        console.log('[CLIENT - SEND]', type, data);
         this.socket.send(JSON.stringify({
             type,
             ...data
@@ -27,7 +26,12 @@ export class SocketJSClient extends SocketClient {
     }
 
     public closeConnection(): void {
+        console.log('[CLIENT - PLAYER EXIT]');
         this.socket.close();
+    }
+
+    protected parseMessageData(event: any): any {
+        return event && event.data ? JSON.parse(event.data) : null;
     }
 }
 

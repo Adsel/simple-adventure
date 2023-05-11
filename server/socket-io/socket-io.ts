@@ -1,19 +1,23 @@
 import {IConnectedPlayer} from "../shared/interfaces/players/connected-player.interface";
 import {SocketGameServerAbstract} from "../shared/abstracts/socket-game-server.abstract";
 
-const { Server } = require("socket.io");
+const {Server} = require("socket.io");
 
 class SocketIOServer extends SocketGameServerAbstract {
     private io: any = null;
 
     protected send(conn: any, data: any): void {
-        conn.emit('message', data);
+        console.log('[SERVER - SEND]', data);
+        conn.emit('message', JSON.stringify(data));
     }
 
     protected broadcastMessage(message: any, skipPlayerId = 0): void {
         this.connectedPlayers.forEach((client: IConnectedPlayer) => {
             if (client.summonerId !== skipPlayerId) {
-                client.socket.emit(message.type, message);
+                this.send(client.socket, {
+                    type: message.type,
+                    ...message
+                });
             }
         });
     }
@@ -23,13 +27,13 @@ class SocketIOServer extends SocketGameServerAbstract {
             return;
         }
 
-        this.io.on('connection', (socket: any) => {
-            socket.emit('hello', 'world');
+        const that = this;
 
-            socket.on('howdy', (arg: any) => {
-                console.log(arg);
-            });
-        })
+        this.io.on('connection', (socket: any) => {
+            console.log('a user connected');
+            socket.on('disconnect', () => that.handleCloseConnection(socket));
+            socket.on('data', (message: string) => that.handleCommunication(socket, message));
+        });
     }
     protected loadSocket = () => {
         this.io = new Server(this.httpServer, {
@@ -38,6 +42,12 @@ class SocketIOServer extends SocketGameServerAbstract {
             }
         });
     };
+
+    protected disconnectPlayer(player: IConnectedPlayer): void {
+        console.log('[SERVER - disconnect player]', player.summonerId);
+        player.socket.disconnect();
+    }
+
     public start = (port: number) => {
         this.httpServer.listen(port, () => {
             this.loadSocket();

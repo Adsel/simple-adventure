@@ -6,6 +6,7 @@ class SockJSServer extends SocketGameServerAbstract {
     private io: Server | null = null;
 
     protected send(conn: any, data: any): void {
+        console.log('[SERVER - SEND]', data);
         conn.write(JSON.stringify(data));
     }
 
@@ -18,22 +19,14 @@ class SockJSServer extends SocketGameServerAbstract {
     }
 
     protected loadRoutes = (): void => {
-        const that = this;
         if (!this.io) {
             return;
         }
 
-        this.io.on('connection', function (conn: any) {
+        const that = this;
+        this.io.on('connection',  (conn: any) => {
             conn.on('data', (message: string) => that.handleCommunication(conn, message));
-            conn.on('close', () => that.connectedPlayers = that.connectedPlayers.filter((connectionData: any) => {
-                if (connectionData.socket.id === conn.id) {
-                    connectionData.socket.write(JSON.stringify({
-                        summonerId: connectionData.summonerId,
-                        type: 'another-player-disconnected'
-                    }));
-                }
-                return connectionData.socket.id !== conn.id;
-            }));
+            conn.on('close', () => that.handleCloseConnection(conn));
         });
     }
 
@@ -54,6 +47,11 @@ class SockJSServer extends SocketGameServerAbstract {
             res.send('GET request to the homepage')
         });
     };
+
+    protected disconnectPlayer(player: IConnectedPlayer): void {
+        console.log('[SERVER - disconnect player]', player.summonerId);
+        player.socket.close();
+    }
 }
 
 module.exports = {SockJSServer};
