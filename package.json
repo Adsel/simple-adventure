@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "Simple MMO RPG pixel game based on websocket.",
   "scripts": {
-    "client:serve": "cd ./client && npm run serve",
-    "server:serve": "cd ./server && npm run serve",
+    "client:socket-io:serve": "cd ./client && npm run socket-io:serve",
+    "client:sock-js:serve": "cd ./client && npm run sock-js:serve",
+    "server:socket-io:serve": "cd ./server && npm run socket-io:serve",
+    "server:sock-js:serve": "cd ./server && npm run sock-js:serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

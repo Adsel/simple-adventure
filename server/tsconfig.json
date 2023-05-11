@@ -4,7 +4,7 @@
     "outDir": "./out"
   },
   "include": [
-    "src"
+    "../common/src"
   ],
   "exclude": [
     "node_modules"

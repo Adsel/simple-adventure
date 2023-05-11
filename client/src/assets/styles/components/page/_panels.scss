@@ -1,0 +1,17 @@
+@import '../../definitions/colors';
+
+.board-panel {
+  &__wrapper {
+    background-color: $color-primary-2;
+    border: 3px solid $color-black;
+    padding: 0.5rem;
+    border-radius: 10px;
+  }
+
+  &__content {
+    background-color: $color-secondary-1;
+    border: 3px solid $color-black;
+    padding: 1.5rem;
+    border-radius: 10px;
+  }
+}
