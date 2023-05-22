@@ -71,9 +71,10 @@ export class Character {
         const drawX = this.getDrawX();
         const drawY = this.getDrawY();
 
-        return false;
-        // TODO:
-        // return drawX < 0 || drawX < || drawY < 0 || drawY >;
+        return drawX < -CHARACTER_CONFIG.width ||
+            drawX > GAME_CONFIG.canvasWidth ||
+            drawY < -CHARACTER_CONFIG.height ||
+            drawY > GAME_CONFIG.canvasHeight;
     }
 
     public animationFrame() {
