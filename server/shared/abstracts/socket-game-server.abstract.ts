@@ -34,7 +34,12 @@ export abstract class SocketGameServerAbstract extends SocketServerAbstract {
         this.send(conn, {
             type: data.type,
             location: {
+                // TODO:
+                // zapisać dane o mapie do bazy
+                // odczytać z bazy
                 backgroundImage: 'backgrounds/Sprite-background-0001.png',
+                width: 640,
+                height: 640
             },
             summoner,
             players: this.connectedPlayers.map((connectedPlayer: IConnectedPlayer) => {

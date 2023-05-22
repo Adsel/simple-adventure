@@ -5,3 +5,14 @@ export interface IDrawingImage {
     y: number;
     imagePath: string;
 }
+
+export interface IDrawingBackground {
+    sourceX: number;
+    sourceY: number;
+    sourceWidth: number;
+    sourceHeight: number;
+    posX: number;
+    posY: number;
+    width: number;
+    height: number;
+}

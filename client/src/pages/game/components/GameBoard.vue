@@ -14,11 +14,13 @@
 <script lang="ts">
 import {ref} from "vue";
 import {GAME_CONFIG} from "@/config/game.config";
-import {drawBackgroundImage, loadImage} from "@/pages/game/helpers/drawing.helper";
+import {loadImage} from "@/pages/game/helpers/drawing.helper";
 import {prepareAndGetContext} from "@/pages/game/helpers/board.helper";
 import {getSocketClientInstance} from "@/socket/shared/instance";
 import GameBoardLoader from "@/pages/game/components/game-loaders/GameBoardLoader.vue";
 import {Character} from "@/models/character.class";
+import {Localization} from "@/models/localization.class";
+import {MainCharacter} from "@/models/main.character.class";
 
 let socketInstance: any;
 
@@ -37,7 +39,8 @@ export default {
         const loadingProgress = ref(0);
         const loadingStage = ref(0);
         let characterPlaceholderImg: HTMLImageElement;
-        let character: Character;
+        let character: MainCharacter;
+        let localization: Localization;
         let bgImage: HTMLImageElement;
         // const graphicsMap = new Map<string, HTMLImageElement>();
         const playersMap = new Map<string, Character>();
@@ -65,7 +68,7 @@ export default {
             const anotherPlayer = data.player;
             const summonerId = data.summonerId;
             if (!playersMap.has(summonerId)) {
-                playersMap.set(summonerId, new Character(gameContext, anotherPlayer.characterImage, characterPlaceholderImg, socketInstance, anotherPlayer.x, anotherPlayer.y, false));
+                playersMap.set(summonerId, new Character(gameContext, anotherPlayer.characterImage, characterPlaceholderImg, socketInstance, anotherPlayer.x, anotherPlayer.y, localization));
             }
         };
 
@@ -93,18 +96,9 @@ export default {
             playersMap.delete(data.summonerId);
         };
 
-        const drawBackground = () => {
-            drawBackgroundImage(gameContext, bgImage, {
-                x: 0,
-                y: 0,
-                width: GAME_CONFIG.width,
-                height: GAME_CONFIG.height,
-            });
-        };
-
         const gameLoop = (data: any) => {
             gameContext.clearRect(0, 0, GAME_CONFIG.width, GAME_CONFIG.height);
-            drawBackground();
+            localization.drawBackground();
             character.animationFrame();
             playersMap.forEach((character: Character) => character.animationFrame());
             window.requestAnimationFrame(() => gameLoop(data));
@@ -112,19 +106,19 @@ export default {
 
         const loadGame = async (data: any) => {
             const characterImage = data.summoner.characterImage;
-            const backgroundImage = data.location.backgroundImage;
             gameContext = prepareAndGetContext(gameBoardRef.value);
+            await loadBackground(data.location);
             loadingProgress.value = 25;
             // loadingStage.value = 1;
             // drawBackground(data.backgroundImage);
             characterPlaceholderImg = await loadImage('characters/Sprite-character-placeholder.png');
-            character = new Character(gameContext, characterImage, characterPlaceholderImg, socketInstance, data.summoner.x, data.summoner.y);
+            character = new MainCharacter(gameContext, characterImage, characterPlaceholderImg, socketInstance, data.summoner.x, data.summoner.y, localization);
             loadingProgress.value = 50;
             // loadingStage.value = 2;
             data.players.forEach((player: any) => playersMap.set(player.summonerId, new Character(
-                gameContext, player.characterImage, characterPlaceholderImg, socketInstance, player.x, player.y, false
+                gameContext, player.characterImage, characterPlaceholderImg, socketInstance, player.x, player.y, localization
             )));
-            bgImage = await loadImage(backgroundImage);
+
             // drawCharacter(data.characterImage, data.xPos, data.yPos);
             loadingProgress.value = 75;
             // loadingStage.value = 3;
@@ -133,6 +127,11 @@ export default {
             isLoadingState.value = false;
 
             window.requestAnimationFrame(() => gameLoop(data));
+        };
+
+        const loadBackground = async (location: any): Promise<void> => {
+            bgImage = await loadImage(location.backgroundImage);
+            localization = new Localization(bgImage, gameContext, location.width, location.height);
         };
 
         return {
