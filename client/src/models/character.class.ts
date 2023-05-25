@@ -45,7 +45,7 @@ export class Character {
     }
 
     protected drawFrame(frameX: number, frameY: number, x: number, y: number): void {
-        if (!this.isMainCharacter && this.isOffTheViewport()) {
+        if (!this.isMainCharacter && (this.isOffTheViewport() || !this.isOffTheFogOfWar())) {
             return;
         }
         const image: HTMLImageElement = this.loadedImage ? this.imageSource : this.imagePlaceholder;
@@ -75,6 +75,14 @@ export class Character {
             drawX > GAME_CONFIG.canvasWidth ||
             drawY < -CHARACTER_CONFIG.height ||
             drawY > GAME_CONFIG.canvasHeight;
+    }
+
+    protected isOffTheFogOfWar(): boolean {
+        // (x - center_x)² + (y - center_y)² < radius²
+        const x2 = Math.pow((this.positionX - this.localizationInstance.getMainCharacterX()), 2);
+        const y2 = Math.pow((this.positionY - this.localizationInstance.getMainCharacterY()), 2);
+
+        return x2 + y2 < Math.pow(GAME_CONFIG.fogOfWar.radius, 2);
     }
 
     public animationFrame() {
@@ -133,22 +141,24 @@ export class Character {
             direction === MovementFacingEnum.Left &&
             this.positionX + deltaX - this.localizationInstance.getShiftX() >= 0
         ) {
-            this.positionX += deltaX;
+            this.moveX(deltaX);
             moved = true;
         } else if (
             direction === MovementFacingEnum.Right &&
             this.positionX + CHARACTER_CONFIG.width + deltaX - this.localizationInstance.getShiftX() < GAME_CONFIG.width
         ) {
-            this.positionX += deltaX;
+            this.moveX(deltaX);
             moved = true;
-        } else if (direction === MovementFacingEnum.Up &&
-            this.positionY + deltaY - this.localizationInstance.getShiftY() >= 0) {
-            this.positionY += deltaY;
+        } else if (
+            direction === MovementFacingEnum.Up &&
+            this.positionY + deltaY - this.localizationInstance.getShiftY() >= 0
+        ) {
+            this.moveY(deltaY);
             moved = true;
         } else if (direction === MovementFacingEnum.Down &&
             this.positionY + CHARACTER_CONFIG.height + deltaY - this.localizationInstance.getShiftY() < GAME_CONFIG.height
         ) {
-            this.positionY += deltaY;
+            this.moveY(deltaY);
             moved = true;
         }
 
@@ -165,6 +175,20 @@ export class Character {
     protected loadCharacterImage(characterImage: string): void {
         this.imageSource.src = getSourceImage(characterImage);
         this.imageSource.onload = () => this.loadedImage = true;
+    }
+
+    protected moveX(deltaX: number): void {
+        this.positionX += deltaX;
+        if (this.isMainCharacter) {
+            this.localizationInstance.setMainCharacterX(this.positionX);
+        }
+    }
+
+    protected moveY(deltaY: number): void {
+        this.positionY += deltaY;
+        if (this.isMainCharacter) {
+            this.localizationInstance.setMainCharacterY(this.positionY);
+        }
     }
 
     public setPositionX(x: number): void {

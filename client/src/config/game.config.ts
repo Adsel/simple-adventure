@@ -9,6 +9,10 @@ export const GAME_CONFIG: IGameConfig = {
     tileHeight: 16,
     canvasWidth: 960,
     canvasHeight: 720,
+    fogOfWar: {
+        alpha: 0.4,
+        radius: 120,
+    }
 };
 
 export const CHARACTER_CONFIG: ICharacterConfig = {

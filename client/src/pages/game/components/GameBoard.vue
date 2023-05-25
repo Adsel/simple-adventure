@@ -7,10 +7,14 @@
       Graczy: {{ playersCount }}
     </div>
     <div class="game-board__wrapper">
+      <canvas ref="gameBoardBackgroundRef"
+              :width="GAME_CONFIG.width"
+              :height="GAME_CONFIG.height"
+              class="game-board__canvas game-board__canvas--background"></canvas>
       <canvas ref="gameBoardRef"
               :width="GAME_CONFIG.width"
               :height="GAME_CONFIG.height"
-              class="game-board__canvas"></canvas>
+              class="game-board__canvas game-board__canvas--foreground"></canvas>
     </div>
   </div>
 </template>
@@ -36,8 +40,10 @@ export default {
     socketInstance = getSocketClientInstance(this);
   },
   setup() {
-    let gameContext: any = null;
+    let gameContextBackground: any = null;
+    let gameContextForeground: any = null;
     const gameBoardRef = ref(null);
+    const gameBoardBackgroundRef = ref(null);
     const isLoadingState = ref(true);
     const loadingProgress = ref(0);
     const loadingStage = ref(0);
@@ -74,7 +80,7 @@ export default {
       const summonerId = data.summonerId;
       if (!playersMap.has(summonerId)) {
         playersCount.value += 1;
-        playersMap.set(summonerId, new Character(gameContext, anotherPlayer.characterImage, characterPlaceholderImg, socketInstance, anotherPlayer.x, anotherPlayer.y, localization));
+        playersMap.set(summonerId, new Character(gameContextForeground, anotherPlayer.characterImage, characterPlaceholderImg, socketInstance, anotherPlayer.x, anotherPlayer.y, localization));
       }
     };
 
@@ -104,8 +110,13 @@ export default {
     };
 
     const gameLoop = (data: any) => {
-      gameContext.clearRect(0, 0, GAME_CONFIG.width, GAME_CONFIG.height);
+      // TODO:
+      // [optimization]
+      // repaint only when changes
+      gameContextBackground.clearRect(0, 0, GAME_CONFIG.width, GAME_CONFIG.height);
+      gameContextForeground.clearRect(0, 0, GAME_CONFIG.width, GAME_CONFIG.height);
       localization.drawBackground();
+      character.drawFogOfWar();
       character.animationFrame();
       playersMap.forEach((character: Character) => character.animationFrame());
       window.requestAnimationFrame(() => gameLoop(data));
@@ -113,19 +124,25 @@ export default {
 
     const loadGame = async (data: any) => {
       const characterImage = data.summoner.characterImage;
-      gameContext = prepareAndGetContext(gameBoardRef.value);
+      gameContextForeground = prepareAndGetContext(gameBoardRef.value);
+      gameContextBackground = prepareAndGetContext(gameBoardBackgroundRef.value);
       await loadBackground(data.location);
       loadingProgress.value = 25;
       // loadingStage.value = 1;
       // drawBackground(data.backgroundImage);
       characterPlaceholderImg = await loadImage('characters/Sprite-character-placeholder.png');
-      character = new MainCharacter(gameContext, characterImage, characterPlaceholderImg, socketInstance, data.summoner.x, data.summoner.y, localization);
+
+      const mainCharacterX = data.summoner.x;
+      const mainCharacterY = data.summoner.y;
+      localization.setMainCharacterX(mainCharacterX);
+      localization.setMainCharacterY(mainCharacterY);
+      character = new MainCharacter(gameContextForeground, characterImage, characterPlaceholderImg, socketInstance, mainCharacterX, mainCharacterY, localization);
       loadingProgress.value = 50;
       // loadingStage.value = 2;
 
       playersCount.value = data.players.length + 1;
       data.players.forEach((player: any) => playersMap.set(player.summonerId, new Character(
-          gameContext, player.characterImage, characterPlaceholderImg, socketInstance, player.x, player.y, localization
+          gameContextForeground, player.characterImage, characterPlaceholderImg, socketInstance, player.x, player.y, localization
       )));
 
       // drawCharacter(data.characterImage, data.xPos, data.yPos);
@@ -140,12 +157,13 @@ export default {
 
     const loadBackground = async (location: any): Promise<void> => {
       bgImage = await loadImage(location.backgroundImage);
-      localization = new Localization(bgImage, gameContext, location.width, location.height);
+      localization = new Localization(bgImage, gameContextBackground, location.width, location.height);
     };
 
     return {
       GAME_CONFIG,
       gameBoardRef,
+      gameBoardBackgroundRef,
       isLoadingState,
       loadingStage,
       loadingProgress,
@@ -180,6 +198,7 @@ export default {
     border-radius: 10px;
     width: calc(#{$gameBoardX} + (2 * #{$gamePadding}));
     height: calc(#{$gameBoardY} + (2 * #{$gamePadding}));
+    position: relative;
   }
 
   &__canvas {
@@ -187,6 +206,9 @@ export default {
     width: $gameBoardX;
     height: $gameBoardY;
     margin: $gamePadding;
+    position: absolute;
+    left: auto;
+    top: auto;
     outline: 3px solid $color-black;
     image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-crisp-edges;
