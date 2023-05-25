@@ -1,4 +1,5 @@
 import {ProtocolTypeEnum} from "@/enums/network/protocol-type.enum";
+import {IDrawingBackground} from "@/interfaces/drawing.interface";
 
 export const getSourceImage = (imagePath: string): string => require(`@/assets/${imagePath}`);
 
@@ -16,13 +17,17 @@ export const drawImage = (gameContext: CanvasRenderingContext2D, drawingImage: H
     );
 }
 
-export const drawBackgroundImage = (gameContext: CanvasRenderingContext2D, drawingImage: HTMLImageElement, drawingImageOptions: any): void => {
+export const drawBackgroundImage = (gameContext: CanvasRenderingContext2D, drawingImage: HTMLImageElement, bgOptions: IDrawingBackground): void => {
     gameContext.drawImage(
         drawingImage,
-        drawingImageOptions.x,
-        drawingImageOptions.y,
-        drawingImageOptions.width,
-        drawingImageOptions.height
+        bgOptions.sourceX,
+        bgOptions.sourceY,
+        bgOptions.sourceWidth,
+        bgOptions.sourceHeight,
+        bgOptions.posX,
+        bgOptions.posY,
+        bgOptions.width,
+        bgOptions.height
     );
 };
 
