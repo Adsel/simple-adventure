@@ -6,8 +6,8 @@ export const getSourceImage = (imagePath: string): string => require(`@/assets/$
 export const drawImage = (gameContext: CanvasRenderingContext2D, drawingImage: HTMLImageElement, drawingImageOptions: any) => {
     gameContext.drawImage(
         drawingImage,
-        drawingImageOptions.frameX ? drawingImageOptions.width * drawingImageOptions.frameX : drawingImageOptions.width,
-        drawingImageOptions.frameY ? drawingImageOptions.width * drawingImageOptions.frameY : drawingImageOptions.width,
+        drawingImageOptions.frameX !== undefined ? drawingImageOptions.width * drawingImageOptions.frameX : drawingImageOptions.width,
+        drawingImageOptions.frameY !== undefined ? drawingImageOptions.height * drawingImageOptions.frameY : drawingImageOptions.height,
         drawingImageOptions.width,
         drawingImageOptions.height,
         drawingImageOptions.x,

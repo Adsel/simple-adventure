@@ -124,7 +124,7 @@ export class Character {
                 this.frameCount = 0;
                 this.currentLoopIndex++;
 
-                if (this.currentLoopIndex >= CHARACTER_CONFIG.movementAnimationLoop.length) {
+                if (this.currentLoopIndex >= 4) {
                     this.currentLoopIndex = 0;
                 }
             }
@@ -132,7 +132,7 @@ export class Character {
             this.currentLoopIndex = 0;
         }
 
-        this.drawFrame(CHARACTER_CONFIG.movementAnimationLoop[this.currentLoopIndex], this.currentDirection, this.getDrawX(), this.getDrawY());
+        this.drawFrame(this.currentLoopIndex, this.currentDirection, this.getDrawX(), this.getDrawY());
     }
 
     protected moveCharacter(deltaX: number, deltaY: number, direction: number): boolean {
