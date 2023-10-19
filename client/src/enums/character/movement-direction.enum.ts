@@ -6,8 +6,8 @@ export enum MovementDirectionEnum {
 }
 
 export enum MovementFacingEnum {
-    Down = 3,
-    Up = 2,
-    Left = 1,
+    Down = 1,
+    Up = 3,
+    Left = 2,
     Right = 0,
 }

@@ -36,7 +36,8 @@ class SockJSServer extends SocketGameServerAbstract {
     };
 
     public start = (port: number) => {
-        this.httpServer.listen(port, () => {
+        const HOST = '0.0.0.0';
+        this.httpServer.listen(port, HOST, () => {
             this.loadSocket();
             this.loadRoutes();
             console.log(`[sock-js] Now listening on port ${port}`);

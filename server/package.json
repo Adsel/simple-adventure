@@ -4,9 +4,8 @@
   "description": "Simple MMO RPG pixel game based on websocket.",
   "main": "index.js",
   "scripts": {
-    "socket-io:serve": "npm run database:run && SERVER_MODE=socket-io ts-node-dev --respawn index.ts",
-    "sock-js:serve": "npm run database:run && SERVER_MODE=sock-js ts-node-dev --respawn index.ts",
-    "database:run": "sudo docker stop $(sudo docker ps -aq) && sudo docker start simple-adventure-db && sudo docker start simple-adventure-phpmyadmin",
+    "socket-io:serve": "SERVER_MODE=socket-io ts-node-dev --respawn index.ts",
+    "sock-js:serve": "SERVER_MODE=sock-js ts-node-dev --respawn index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

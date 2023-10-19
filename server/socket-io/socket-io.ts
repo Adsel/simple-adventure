@@ -49,7 +49,8 @@ class SocketIOServer extends SocketGameServerAbstract {
     }
 
     public start = (port: number) => {
-        this.httpServer.listen(port, () => {
+        const HOST = '0.0.0.0';
+        this.httpServer.listen(port, HOST, () => {
             this.loadSocket();
             this.loadRoutes();
             console.log(`[socket-io] Now listening on port ${port}`);

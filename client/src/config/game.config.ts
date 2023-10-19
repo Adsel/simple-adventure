@@ -18,7 +18,6 @@ export const GAME_CONFIG: IGameConfig = {
 export const CHARACTER_CONFIG: ICharacterConfig = {
     width: 16,
     height: 16,
-    movementAnimationLoop: [0, 1, 0, 2],
     movementAnimationDelay: 10,
     movementSpeed: 1,
 };

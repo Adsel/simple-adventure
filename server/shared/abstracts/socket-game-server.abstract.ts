@@ -54,6 +54,8 @@ export abstract class SocketGameServerAbstract extends SocketServerAbstract {
             summonerId,
             summoner
         };
+
+        playerData.summoner.characterImage = 'characters/Sprite-character-0002.png';
         this.rememberConnectedPlayer(playerData, conn);
         this.broadcastMessage({
             type: 'another-player-connected',

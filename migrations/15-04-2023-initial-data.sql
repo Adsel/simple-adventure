@@ -2,8 +2,7 @@
 CREATE
 DATABASE SimpleAdventure;
 
-use
-SimpleAdventure;
+use SimpleAdventure;
 
 CREATE TABLE summoner
 (
