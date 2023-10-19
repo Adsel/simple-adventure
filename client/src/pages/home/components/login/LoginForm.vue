@@ -1,17 +1,30 @@
 <template>
-    <div class="board-panel__wrapper">
-        <div class="board-panel__content">
-            <form class="login-form__wrapper">
-                <div class="input-text__wrapper">
-                    <label for="nickname" class="input-text__label">Enter your nickname</label>
-                    <input type="text" name="nickname" class="input-text__input" id="nickname" v-model="nicknameInput">
-                </div>
-                <div class="button__wrapper login-form__login-btn">
-                    <input class="button__btn" type="submit" @click="login" value="Login">
-                </div>
-            </form>
+  <div class="board-panel__wrapper">
+    <div class="board-panel__content">
+      <form class="login-form__wrapper">
+        <div class="input-text__wrapper">
+          <label for="login" class="input-text__label">Enter your Login</label>
+          <input type="text" name="login" class="input-text__input" id="login" v-model="loginInput">
         </div>
+        <div class="input-text__wrapper">
+          <label for="password" class="input-text__label">Enter your Password</label>
+          <input :type="showPassword ? 'text' : 'password'"
+                 name="password"
+                 class="input-text__input input-text__input--icon"
+                 id="password"
+                 v-model="passwordInput">
+          <img :src="require('@/assets/icons/' + (showPassword ? 'icon-eye-disabled-24x24.svg' : 'icon-eye-brown-24x24.svg'))"
+               @click="togglePwdVisibility"
+               class="input-text__icon input-text__icon--btn"
+               role="button"
+               alt="Icon eye"/>
+        </div>
+        <div class="button__wrapper login-form__login-btn">
+          <input class="button__btn" type="submit" @click="login" value="Login">
+        </div>
+      </form>
     </div>
+  </div>
 </template>
 <script lang="ts">
 import {ref} from "vue";
@@ -21,33 +34,41 @@ import {saveIntoLocalStorage} from "@/pages/game/helpers/local-storage.helper";
 import {LocalStorageKeyEnum} from "@/enums/local-storage-key.enum";
 
 export default {
-    name: 'LoginForm',
-    emits: ['login-error', 'login-success'],
-    setup(props: any, context: any) {
-        const nicknameInput = ref('');
+  name: 'LoginForm',
+  emits: ['login-error', 'login-success'],
+  setup(props: any, context: any) {
+    const loginInput = ref('');
+    const passwordInput = ref('');
+    const showPassword = ref(false);
 
-        const login = (event: Event) => {
-            event.preventDefault();
-            apiMethodLogin(nicknameInput.value).then((response: IAuthLoginResponse) => {
-                if (!response.summoner_id) {
-                    throw new Error('Missing data error');
-                }
+    const login = (event: Event) => {
+      event.preventDefault();
+      apiMethodLogin(loginInput.value, passwordInput.value).then((response: IAuthLoginResponse) => {
+        // TODO:
+        // if (!response.summoner_id) {
+        //   throw new Error('Missing data error');
+        // }
 
-                saveIntoLocalStorage(LocalStorageKeyEnum.SummonerIdentifier, response.summoner_id);
-                context.emit('login-success', response);
-            }).catch((error: any) => {
-                context.emit('login-error', error)
-            });
-        };
+        saveIntoLocalStorage(LocalStorageKeyEnum.SummonerIdentifier, response.summoner_id);
+        context.emit('login-success', response);
+      }).catch((error: any) => {
+        context.emit('login-error', error)
+      });
+    };
 
-        return {nicknameInput, login};
-    }
+    const togglePwdVisibility = () => {
+      showPassword.value = !showPassword.value;
+    };
+
+    return {loginInput, passwordInput, showPassword, login, togglePwdVisibility};
+  }
 }
 </script>
 <style lang="scss">
 @import "../../../../assets/styles/components/page/buttons";
 @import "../../../../assets/styles/components/page/inputs";
 @import "../../../../assets/styles/components/page/panels";
+@import "../../../../assets/styles/definitions/units";
 
 .login-form {
   &__wrapper {
@@ -55,6 +76,7 @@ export default {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    gap: $px-12;
   }
 
   &__login-btn {
