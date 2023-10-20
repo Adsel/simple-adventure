@@ -1,10 +1,13 @@
 import {IConnectionConfiguration} from "../interfaces/connection-configuration.interface";
 
 export const CONNECTION_CONFIGURATION: IConnectionConfiguration = {
-    host: process.env.SERVER_DB_HOST || 'mysql',
-    database: process.env.SERVER_DB_DATABASE || 'db',
-    port: '3306',
-    user: process.env.SERVER_DB_USER || 'root',
-    password: process.env.SERVER_DB_PASSWORD || '123456',
-    connectionLimit: 10
+    type: 'mysql',
+    host: process.env.SERVER_DB_HOST || 'host',
+    port: 3306,
+    username: process.env.SERVER_DB_USER || 'username',
+    password: process.env.SERVER_DB_PASSWORD || 'password',
+    database: process.env.SERVER_DB_DATABASE || 'database',
+    entities: [__dirname + "/../**/*entity.{js,ts}"],
+    logging: true,
+    synchronize: true,
 };

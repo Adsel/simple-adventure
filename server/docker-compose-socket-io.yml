@@ -37,7 +37,10 @@ services:
       - simple-adventure-db
     volumes:
       - ~/www/simple-adventure/server/:/var/www/html
+      - ~/www/simple-adventure/server/socket-io/.env:/app/.env
     ports:
       - "3002:8080"
     stdin_open: true
     tty: true
+    env_file:
+      - ./socket-io/.env

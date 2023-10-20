@@ -1,10 +1,13 @@
-import {CONNECTION_CONFIGURATION} from "../../constants/connection-configuration";
+import {myDataSource} from "../type-orm/data-source";
 
-const mysql = require('mysql');
-
-export const databaseConnection = mysql.createConnection(CONNECTION_CONFIGURATION);
-
-databaseConnection.connect(function (err: any) {
-    if (err) throw err;
-    console.log("Connected with database!");
-});
+export const initDbConnection = async (): Promise<boolean> => {
+    return new Promise((resolve, reject) => {
+        myDataSource.initialize().then(() => {
+            console.log('Connected with database!');
+            resolve(true);
+        }).catch((err: any) => {
+            console.error('[ERROR] Can`t connect with database!', err);
+            reject();
+        });
+    });
+};

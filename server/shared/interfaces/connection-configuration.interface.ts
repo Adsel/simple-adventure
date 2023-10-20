@@ -1,8 +1,11 @@
 export interface IConnectionConfiguration {
+    type: 'mysql';
     host: string;
     database: string;
-    port: string;
-    user: string;
+    port: number;
+    username: string;
     password: string;
-    connectionLimit?: number;
+    entities: string[];
+    logging: boolean;
+    synchronize: boolean;
 }

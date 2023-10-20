@@ -56,6 +56,6 @@ export abstract class SocketServerAbstract {
 
     public loadApiRoutes(): void {
         this.appServer.get('/', (req: any, res: any) => res.send('SimpleAdventure API - version 1.0.0'));
-        this.appServer.post('/api/auth/login', JSON_PARSER, (req: any, res: any, next: any) => API_METHOD_LOGIN(req, res, next));
+        this.appServer.post('/api/auth/login', JSON_PARSER, async (req: any, res: any, next: any) => await API_METHOD_LOGIN(req, res, next));
     }
 }
