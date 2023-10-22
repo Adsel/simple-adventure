@@ -1,13 +1,16 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity()
-export class Player {
+export class Player extends BaseEntity {
     @PrimaryGeneratedColumn()
-    player_id: number
+    player_id: number;
 
     @Column()
-    player_login: string
+    player_login: string;
 
     @Column()
-    player_password: string
+    player_password: string;
+
+    @Column()
+    player_token: string;
 }
