@@ -24,7 +24,7 @@ export const API_METHOD_LOGIN = async (req: any, res: any, next: any) => {
 
     try {
         const user = await myDataSource.getRepository(Player).findOne({
-            where: {player_login: req?.body?.login}
+            where: {player_login: req.body.login}
         });
 
         if (!user) {

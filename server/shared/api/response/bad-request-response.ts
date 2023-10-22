@@ -1,7 +1,7 @@
 import {HttpStatusEnum} from "../../enums/http/http-status.enum";
 
-export const badRequestResponse = (res: any): void => {
+export const badRequestResponse = (res: any, message: string|null = null): void => {
     res.status(HttpStatusEnum.BAD_REQUEST).json({
-        message: 'Forbidden'
+        message: message ? message : 'Forbidden'
     });
 }

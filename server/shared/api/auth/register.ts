@@ -28,11 +28,14 @@ export const API_METHOD_REGISTER = async (req: any, res: any, next: any): Promis
         return;
     }
 
-    // TODO:
-    // trim(login) ZABROŃ tych samych loginów
+    const login: string = req.body.login;
+    const existingUser = await Player.findOne({ where: { player_login: login } });
+    if (existingUser) {
+        badRequestResponse(res, 'Login exists!');
+    }
 
     try {
-        const createdUser = await createUser(req.body.login, req.body.password);
+        const createdUser = await createUser(login, req.body.password);
         okResponse(res, createdUser);
     } catch (error) {
         console.log(error);
