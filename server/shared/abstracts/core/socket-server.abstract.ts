@@ -2,6 +2,7 @@ import {API_METHOD_LOGIN} from "../../api/auth/login";
 import {JSON_PARSER} from "../../constants/json-parser";
 import {IConnectedPlayer} from "../../interfaces/players/connected-player.interface";
 import {API_METHOD_REGISTER} from "../../api/auth/register";
+import {API_METHOD_GET_SUMMONERS} from "../../api/player/summoners";
 
 export abstract class SocketServerAbstract {
     protected httpServer: any;
@@ -59,5 +60,6 @@ export abstract class SocketServerAbstract {
         this.appServer.get('/', (req: any, res: any) => res.send('SimpleAdventure API - version 1.0.0'));
         this.appServer.post('/api/auth/login', JSON_PARSER, async (req: any, res: any, next: any) => await API_METHOD_LOGIN(req, res, next));
         this.appServer.post('/api/auth/register', JSON_PARSER, async (req: any, res: any, next: any) => await API_METHOD_REGISTER(req, res, next));
+        this.appServer.get(`/api/player/:playerId/summoners`, JSON_PARSER, async (req: any, res: any, next: any) => await API_METHOD_GET_SUMMONERS(req, res, next));
     }
 }

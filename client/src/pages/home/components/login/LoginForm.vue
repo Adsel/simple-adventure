@@ -19,9 +19,7 @@
                role="button"
                alt="Icon eye"/>
         </div>
-        <div class="button__wrapper login-form__login-btn">
-          <input class="button__btn" type="submit" @click="login" value="Login">
-        </div>
+        <SimpleButton text="Login" @click="login"/>
       </form>
     </div>
   </div>
@@ -32,9 +30,11 @@ import {apiMethodLogin} from "@/api/auth/auth.api";
 import {IAuthLoginResponse} from "@/interfaces/api/auth.interface";
 import {saveIntoLocalStorage} from "@/pages/game/helpers/local-storage.helper";
 import {LocalStorageKeyEnum} from "@/enums/local-storage-key.enum";
+import SimpleButton from "@/pages/shared/components/buttons/SimpleButton.vue";
 
 export default {
   name: 'LoginForm',
+  components: {SimpleButton},
   emits: ['login-error', 'login-success'],
   setup(props: any, context: any) {
     const loginInput = ref('');
@@ -44,12 +44,7 @@ export default {
     const login = (event: Event) => {
       event.preventDefault();
       apiMethodLogin(loginInput.value, passwordInput.value).then((response: IAuthLoginResponse) => {
-        // TODO:
-        // if (!response.summoner_id) {
-        //   throw new Error('Missing data error');
-        // }
-
-        saveIntoLocalStorage(LocalStorageKeyEnum.SummonerIdentifier, response.summoner_id);
+        saveIntoLocalStorage(LocalStorageKeyEnum.AuthToken, response.token);
         context.emit('login-success', response);
       }).catch((error: any) => {
         context.emit('login-error', error)

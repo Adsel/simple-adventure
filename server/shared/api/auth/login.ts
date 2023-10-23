@@ -1,6 +1,6 @@
 import {failedValidationResponse} from "../response/failed-validation-response";
 import {myDataSource} from "../../database/type-orm/data-source";
-import {Player} from "../../database/entities/player-entity";
+import {Player} from "../../database/entities/player.entity";
 import {isEqualToHashedString} from "../../services/auth-hash.service";
 import {unauthorizedResponse} from "../response/unauthorized-response";
 import {okResponse} from "../response/ok-response";

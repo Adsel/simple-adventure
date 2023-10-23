@@ -3,6 +3,5 @@ export interface IApiConfig {
 }
 
 export interface IAuthLoginResponse {
-    summoner_nick: string;
-    summoner_id: string;
+    token: string;
 }

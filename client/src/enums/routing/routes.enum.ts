@@ -1,3 +1,4 @@
 export enum RoutesEnum {
-    Lobby = '/lobby'
+    Lobby = '/lobby',
+    Home = '/'
 }

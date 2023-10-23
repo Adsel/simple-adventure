@@ -17,16 +17,17 @@ export abstract class SocketClient {
     }
 
     public moveCharacter(x: number, y: number) {
-        this.send('movement', {
-            summonerId: getFromLocalStorage(LocalStorageKeyEnum.SummonerIdentifier),
-            x: x,
-            y: y
-        });
+        // this.send('movement', {
+        //     summonerId: getFromLocalStorage(LocalStorageKeyEnum.SummonerIdentifier),
+        //     x: x,
+        //     y: y
+        // });
     }
 
     protected onConnected(): void {
         this.send('initial-data', {
-            summonerId: getFromLocalStorage(LocalStorageKeyEnum.SummonerIdentifier)
+            // TODO:
+            summonerId: 11 //getFromLocalStorage(LocalStorageKeyEnum.SummonerIdentifier)
         });
     }
 

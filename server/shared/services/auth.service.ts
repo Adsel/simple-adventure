@@ -1,5 +1,5 @@
 import jwt = require('jsonwebtoken');
-import {Player} from "../database/entities/player-entity";
+import {Player} from "../database/entities/player.entity";
 
 const authSecretKey = process.env.AUTH_JWT_HASH || 'secret-key';
 
