@@ -13,6 +13,7 @@ export abstract class SocketServerAbstract {
         this.httpServer = httpServer;
         this.appServer = appServer;
         this.loadApiRoutes();
+        this.loadSecuredApiRoutes();
     }
 
     protected abstract send(conn: any, data: any): void;
@@ -60,6 +61,9 @@ export abstract class SocketServerAbstract {
         this.appServer.get('/', (req: any, res: any) => res.send('SimpleAdventure API - version 1.0.0'));
         this.appServer.post('/api/auth/login', async (req: any, res: any, next: any) => await API_METHOD_LOGIN(req, res, next));
         this.appServer.post('/api/auth/register', async (req: any, res: any, next: any) => await API_METHOD_REGISTER(req, res, next));
+    }
+
+    public loadSecuredApiRoutes(): void {
         this.appServer.get(`/api/player/:playerId/summoners`, middleware.auth, async (req: any, res: any, next: any) => await API_METHOD_GET_SUMMONERS(req, res, next));
     }
 }
