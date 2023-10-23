@@ -1,3 +1,6 @@
+import {getFromLocalStorage} from "@/pages/game/helpers/local-storage.helper";
+import {LocalStorageKeyEnum} from "@/enums/local-storage-key.enum";
+
 function getRequest<T>(url: string, adminStrict = false): Promise<T> {
     return makeHttpRequest(url, 'GET', null, adminStrict);
 }
@@ -17,7 +20,7 @@ function putRequest<T>(url: string, postData: object, adminStrict = false): Prom
 function makeHttpRequest<T>(url: string, method: string, postData: object | null = null, adminStrict: boolean = false): Promise<T> {
     const headersToAppend = getDefaultHeaders();
     if (adminStrict) {
-        headersToAppend.append('Token', '');
+        headersToAppend.append('Authorization', getFromLocalStorage(LocalStorageKeyEnum.AuthToken));
     }
 
     return new Promise((resolve, reject) => {
@@ -25,13 +28,11 @@ function makeHttpRequest<T>(url: string, method: string, postData: object | null
         const httpRequestObject: RequestInit = {
             mode: 'cors',
             method,
+            headers: headersToAppend,
         };
 
         if (postData) {
             httpRequestObject.body = JSON.stringify(postData);
-        }
-        if (method !== 'GET') {
-            httpRequestObject.headers = headersToAppend;
         }
 
         fetch(url, httpRequestObject).then(response => {
