@@ -180,6 +180,7 @@ export default {
 <style lang="scss">
 @import '../../../assets/styles/definitions/game-board-definitions';
 @import '../../../assets/styles/definitions/colors';
+@import '../../../assets/styles/definitions/images';
 
 .game-board {
   &__overlay {
@@ -202,6 +203,7 @@ export default {
   }
 
   &__canvas {
+    @include pixelArtImage();
     display: block;
     width: $gameBoardX;
     height: $gameBoardY;
@@ -210,10 +212,6 @@ export default {
     left: auto;
     top: auto;
     outline: 3px solid $color-black;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: -webkit-crisp-edges;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
   }
 }
 </style>

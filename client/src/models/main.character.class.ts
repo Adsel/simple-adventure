@@ -1,5 +1,5 @@
 import {Character} from "@/models/character.class";
-import {EventTypeEnum} from "@/enums/event-type.enum";
+import {EventTypeEnum} from "@/enums/events/event-type.enum";
 import {Localization} from "@/models/localization.class";
 import {CHARACTER_CONFIG, GAME_CONFIG} from "@/config/game.config";
 import {GlobalCompositeOperationEnum} from "@/enums/canvas/global-composite-operation.enum";

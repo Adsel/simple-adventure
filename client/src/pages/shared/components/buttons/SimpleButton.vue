@@ -1,6 +1,8 @@
 <template>
-  <div class="button__wrapper login-form__login-btn" @click="onClick">
-    <button class="button__btn">{{ text }}</button>
+  <div class="button__wrapper login-form__login-btn">
+    <button class="button__btn" @click="onClick($event)">
+      {{ text }}
+    </button>
   </div>
 </template>
 <script lang="ts">
@@ -13,7 +15,8 @@ export default {
   },
   emits: ['click'],
   setup(props: any, context: any) {
-    const onClick = () => {
+    const onClick = (event: any) => {
+      event.preventDefault();
       context.emit('click');
     };
 

@@ -31,6 +31,7 @@ import {IAuthLoginResponse} from "@/interfaces/api/auth.interface";
 import {saveIntoLocalStorage} from "@/pages/game/helpers/local-storage.helper";
 import {LocalStorageKeyEnum} from "@/enums/local-storage-key.enum";
 import SimpleButton from "@/pages/shared/components/buttons/SimpleButton.vue";
+import {LoaderService} from "@/services/loader.service";
 
 export default {
   name: 'LoginForm',
@@ -41,14 +42,15 @@ export default {
     const passwordInput = ref('');
     const showPassword = ref(false);
 
-    const login = (event: Event) => {
-      event.preventDefault();
+    const login = () => {
+      // event.preventDefault();
+      LoaderService.showLoader();
       apiMethodLogin(loginInput.value, passwordInput.value).then((response: IAuthLoginResponse) => {
         saveIntoLocalStorage(LocalStorageKeyEnum.AuthToken, response.token);
         context.emit('login-success', response);
       }).catch((error: any) => {
         context.emit('login-error', error)
-      });
+      }).finally(() => LoaderService.hideLoader());
     };
 
     const togglePwdVisibility = () => {
