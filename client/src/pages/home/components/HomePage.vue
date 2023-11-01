@@ -24,6 +24,7 @@ export default {
 
     const onLoginSuccess = (event: IAuthLoginResponse) => {
       console.log('onLoginSuccess', event);
+      toast.success('Login successful');
       router.push(RoutesEnum.Lobby);
     };
 

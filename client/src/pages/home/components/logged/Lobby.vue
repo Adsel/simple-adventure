@@ -8,15 +8,32 @@
             <span v-if="summoners.length <= 0">
               Empty
             </span>
-            <div v-for="summoner of summoners"
-                 :key="summoner.summoner_id"
-                 class="choosing-character__list">
-              {{ summoner }}
-              <img :src="require('@/assets/' + summoner.summoner_outfit)"/>
-              <div :style="{'background': 'url(@/assets/' + summoner.summoner_outfit + ')'}"></div>
-            </div>
+            <LobbySummoner class="choosing-character__list-item"
+                           :summoner="renderedList.prev ? renderedList.prev : null"></LobbySummoner>
+            <LobbySummoner class="choosing-character__list-item"
+                           :current="true"
+                           :summoner="renderedList.current ? renderedList.current : null"></LobbySummoner>
+            <LobbySummoner class="choosing-character__list-item"
+                           :summoner="renderedList.next ? renderedList.next : null"></LobbySummoner>
           </div>
+          <div>
+            <img src="@/assets/icons/switch-arrow-left.svg"
+                 class="choosing-character__switch-icon choosing-character__switch-icon--left"
+                 width="32"
+                 height="32"
+                 alt="Switch arrow left"
+                 @click="changeSummoner(-1)"/>
+            <img src="@/assets/icons/switch-arrow-right.svg"
+                 class="choosing-character__switch-icon choosing-character__switch-icon--right"
+                 width="32"
+                 height="32"
+                 alt="Switch arrow right"
+                 @click="changeSummoner()"/>
+          </div>
+        </div>
+        <div>
           <SimpleButton text="+" @click="onLogout"></SimpleButton>
+          <SimpleButton text="Play" @click="onChooseCharacter"></SimpleButton>
           <SimpleButton text="Logout" @click="onLogout"></SimpleButton>
         </div>
       </div>
@@ -33,31 +50,82 @@ import {saveIntoLocalStorage} from "@/pages/game/helpers/local-storage.helper";
 import {LocalStorageKeyEnum} from "@/enums/local-storage-key.enum";
 import {apiMethodGetSummoners} from "@/api/summoner/summoner.api";
 import {IGetSummonersResponse} from "@/interfaces/api/summoner.interface";
-// import {ISummoner} from "@/interfaces/player/summoner.interface";
+import {ISummoner, ISummonerChoosingList} from "@/interfaces/player/summoner.interface";
+import LobbySummoner from "@/pages/home/components/logged/LobbySummoner.vue";
 
 export default {
   name: 'LobbyC',
-  components: {SimpleButton, LobbyLayout},
+  components: {LobbySummoner, SimpleButton, LobbyLayout},
   setup() {
     const router = useRouter();
-    // ISummoner[]
-    const summoners: any = ref([]);
+    const summoners: any = ref<Array<ISummoner>>([]);
+    const renderedList: any = ref<ISummonerChoosingList>({});
+    const currentSummonerIndex = ref(0);
 
     onMounted(() => {
       apiMethodGetSummoners(2).then((response: IGetSummonersResponse) => {
         summoners.value = response.summoners;
+        loadSummonersToDisplay();
       }).catch((error: Error) => {
         console.error(error);
       })
     });
+
+    const changeSummoner = (direction: number = 1) => {
+      if (summoners.value.length <= 1) {
+        return;
+      }
+
+      if (direction > 0) {
+        if (currentSummonerIndex.value + direction < summoners.value.length) {
+          currentSummonerIndex.value += direction;
+        } else {
+          currentSummonerIndex.value = 0;
+        }
+      } else {
+        if (currentSummonerIndex.value + direction >= 0) {
+          currentSummonerIndex.value += direction;
+        } else {
+          currentSummonerIndex.value = summoners.value.length - 1;
+        }
+      }
+
+      loadSummonersToDisplay();
+    };
+
+    const loadSummonersToDisplay = () => {
+      const index = currentSummonerIndex.value;
+      const listObject: ISummonerChoosingList = {
+        current: summoners.value[index]
+      };
+
+      if (summoners.value.length > 1) {
+        const prevIndex = index - 1 >= 0 ? index - 1 : summoners.value.length - 1;
+        listObject.prev = summoners.value[prevIndex] ? summoners.value[prevIndex] : null;
+      }
+
+      if (summoners.value.length > 2) {
+        const nextIndex = index + 1 < summoners.value.length ? index + 1 : 0;
+        listObject.next = summoners.value[nextIndex] ? summoners.value[nextIndex] : null;
+      }
+
+      renderedList.value = listObject;
+    };
 
     const onLogout = () => {
       saveIntoLocalStorage(LocalStorageKeyEnum.AuthToken, null);
       router.push(RoutesEnum.Home);
     };
 
+    const onChooseCharacter = () => {
+      router.push(RoutesEnum.Game);
+    };
+
     return {
+      renderedList,
       summoners,
+      changeSummoner,
+      onChooseCharacter,
       onLogout
     };
   }
@@ -67,4 +135,30 @@ export default {
 @import "../../../../assets/styles/components/page/inputs";
 @import "../../../../assets/styles/components/page/panels";
 @import "../../../../assets/styles/definitions/units";
+
+.choosing-character {
+  &__list {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    width: 500px;
+    margin-top: 2rem;
+  }
+
+  &__switch-icon {
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.15);
+    }
+  }
+
+  &__list-item {
+    position: relative;
+    padding: $px-16;
+    margin-top: $px-32;
+    border: $color-primary-3 2px dashed;
+    border-radius: $px-48;
+  }
+}
 </style>
