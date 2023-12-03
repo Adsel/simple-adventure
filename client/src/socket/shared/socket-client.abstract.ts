@@ -26,8 +26,8 @@ export abstract class SocketClient {
 
     protected onConnected(): void {
         this.send('initial-data', {
-            // TODO:
-            summonerId: 11 //getFromLocalStorage(LocalStorageKeyEnum.SummonerIdentifier)
+            summonerId: getFromLocalStorage(LocalStorageKeyEnum.SummonerIdentifier),
+            playerId: getFromLocalStorage(LocalStorageKeyEnum.PlayerId),
         });
     }
 

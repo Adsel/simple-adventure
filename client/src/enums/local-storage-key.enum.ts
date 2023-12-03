@@ -1,3 +1,5 @@
 export enum LocalStorageKeyEnum {
-    AuthToken = 'auth.token'
+    AuthToken = 'auth.token',
+    PlayerId = 'game.playerId',
+    SummonerIdentifier = 'game.summonerId'
 }

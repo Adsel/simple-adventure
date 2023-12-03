@@ -8,15 +8,15 @@
             <span v-if="summoners.length <= 0">
               Empty
             </span>
-            <LobbySummoner class="choosing-character__list-item"
+            <LobbySummoner class="choosing-character__list-item choosing-character__list-item--secondary"
                            :summoner="renderedList.prev ? renderedList.prev : null"></LobbySummoner>
             <LobbySummoner class="choosing-character__list-item"
                            :current="true"
                            :summoner="renderedList.current ? renderedList.current : null"></LobbySummoner>
-            <LobbySummoner class="choosing-character__list-item"
+            <LobbySummoner class="choosing-character__list-item choosing-character__list-item--secondary"
                            :summoner="renderedList.next ? renderedList.next : null"></LobbySummoner>
           </div>
-          <div>
+          <div class="choosing-character__nav">
             <img src="@/assets/icons/switch-arrow-left.svg"
                  class="choosing-character__switch-icon choosing-character__switch-icon--left"
                  width="32"
@@ -118,6 +118,7 @@ export default {
     };
 
     const onChooseCharacter = () => {
+      saveIntoLocalStorage(LocalStorageKeyEnum.SummonerIdentifier, summoners.value[currentSummonerIndex.value].summoner_id);
       router.push(RoutesEnum.Game);
     };
 
@@ -143,6 +144,31 @@ export default {
     margin-bottom: 2rem;
     width: 500px;
     margin-top: 2rem;
+    gap: 0.5rem;
+    align-items: flex-start;
+    align-content: flex-start;
+  }
+
+  &__list-item {
+    position: relative;
+    padding: $px-16;
+    margin-top: $px-64;
+    border: $color-primary-3 2px dashed;
+    border-radius: $px-48;
+    flex-grow: 1;
+    width: 33%;
+
+    &--secondary {
+      margin-top: $px-32;
+      opacity: 0.3;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: $px-16;
   }
 
   &__switch-icon {
@@ -151,14 +177,6 @@ export default {
     &:hover {
       transform: scale(1.15);
     }
-  }
-
-  &__list-item {
-    position: relative;
-    padding: $px-16;
-    margin-top: $px-32;
-    border: $color-primary-3 2px dashed;
-    border-radius: $px-48;
   }
 }
 </style>

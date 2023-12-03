@@ -6,15 +6,30 @@
     <div class="game-board-header-top__wrapper">
       Graczy: {{ playersCount }}
     </div>
-    <div class="game-board__wrapper">
-      <canvas ref="gameBoardBackgroundRef"
-              :width="GAME_CONFIG.width"
-              :height="GAME_CONFIG.height"
-              class="game-board__canvas game-board__canvas--background"></canvas>
-      <canvas ref="gameBoardRef"
-              :width="GAME_CONFIG.width"
-              :height="GAME_CONFIG.height"
-              class="game-board__canvas game-board__canvas--foreground"></canvas>
+    <div class="game-board__center">
+      <div class="game-board__left-column">
+      </div>
+      <div class="game-board__wrapper">
+        <canvas ref="gameBoardBackgroundRef"
+                :width="GAME_CONFIG.width"
+                :height="GAME_CONFIG.height"
+                class="game-board__canvas game-board__canvas--background"></canvas>
+        <canvas ref="gameBoardRef"
+                :width="GAME_CONFIG.width"
+                :height="GAME_CONFIG.height"
+                class="game-board__canvas game-board__canvas--foreground"></canvas>
+      </div>
+      <div class="game-board__right-column">
+        <div class="game-board__stats-header" v-if="summonerData.summonerNick">
+          {{ summonerData.summonerNick }}
+        </div>
+        <div class="game-board__stats-desc">
+          <span>Lvl. {{ +summonerData.summonerLevel }}</span>
+          <span>
+            {{ +summonerData.summonerExp + ' / ' + (+summonerData.summonerExpToUp) }}
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -48,6 +63,15 @@ export default {
     const loadingProgress = ref(0);
     const loadingStage = ref(0);
     const playersCount = ref(1);
+    const summonerData = ref({
+      characterImage: '',
+      x: 0,
+      y: 0,
+      summonerExpToUp: 0,
+      summonerExp: 0,
+      summonerLevel: 0,
+      summonerNick: ''
+    });
 
     let characterPlaceholderImg: HTMLImageElement;
     let character: MainCharacter;
@@ -122,8 +146,16 @@ export default {
       window.requestAnimationFrame(() => gameLoop(data));
     };
 
+    // TODO:
+    // interface for `data`
     const loadGame = async (data: any) => {
-      const characterImage = data.summoner.characterImage;
+      summonerData.value = data.summoner;
+      if (!summonerData.value) {
+        return;
+      }
+
+
+      const characterImage = summonerData.value.characterImage;
       gameContextForeground = prepareAndGetContext(gameBoardRef.value);
       gameContextBackground = prepareAndGetContext(gameBoardBackgroundRef.value);
       await loadBackground(data.location);
@@ -132,8 +164,8 @@ export default {
       // drawBackground(data.backgroundImage);
       characterPlaceholderImg = await loadImage('characters/Sprite-character-placeholder.png');
 
-      const mainCharacterX = data.summoner.x;
-      const mainCharacterY = data.summoner.y;
+      const mainCharacterX = summonerData.value.x;
+      const mainCharacterY = summonerData.value.y;
       localization.setMainCharacterX(mainCharacterX);
       localization.setMainCharacterY(mainCharacterY);
       character = new MainCharacter(gameContextForeground, characterImage, characterPlaceholderImg, socketInstance, mainCharacterX, mainCharacterY, localization);
@@ -168,6 +200,7 @@ export default {
       loadingStage,
       loadingProgress,
       playersCount,
+      summonerData,
       onAnotherPlayerConnected,
       onAnotherPlayerDisconnected,
       onAnotherPlayerMoved,
@@ -181,6 +214,19 @@ export default {
 @import '../../../assets/styles/definitions/game-board-definitions';
 @import '../../../assets/styles/definitions/colors';
 @import '../../../assets/styles/definitions/images';
+@import '../../../assets/styles/definitions/units';
+@import '../../../assets/styles/definitions/typography';
+
+$mainBorder: 3px solid $color-black;
+%rightRow {
+  padding: $px-8;
+  background-color: $color-primary-3-30;
+  align-self: flex-start;
+  border-right: $mainBorder;
+  border-top: $mainBorder;
+  border-bottom: $mainBorder;
+  border-radius: 0 $px-10 $px-10 0;
+}
 
 .game-board {
   &__overlay {
@@ -192,9 +238,13 @@ export default {
     height: 100vh;
   }
 
+  &__center {
+    display: flex;
+  }
+
   &__wrapper {
     background-color: $color-primary-2;
-    border: 3px solid $color-black;
+    border: $mainBorder;
     padding: $gamePadding;
     border-radius: 10px;
     width: calc(#{$gameBoardX} + (2 * #{$gamePadding}));
@@ -212,6 +262,26 @@ export default {
     left: auto;
     top: auto;
     outline: 3px solid $color-black;
+  }
+
+  &__right-column {
+    margin-top: $px-16;
+    gap: $px-4;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__stats-header {
+    @include font-weight-semi-bold();
+    @extend %rightRow;
+    font-size: 1.25rem;
+  }
+
+  &__stats-desc {
+    @extend %rightRow;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
   }
 }
 </style>

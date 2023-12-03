@@ -47,6 +47,7 @@ export default {
       LoaderService.showLoader();
       apiMethodLogin(loginInput.value, passwordInput.value).then((response: IAuthLoginResponse) => {
         saveIntoLocalStorage(LocalStorageKeyEnum.AuthToken, response.token);
+        saveIntoLocalStorage(LocalStorageKeyEnum.PlayerId, response.playerId);
         context.emit('login-success', response);
       }).catch((error: any) => {
         context.emit('login-error', error)

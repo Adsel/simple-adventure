@@ -1,5 +1,6 @@
 import {SocketServerAbstract} from "./core/socket-server.abstract";
 import {IConnectedPlayer} from "../interfaces/players/connected-player.interface";
+import {API_METHOD_GET_SUMMONER_DATA} from "./websocket-api/summoners/summoner";
 
 export abstract class SocketGameServerAbstract extends SocketServerAbstract {
     constructor(httpServer: any, appServer: any) {
@@ -21,47 +22,27 @@ export abstract class SocketGameServerAbstract extends SocketServerAbstract {
     }
 
     protected handlePlayerConnected(conn: any, data: any): void {
-        if (!data.summonerId) {
-            return;
-        }
-        const summonerId = +data.summonerId;
-        // TODO: read from db
-        const summoner: any = {
-            characterImage: 'characters/Sprite-character-0001.png',
-            x: 0,
-            y: 0
-        };
-        this.send(conn, {
-            type: data.type,
-            location: {
-                // TODO:
-                // zapisać dane o mapie do bazy
-                // odczytać z bazy
-                backgroundImage: 'backgrounds/Sprite-background-0001.png',
-                width: 640,
-                height: 640
-            },
-            summoner,
-            players: this.connectedPlayers.map((connectedPlayer: IConnectedPlayer) => {
-                return {
-                    summonerId: connectedPlayer.summonerId,
-                    ...connectedPlayer.summoner,
-                };
-            })
+        // TODO:
+        // type for `data`
+        API_METHOD_GET_SUMMONER_DATA(data, this.connectedPlayers).then((data: any) => {
+            this.send(conn, data.player);
+
+            const summonerId = data.summonerId;
+            const summoner = data.summoner;
+
+            const playerData: any = {
+                summonerId,
+                summoner
+            };
+
+            playerData.summoner.characterImage = 'characters/Sprite-character-0002.png';
+            this.rememberConnectedPlayer(playerData, conn);
+            this.broadcastMessage({
+                type: 'another-player-connected',
+                player: summoner,
+                summonerId
+            }, summonerId);
         });
-
-        const playerData: any = {
-            summonerId,
-            summoner
-        };
-
-        playerData.summoner.characterImage = 'characters/Sprite-character-0002.png';
-        this.rememberConnectedPlayer(playerData, conn);
-        this.broadcastMessage({
-            type: 'another-player-connected',
-            player: summoner,
-            summonerId
-        }, summonerId);
     }
 
 

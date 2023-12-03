@@ -40,7 +40,10 @@ export const API_METHOD_LOGIN = async (req: any, res: any, next: any) => {
             user.player_token = generateAuthToken(user);
             await user.save();
 
-            okResponse(res, {token: user.player_token});
+            okResponse(res, {
+                token: user.player_token,
+                playerId: user.player_id,
+            });
             return;
         }
     } catch (e) {

@@ -4,4 +4,5 @@ export interface IApiConfig {
 
 export interface IAuthLoginResponse {
     token: string;
+    playerId: number;
 }
