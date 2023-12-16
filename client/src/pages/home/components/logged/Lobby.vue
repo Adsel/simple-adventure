@@ -157,6 +157,7 @@ export default {
     border-radius: $px-48;
     flex-grow: 1;
     width: 33%;
+    text-align: center;
 
     &--secondary {
       margin-top: $px-32;
