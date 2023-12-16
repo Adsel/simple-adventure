@@ -33,8 +33,8 @@
         </div>
         <div>
           <SimpleButton text="+" @click="onLogout"></SimpleButton>
-          <SimpleButton text="Play" @click="onChooseCharacter"></SimpleButton>
-          <SimpleButton text="Logout" @click="onLogout"></SimpleButton>
+          <SimpleButton text="Play" type="success" @click="onChooseCharacter"></SimpleButton>
+          <SimpleButton text="Logout" type="error" @click="onLogout"></SimpleButton>
         </div>
       </div>
     </div>
@@ -153,7 +153,7 @@ export default {
     position: relative;
     padding: $px-16;
     margin-top: $px-64;
-    border: $color-primary-3 2px dashed;
+    border: $color-primary-3 $px-2 dashed;
     border-radius: $px-48;
     flex-grow: 1;
     width: 33%;
@@ -162,6 +162,7 @@ export default {
     &--secondary {
       margin-top: $px-32;
       opacity: 0.3;
+      border: transparent $px-2 dashed;
     }
   }
 

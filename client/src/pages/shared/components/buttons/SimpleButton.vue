@@ -1,5 +1,9 @@
 <template>
-  <div class="button__wrapper login-form__login-btn">
+  <div class="button__wrapper login-form__login-btn"
+       :class="{
+        'button__wrapper--success': type === 'success',
+        'button__wrapper--error': type === 'error'
+      }">
     <button class="button__btn" @click="onClick($event)">
       {{ text }}
     </button>
@@ -12,6 +16,10 @@ export default {
       type: String,
       required: true
     },
+    type: {
+      type: String,
+      required: false
+    }
   },
   emits: ['click'],
   setup(props: any, context: any) {
