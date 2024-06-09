@@ -76,4 +76,21 @@ export abstract class SocketGameServerAbstract extends SocketServerAbstract {
             }
         }, summonerId);
     }
+
+    // TODO:
+    // private checkCollision(hero) {
+    //     for (const obj of objects) {
+    //         if (
+    //             hero.x < obj.x + obj.width &&
+    //             hero.x + hero.width > obj.x &&
+    //             hero.y < obj.y + obj.height &&
+    //             hero.y + hero.height > obj.y
+    //         ) {
+    //             // Kolizja z obiektem, można tutaj obsłużyć zdarzenie kolizji
+    //             return true;
+    //         }
+    //     }
+    //     // Brak kolizji
+    //     return false;
+    // }
 }
