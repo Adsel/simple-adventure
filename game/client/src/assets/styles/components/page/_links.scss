@@ -1,0 +1,15 @@
+.link {
+  &__btn {
+    width: 100%;
+    height: 100%;
+    font-size: 14px; /* Dopasowanie rozmiaru czcionki */
+    margin: 5px;
+    color: #FFA500; /* Kolor pomarańczowy, pasujący do formularza */
+    text-decoration: none; /* Usunięcie podkreślenia */
+
+    &:hover {
+      color: #FF4500; /* Ciemniejszy pomarańczowy kolor po najechaniu */
+      text-decoration: underline;
+    }
+  }
+}
