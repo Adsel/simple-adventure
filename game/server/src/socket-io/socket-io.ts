@@ -1,7 +1,7 @@
 import {IConnectedPlayer} from "../shared/interfaces/players/connected-player.interface";
 import {SocketGameServerAbstract} from "../shared/abstracts/socket-game-server.abstract";
 
-const {Server} = require("socket.io");
+import {Server} from "socket.io";
 
 class SocketIOServer extends SocketGameServerAbstract {
     private io: any = null;
