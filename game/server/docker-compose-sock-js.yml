@@ -42,4 +42,4 @@ services:
     stdin_open: true
     tty: true
     env_file:
-      - ./sock-js/.env
+      - ./src/sock-js/.env

@@ -42,4 +42,4 @@ services:
     stdin_open: true
     tty: true
     env_file:
-      - ./socket-io/.env
+      - ./src/socket-io/.env
