@@ -5,7 +5,7 @@ export class SocketJSClient extends SocketClient {
 
     constructor(context: any) {
         super(context);
-        this.socket = new SockJS(process.env.VUE_APP_WS_URL);
+        this.socket = new SockJS(process.env.VUE_APP_WS_URL || '');
         this.connect();
     }
 

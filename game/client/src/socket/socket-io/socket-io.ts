@@ -4,7 +4,7 @@ import {SocketClient} from "@/socket/shared/socket-client.abstract";
 export class SocketIOClient extends SocketClient {
     constructor(context: any) {
         super(context);
-        this.socket = io(process.env.VUE_APP_WS_URL);
+        this.socket = io(process.env.VUE_APP_WS_URL || '');
         this.connect();
     }
 

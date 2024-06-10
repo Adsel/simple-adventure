@@ -21,7 +21,7 @@ Simple MMO RPG pixel game based on websocket.
 2.  Build docker infrastructure for both servers
    ```bash
    docker-compose -f server/docker-compose-sock-js.yml build --build-arg serverMode=sock-js --no-cache
-   docker-compose -f server/docker-compose-socket-io.yml build --build-arg serverMode=socket-io --no-cache
+   af
    ```
 ### Load database structure from migration
 

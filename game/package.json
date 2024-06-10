@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Simple MMO RPG pixel game based on websocket.",
   "scripts": {
+    "client:serve": "cd ./client && npm run serve",
+    "client:build": "cd ./client && npm run build",
+    "server:serve": "cd ./server && npm run serve",
+    "server:build": "cd ./server && npm run build",
     "client:socket-io:serve": "cd ./client && npm run socket-io:serve",
     "client:sock-js:serve": "cd ./client && npm run sock-js:serve",
     "server:socket-io:serve": "cd ./server && npm run socket-io:serve",

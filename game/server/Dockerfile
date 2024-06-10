@@ -1,4 +1,4 @@
-FROM node:14.17
+FROM node:20.13.1
 ARG serverMode
 ENV SERVER_MODE=$serverMode
 
