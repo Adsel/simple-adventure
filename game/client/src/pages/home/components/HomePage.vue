@@ -1,6 +1,10 @@
 <template>
   <LobbyLayout>
-    <AuthView @login-success="onLoginSuccess" @login-error="onLoginError"/>
+    <AuthView @login-success="onLoginSuccess"
+              @login-error="onLoginError"
+              @remind-password-success="onRemindPasswordSuccess"
+              @remind-password-error="onRemindPasswordError"
+    />
   </LobbyLayout>
 </template>
 <script lang="ts">
@@ -16,7 +20,10 @@ import AuthView from "@/pages/home/components/login/AuthView.vue";
 
 export default {
   name: 'HomePage',
-  components: {AuthView, LobbyLayout},
+  components: {
+    AuthView,
+    LobbyLayout
+  },
   setup() {
     const router = useRouter();
 
@@ -28,7 +35,20 @@ export default {
       router.push(RoutesEnum.Lobby);
     };
 
-    return {onLoginError, onLoginSuccess};
+    const onRemindPasswordSuccess = (event: any) => {
+      console.log('onRemindPasswordSuccess', event);
+      // TODO:
+      // prompt or sth
+    };
+
+    const onRemindPasswordError = (event: Error) => toast.error(event.message);
+
+    return {
+      onLoginError,
+      onLoginSuccess,
+      onRemindPasswordSuccess,
+      onRemindPasswordError
+    };
   }
 }
 </script>

@@ -6,7 +6,9 @@
                    @login-success="onLoginSuccess"
                    @login-error="onLoginError"
         />
-        <RemindPasswordForm v-if="mode === 'remind-password'"/>
+        <RemindPasswordForm v-if="mode === 'remind-password'"
+                            @remind-password-success="onRemindPasswordRequest"
+                            @remind-password-error="onRemindPasswordRequestError"/>
         <div class="auth-view__extra-operations">
           <template v-for="link of links" :key="link.id">
             <SimpleLink :text="link.name" @click="changeMode(link.mode)"/>
@@ -30,7 +32,7 @@ export default {
     SimpleLink,
     LoginForm
   },
-  emits: ['login-error', 'login-success'],
+  emits: ['login-error', 'login-success', 'remind-password-success', 'remind-password-error'],
   setup(props: any, context: any) {
     const mode = ref('login');
     const links = ref([]);
@@ -53,12 +55,22 @@ export default {
       context.emit('login-success', event);
     };
 
+    const onRemindPasswordRequest = (event) => {
+      context.emit('remind-password-success', event);
+    }
+
+    const onRemindPasswordRequestError = (event) => {
+      context.emit('remind-password-error', event);
+    }
+
     return {
       links,
       mode,
       changeMode,
       onLoginError,
       onLoginSuccess,
+      onRemindPasswordRequest,
+      onRemindPasswordRequestError,
     }
   }
 }

@@ -9,13 +9,15 @@
 <script lang="ts">
 import {ref} from "vue";
 import SimpleButton from "@/pages/shared/components/buttons/SimpleButton.vue";
+import {apiMethodRemindPassword} from "@/api/auth/auth.api";
+import {LoaderService} from "@/services/loader.service";
 
 export default {
   name: 'RemindPasswordForm',
   components: {
     SimpleButton
   },
-  emits: ['remind-password', 'remind-password-error'],
+  emits: ['remind-password-success', 'remind-password-error'],
   setup(setup: any, context: any) {
     const loginOrMailInput = ref('');
 
@@ -25,11 +27,17 @@ export default {
 
     const remindPassword = () => {
       if (!isInputValid()) {
-        context.emit('remind-password-error');
+        context.emit('remind-password-error', {
+          message: 'Invalid login or e-mail!'
+        });
         return;
       }
-      const inputVal = loginOrMailInput.value.trim();
-      context.emit('remind-password', inputVal);
+
+      apiMethodRemindPassword(loginOrMailInput.value.trim()).then((response: any) => {
+        context.emit('remind-password-success', response);
+      }).catch((error: any) => {
+        context.emit('remind-password-error', error)
+      }).finally(() => LoaderService.hideLoader());
     };
 
     return {
