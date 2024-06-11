@@ -1,10 +1,18 @@
 <template>
   <div class="link__wrapper">
-    <a :href="href"
-       class="link__btn"
-       @click="onClick($event)">
-      {{ text }}
-    </a>
+    <template v-if="href">
+      <a :href="href"
+         class="link__btn"
+         @click="onClick($event)">
+        {{ text }}
+      </a>
+    </template>
+    <template v-else>
+      <span class="link__btn"
+            @click="onClick($event)">
+        {{ text }}
+      </span>
+    </template>
   </div>
 </template>
 <script lang="ts">
@@ -16,7 +24,7 @@ export default {
     },
     href: {
       type: String,
-      required: true
+      required: false
     }
   },
   emits: ['click'],

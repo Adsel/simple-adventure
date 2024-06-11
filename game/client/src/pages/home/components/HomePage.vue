@@ -1,6 +1,6 @@
 <template>
   <LobbyLayout>
-    <LoginForm @login-success="onLoginSuccess" @login-error="onLoginError"/>
+    <AuthView @login-success="onLoginSuccess" @login-error="onLoginError"/>
   </LobbyLayout>
 </template>
 <script lang="ts">
@@ -12,11 +12,11 @@ import {useRouter} from "vue-router";
 import {IAuthLoginResponse} from "@/interfaces/api/auth.interface";
 import {RoutesEnum} from "@/enums/routing/routes.enum";
 import LobbyLayout from "@/pages/shared/lobby-layout/LobbyLayout.vue";
-import LoginForm from "@/pages/home/components/login/LoginForm.vue";
+import AuthView from "@/pages/home/components/login/AuthView.vue";
 
 export default {
   name: 'HomePage',
-  components: {LoginForm, LobbyLayout},
+  components: {AuthView, LobbyLayout},
   setup() {
     const router = useRouter();
 
