@@ -11,7 +11,7 @@
            id="password"
            v-model="passwordInput">
     <img
-        :src="require('@/assets/icons/' + (showPassword ? 'icon-eye-disabled-24x24.svg' : 'icon-eye-brown-24x24.svg'))"
+        :src="require('@/assets/icons/auth/' + (showPassword ? 'icon-eye-disabled-24x24.svg' : 'icon-eye-brown-24x24.svg'))"
         @click="togglePwdVisibility"
         class="input-text__icon input-text__icon--btn"
         role="button"

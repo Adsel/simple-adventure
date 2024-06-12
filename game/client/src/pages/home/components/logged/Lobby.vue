@@ -17,13 +17,13 @@
                            :summoner="renderedList.next ? renderedList.next : null"></LobbySummoner>
           </div>
           <div class="choosing-character__nav">
-            <img src="@/assets/icons/switch-arrow-left.svg"
+            <img src="@/assets/icons/character-switcher/switch-arrow-left.svg"
                  class="choosing-character__switch-icon choosing-character__switch-icon--left"
                  width="32"
                  height="32"
                  alt="Switch arrow left"
                  @click="changeSummoner(-1)"/>
-            <img src="@/assets/icons/switch-arrow-right.svg"
+            <img src="@/assets/icons/character-switcher/switch-arrow-right.svg"
                  class="choosing-character__switch-icon choosing-character__switch-icon--right"
                  width="32"
                  height="32"
