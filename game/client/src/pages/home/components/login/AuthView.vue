@@ -36,30 +36,29 @@ export default {
   setup(props: any, context: any) {
     const mode = ref('login');
     const links = ref([]);
-    const availableActions = AUTH_AVAILABLE_ACTIONS;
 
     onBeforeMount(() => {
       changeMode('login');
-    })
+    });
 
-    const changeMode = (modeValue) => {
+    const changeMode = (modeValue: string) => {
       mode.value = modeValue;
-      links.value = availableActions[modeValue];
+      links.value = AUTH_AVAILABLE_ACTIONS[modeValue];
     };
 
-    const onLoginError = (event) => {
+    const onLoginError = (event: any) => {
       context.emit('login-error', event);
     };
 
-    const onLoginSuccess = (event) => {
+    const onLoginSuccess = (event: any) => {
       context.emit('login-success', event);
     };
 
-    const onRemindPasswordRequest = (event) => {
+    const onRemindPasswordRequest = (event: any) => {
       context.emit('remind-password-success', event);
     }
 
-    const onRemindPasswordRequestError = (event) => {
+    const onRemindPasswordRequestError = (event: any) => {
       context.emit('remind-password-error', event);
     }
 

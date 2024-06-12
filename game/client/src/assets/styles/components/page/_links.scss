@@ -6,14 +6,14 @@
     height: 100%;
     font-size: 14px;
     margin: 5px;
-    color: $color-primary-21;
+    color: $color-primary-2-lighten;
     text-decoration: none;
     display: inline-block;
     transition: color 0.3s ease, transform 0.3s ease;
     cursor: pointer;
 
     &:hover {
-      color: $color-primary-22;
+      color: $color-primary-2-darken;
       text-decoration: underline;
       transform: scale(1.1);
     }

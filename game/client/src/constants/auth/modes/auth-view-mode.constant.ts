@@ -1,4 +1,4 @@
-export const AUTH_AVAILABLE_ACTIONS = {
+export const AUTH_AVAILABLE_ACTIONS: any = {
     'login': [
         {
             id: 1,
