@@ -1,4 +1,7 @@
 <template>
+  <div>
+    <h2>Sign in</h2>
+  </div>
   <div class="input-text__wrapper">
     <label for="login" class="input-text__label">Enter your Login</label>
     <input type="text" name="login" class="input-text__input" id="login" v-model="loginInput">

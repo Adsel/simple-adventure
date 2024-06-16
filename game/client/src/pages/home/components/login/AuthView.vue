@@ -85,6 +85,10 @@ export default {
     align-items: center;
     flex-direction: column;
     gap: $px-12;
+
+    h2 {
+      margin: 0;
+    }
   }
 
   &__extra-operations {

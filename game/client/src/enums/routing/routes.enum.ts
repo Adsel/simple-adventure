@@ -1,5 +1,7 @@
-export enum RoutesEnum {
-    Lobby = '/lobby',
+export enum Routes {
+    Lobby = 'lobby',
     Game = '/game',
-    Home = '/'
+    Home = '/',
+    Documentation = 'documentation',
+    KnowledgeBase = 'knowledge-base',
 }

@@ -44,7 +44,7 @@
 import LobbyLayout from "@/pages/shared/lobby-layout/LobbyLayout.vue";
 import {onMounted, ref} from "vue";
 import SimpleButton from "@/pages/shared/components/buttons/SimpleButton.vue";
-import {RoutesEnum} from "@/enums/routing/routes.enum";
+import {Routes} from "@/enums/routing/routes.enum";
 import {useRouter} from "vue-router";
 import {saveIntoLocalStorage} from "@/pages/game/helpers/local-storage.helper";
 import {LocalStorageKeyEnum} from "@/enums/local-storage-key.enum";
@@ -114,12 +114,12 @@ export default {
 
     const onLogout = () => {
       saveIntoLocalStorage(LocalStorageKeyEnum.AuthToken, null);
-      router.push(RoutesEnum.Home);
+      router.push(Routes.Home);
     };
 
     const onChooseCharacter = () => {
       saveIntoLocalStorage(LocalStorageKeyEnum.SummonerIdentifier, summoners.value[currentSummonerIndex.value].summoner_id);
-      router.push(RoutesEnum.Game);
+      router.push(Routes.Game);
     };
 
     return {

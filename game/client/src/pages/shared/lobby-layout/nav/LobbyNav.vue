@@ -9,34 +9,34 @@
       </div>
       <ul id="navMenu" class="desktop-menu__wrapper">
         <li class="desktop-menu__item">
-          <a href="#" class="desktop-menu__link">
+          <RouterLink to="/" class="desktop-menu__link">
             <img src="@/assets/icons/nav/icon-play-24x24.svg"
                  class=""
                  width="48"
                  height="48"
                  alt="Play icon"/>
             Play
-          </a>
+          </RouterLink>
         </li>
         <li class="desktop-menu__item">
-          <a href="#" class="desktop-menu__link">
+          <RouterLink to="/knowledge-base" class="desktop-menu__link">
             <img src="@/assets/icons/nav/icon-knowledge-book-24x24.svg"
                  class=""
                  width="48"
                  height="48"
                  alt="Book icon"/>
             Knowledge Base
-          </a>
+          </RouterLink>
         </li>
         <li class="desktop-menu__item">
-          <a href="#" class="desktop-menu__link">
+          <RouterLink to="/documentation" class="desktop-menu__link">
             <img src="@/assets/icons/nav/icon-scrolled-script-24x24.svg"
                  class=""
                  width="48"
                  height="48"
                  alt="Book icon"/>
             Documentation
-          </a>
+          </RouterLink>
         </li>
       </ul>
     </nav>

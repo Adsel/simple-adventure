@@ -1,4 +1,4 @@
-export enum RoutesEnum {
+export enum Routes {
     Dashboard = '/',
     MapsManagement = '/maps'
 }
