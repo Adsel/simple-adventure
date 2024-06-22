@@ -21,6 +21,10 @@
     &--icon {
       padding-right: $px-64;
     }
+
+    &--invalid {
+      border-color: darken($color-error-validation-1, 40%);
+    }
   }
 
   &__label {

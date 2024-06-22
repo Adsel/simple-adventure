@@ -37,8 +37,10 @@
     "socket.io-client": "^4.6.1",
     "sockjs-client": "^1.6.1",
     "typescript": "~4.5.5",
+    "vee-validate": "^4.13.1",
     "vue-router": "^4.1.6",
-    "vue3-toastify": "^0.1.6"
+    "vue3-toastify": "^0.1.6",
+    "yup": "^1.4.0"
   },
   "eslintConfig": {
     "root": true,

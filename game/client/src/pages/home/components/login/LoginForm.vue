@@ -1,26 +1,45 @@
 <template>
-  <div>
-    <h2>Sign in</h2>
-  </div>
-  <div class="input-text__wrapper">
-    <label for="login" class="input-text__label">Enter your Login</label>
-    <input type="text" name="login" class="input-text__input" id="login" v-model="loginInput">
-  </div>
-  <div class="input-text__wrapper">
-    <label for="password" class="input-text__label">Enter your Password</label>
-    <input :type="showPassword ? 'text' : 'password'"
-           name="password"
-           class="input-text__input input-text__input--icon"
-           id="password"
-           v-model="passwordInput">
-    <img
-        :src="require('@/assets/icons/auth/' + (showPassword ? 'icon-eye-disabled-24x24.svg' : 'icon-eye-brown-24x24.svg'))"
-        @click="togglePwdVisibility"
-        class="input-text__icon input-text__icon--btn"
-        role="button"
-        alt="Icon eye"/>
-  </div>
-  <SimpleButton text="Login" @click="login"/>
+  <form>
+    <div>
+      <h2>Sign in</h2>
+    </div>
+    <div>
+      <div>
+        <div class="input-text__wrapper">
+          <label for="login" class="input-text__label">Enter your Login</label>
+          <input type="text"
+                 name="login"
+                 class="input-text__input"
+                 :class="{ 'input-text__input--invalid' : errors.password }"
+                 id="login"
+                 v-model="form.login">
+        </div>
+        <div v-if="errors.login" class="input-validator__wrapper">
+          <span>{{ errors.login }}</span>
+        </div>
+      </div>
+      <div>
+        <div class="input-text__wrapper">
+          <label for="password" class="input-text__label">Enter your Password</label>
+          <input :type="showPassword ? 'text' : 'password'"
+                 name="password"
+                 class="input-text__input input-text__input--icon"
+                 :class="{ 'input-text__input--invalid' : errors.password }"
+                 id="password"
+                 v-model="form.password">
+          <img class="input-text__icon input-text__icon--btn"
+               role="button"
+               alt="Icon eye"
+               :src="require('@/assets/icons/auth/' + (showPassword ? 'icon-eye-disabled-24x24.svg' : 'icon-eye-brown-24x24.svg'))"
+               @click="togglePwdVisibility"/>
+        </div>
+        <div v-if="errors.password" class="input-validator__wrapper">
+          <span>{{ errors.password }}</span>
+        </div>
+      </div>
+    </div>
+    <SimpleButton text="Login" @click="onLoginSubmit" type="submit"/>
+  </form>
 </template>
 <script lang="ts">
 import {ref} from "vue";
@@ -30,6 +49,8 @@ import {saveIntoLocalStorage} from "@/pages/game/helpers/local-storage.helper";
 import {LocalStorageKeyEnum} from "@/enums/local-storage-key.enum";
 import SimpleButton from "@/pages/shared/components/buttons/SimpleButton.vue";
 import {LoaderService} from "@/services/loader.service";
+import * as yup from 'yup';
+import {AUTH_REQUIREMENTS} from "@/config/auth.config";
 
 export default {
   name: 'LoginForm',
@@ -38,14 +59,52 @@ export default {
   },
   emits: ['login-error', 'login-success'],
   setup(props: any, context: any) {
-    const loginInput = ref('');
-    const passwordInput = ref('');
+    const form = ref({
+      login: '',
+      password: '',
+    });
+    const errors = ref({});
     const showPassword = ref(false);
+    // TODO:
+    // split into separated definitions (to registration usage)
+    const schema = yup.object().shape({
+      login: yup.string()
+          .min(AUTH_REQUIREMENTS.fields.login.min, `Login must be at least ${AUTH_REQUIREMENTS.fields.login.min} characters long!`)
+          .max(AUTH_REQUIREMENTS.fields.login.max, `Login can be at most ${AUTH_REQUIREMENTS.fields.login.max} characters long!`)
+          .required('Login is required!'),
+      password: yup.string()
+          .min(AUTH_REQUIREMENTS.fields.password.min, `Password must be at least ${AUTH_REQUIREMENTS.fields.password.min} characters long!`)
+          .max(AUTH_REQUIREMENTS.fields.password.max, `Password can be at most ${AUTH_REQUIREMENTS.fields.password.max} characters long!`)
+          .matches(AUTH_REQUIREMENTS.fields.password.rules.alpha, 'Password must contain at least one letter!')
+          .matches(AUTH_REQUIREMENTS.fields.password.rules.number, 'Password must contain at least one number!')
+          .matches(AUTH_REQUIREMENTS.fields.password.rules.char, 'Password must contain at least one special character!')
+          .required('Password is required!'),
+    });
+
+    const validateForm = async () => {
+      try {
+        await schema.validate(form.value, {abortEarly: false});
+        errors.value = {};
+      } catch (err: any) {
+        const validationErrors: any = {};
+        err.inner.forEach((error: any) => {
+          validationErrors[error.path] = error.message;
+        });
+        errors.value = validationErrors;
+      }
+    };
+
+    const onLoginSubmit = async () => {
+      await validateForm();
+      if (Object.keys(errors.value).length === 0) {
+        login();
+      }
+    };
 
     const login = () => {
       // event.preventDefault();
       LoaderService.showLoader();
-      apiMethodLogin(loginInput.value, passwordInput.value).then((response: IAuthLoginResponse) => {
+      apiMethodLogin(form.value.login, form.value.password).then((response: IAuthLoginResponse) => {
         saveIntoLocalStorage(LocalStorageKeyEnum.AuthToken, response.token);
         saveIntoLocalStorage(LocalStorageKeyEnum.PlayerId, response.playerId);
         context.emit('login-success', response);
@@ -58,17 +117,24 @@ export default {
       showPassword.value = !showPassword.value;
     };
 
-    return {loginInput, passwordInput, showPassword, login, togglePwdVisibility};
+    return {
+      errors,
+      form,
+      showPassword,
+      onLoginSubmit,
+      togglePwdVisibility
+    };
   }
 }
 </script>
 <style lang="scss">
 @import "../../../../assets/styles/components/page/buttons";
 @import "../../../../assets/styles/components/page/inputs";
+@import "../../../../assets/styles/components/page/validation";
 
 .login-form {
   &__login-btn {
-    margin-top: 0.25rem;
+    margin-top: 1.5rem;
   }
 }
 </style>

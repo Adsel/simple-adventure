@@ -4,7 +4,9 @@
         'button__wrapper--success': type === 'success',
         'button__wrapper--error': type === 'error'
       }">
-    <button class="button__btn" @click="onClick($event)">
+    <button class="button__btn"
+            :type="type ? type : 'button'"
+            @click="onClick($event)">
       {{ text }}
     </button>
   </div>
