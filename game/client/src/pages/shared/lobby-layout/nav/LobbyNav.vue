@@ -2,6 +2,7 @@
   <div>
     <nav class="lobby-navbar__nav">
       <GameTitle/>
+
       <div class="mobile-menu__wrapper" @click="toggleMenu()">
         <div class="mobile-menu__item"></div>
         <div class="mobile-menu__item"></div>

@@ -1,0 +1,15 @@
+{
+  "login": {
+    "min": "Login musi mieć co najmniej {min} znaków!",
+    "max": "Login może mieć maksymalnie {max} znaków!",
+    "required": "Login jest wymagany!"
+  },
+  "password": {
+    "min": "Hasło musi mieć co najmniej {min} znaków!",
+    "max": "Hasło może mieć maksymalnie {max} znaków!",
+    "alpha": "Hasło musi zawierać co najmniej jedną literę!",
+    "number": "Hasło musi zawierać co najmniej jedną cyfrę!",
+    "char": "Hasło musi zawierać co najmniej jeden znak specjalny!",
+    "required": "Hasło jest wymagane!"
+  }
+}

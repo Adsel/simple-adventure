@@ -1,0 +1,15 @@
+{
+  "login": {
+    "min": "Login must be at least {min} characters long!",
+    "max": "Login can be at most {max} characters long!",
+    "required": "Login is required!"
+  },
+  "password": {
+    "min": "Password must be at least {min} characters long!",
+    "max": "Password can be at most {max} characters long!",
+    "alpha": "Password must contain at least one letter!",
+    "number": "Password must contain at least one number!",
+    "char": "Password must contain at least one special character!",
+    "required": "Password is required!"
+  }
+}
