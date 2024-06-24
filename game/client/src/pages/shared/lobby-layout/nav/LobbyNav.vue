@@ -2,7 +2,7 @@
   <div>
     <nav class="lobby-navbar__nav">
       <GameTitle/>
-
+      <LangSwitcher/>
       <div class="mobile-menu__wrapper" @click="toggleMenu()">
         <div class="mobile-menu__item"></div>
         <div class="mobile-menu__item"></div>
@@ -45,10 +45,14 @@
 </template>
 <script lang="ts">
 import GameTitle from "@/pages/shared/game-title/GameTitle.vue";
+import LangSwitcher from "@/pages/shared/components/nav/LangSwitcher.vue";
 
 export default {
   name: 'LobbyNav',
-  components: {GameTitle},
+  components: {
+    LangSwitcher,
+    GameTitle
+  },
   setup() {
     const toggleMenu = () => {
       alert('TODO: toggle mobile menu')
