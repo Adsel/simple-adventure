@@ -14,9 +14,9 @@
         <img :src="require('@/assets/icons/lang/' + lang.flag)"
              width="48"
              height="48"
-             class="pixel-image__img"
-             :alt="lang.label" />
-        {{ lang.label }}
+             class="pixel-image__img language-selector-option__flag"
+             :alt="$t(lang.label)" />
+        {{ $t(lang.label) }}
       </div>
     </div>
   </div>
@@ -32,8 +32,8 @@ export default {
     const languages = [
       // { code: 'en', label: 'English', flag: require('@/assets/flags/en.png') },
       // { code: 'pl', label: 'Polski', flag: require('@/assets/flags/pl.png') },
-      { code: 'en', label: 'English', flag: 'icon-flag-en-us-24x24.svg'},
-      { code: 'pl', label: 'Polski', flag: 'icon-flag-pl-24x24.svg' },
+      { code: 'en', label: 'lang.en.us', flag: 'icon-flag-en-us-24x24.svg'},
+      { code: 'pl', label: 'lang.pl', flag: 'icon-flag-pl-24x24.svg' },
     ];
 
     const isOpen = ref(false);
@@ -59,6 +59,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "../../../../assets/styles/components/page/buttons";
+@import "../../../../assets/styles/definitions/units";
 
 .language-selector {
   position: relative;
@@ -104,9 +105,9 @@ export default {
   background-color: #555;
 }
 
-.flag {
-  //width: 20px;
-  //height: 14px;
-  margin-right: 10px;
+.language-selector-option {
+  &__flag {
+    margin-right: $px-16;
+  }
 }
 </style>

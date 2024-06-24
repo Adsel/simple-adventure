@@ -1,5 +1,14 @@
 {
+  "lang": {
+    "pl": "Polski",
+    "en": {
+      "us": "Angielski (US)"
+    }
+  },
   "login": {
+    "headers": {
+      "signIn": "Zaloguj się"
+    },
     "min": "Login musi mieć co najmniej {min} znaków!",
     "max": "Login może mieć maksymalnie {max} znaków!",
     "required": "Login jest wymagany!"

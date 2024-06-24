@@ -1,5 +1,14 @@
 {
+  "lang": {
+    "pl": "Polish",
+    "en": {
+      "us": "English (US)"
+    }
+  },
   "login": {
+    "headers": {
+      "signIn": "Sign in"
+    },
     "min": "Login must be at least {min} characters long!",
     "max": "Login can be at most {max} characters long!",
     "required": "Login is required!"

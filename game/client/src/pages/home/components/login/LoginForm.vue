@@ -1,7 +1,7 @@
 <template>
   <form>
     <div>
-      <h2>Sign in</h2>
+      <h2>{{ $t('login.headers.signIn')}}</h2>
     </div>
     <div>
       <div>
