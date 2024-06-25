@@ -1,8 +1,14 @@
 <template>
   <div class="language-selector">
     <button @click="toggleDropdown" class="language-button">
-      {{ locale }}
-      <span class="arrow" :class="{ open: isOpen }">▼</span>
+      {{ $t(localeLabel) }}
+      <span class="arrow" :class="{ open: isOpen }">
+        <img src="@/assets/icons/nav/arrow-down-24x24.png"
+             alt="Arrow down icon"
+             width="48"
+             height="48"
+        />
+      </span>
     </button>
     <div v-if="isOpen" class="dropdown">
       <div v-for="lang in languages"
@@ -27,6 +33,7 @@ import {useI18n} from "vue-i18n";
 export default {
   setup() {
     const {locale} = useI18n();
+    const localeLabel = ref<string>('');
 
     const languages = [
       {code: 'en', label: 'lang.en.us', flag: 'icon-flag-en-us-24x24.svg'},
@@ -41,11 +48,12 @@ export default {
 
     const changeLanguage = (newLocale: string) => {
       locale.value = newLocale;
+      localeLabel.value = languages.find(item => item.code === newLocale)?.label || '';
       isOpen.value = false;
     };
 
     return {
-      locale,
+      localeLabel,
       languages,
       isOpen,
       toggleDropdown,
