@@ -135,13 +135,5 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "../../../../assets/styles/components/page/buttons";
-@import "../../../../assets/styles/components/page/inputs";
-@import "../../../../assets/styles/components/page/validation";
-
-.login-form {
-  &__login-btn {
-    margin-top: 1.5rem;
-  }
-}
+@import 'login-form';
 </style>

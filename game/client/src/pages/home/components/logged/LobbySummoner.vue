@@ -6,7 +6,7 @@
     <div>
       <span>{{ summoner.summoner_nickname }}</span>
       &nbsp;
-      <span>Level: {{ summoner.summoner_level }}</span>
+      <span>{{ $t('generic.level') }}: {{ summoner.summoner_level }}</span>
     </div>
     <div>({{ summoner.summoner_experience }} / {{ summoner.summoner_experience_to_up }})</div>
   </div>
@@ -35,26 +35,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import "../../../../assets/styles/definitions/colors";
-@import "../../../../assets/styles/definitions/images";
-@import "../../../../assets/styles/definitions/units";
-
-.lobby-summoner {
-  $size: $px-16;
-  &__image {
-    @include pixelArtImage();
-
-    position: absolute;
-    top: -$px-32;
-    left: calc(50% - #{$px-8});
-    background-size: $px-64 $px-64;
-    height: $size;
-    width: $size;
-    transform: scale(4);
-
-    &--active {
-      filter: drop-shadow(0 0 $px-2 $color-primary-3);
-    }
-  }
-}
+@import 'lobby-summoner';
 </style>

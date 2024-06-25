@@ -1,7 +1,15 @@
 {
+  "characters": {
+    "headers": {
+      "choose": "Choose character"
+    }
+  },
   "generic": {
     "hide": "Hide",
-    "show": "Show"
+    "show": "Show",
+    "empty": "Empty",
+    "level": "Level",
+    "loader": "Loader"
   },
   "lang": {
     "pl": "Polish",
@@ -13,7 +21,8 @@
     "headers": {
       "sign-in": "Sign in",
       "remind-password": "Remind password",
-      "register": "Register"
+      "register": "Register",
+      "logout": "Logout"
     },
     "fields": {
       "enter-login": "Enter your Login",

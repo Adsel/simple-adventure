@@ -76,27 +76,5 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-@import "../../../../assets/styles/components/page/panels";
-@import "../../../../assets/styles/definitions/units";
-
-.auth-view {
-  &__wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: $px-12;
-
-    h2 {
-      margin: 0;
-    }
-  }
-
-  &__extra-operations {
-    margin-top: $px-16;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
-}
+@import 'auth-view';
 </style>

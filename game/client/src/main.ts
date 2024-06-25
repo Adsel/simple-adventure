@@ -11,6 +11,7 @@ function createVueApp() {
     console.log('t' , messages);
 
     const i18n: any = createI18n({
+        legacy: false,
         locale: navigator.language.split('-')[0],
         fallbackLocale: 'en',
         messages,

@@ -3,10 +3,12 @@
     <div class="board-panel__wrapper">
       <div class="board-panel__content">
         <div class="choosing-character__wrapper">
-          <h1>Choose character</h1>
+          <h1>
+            {{ $t('characters.headers.choose') }}
+          </h1>
           <div class="choosing-character__list" v-if="summoners">
             <span v-if="summoners.length <= 0">
-              Empty
+              {{ $t('generic.empty') }}
             </span>
             <LobbySummoner class="choosing-character__list-item choosing-character__list-item--secondary"
                            :summoner="renderedList.prev ? renderedList.prev : null"></LobbySummoner>
@@ -34,7 +36,7 @@
         <div>
           <SimpleButton text="+" @click="onLogout"></SimpleButton>
           <SimpleButton :text="$t('nav.items.play')" type="success" @click="onChooseCharacter"></SimpleButton>
-          <SimpleButton text="Logout" type="error" @click="onLogout"></SimpleButton>
+          <SimpleButton :text="$t('login.headers.logout')" @click="onLogout"></SimpleButton>
         </div>
       </div>
     </div>
@@ -133,52 +135,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import "../../../../assets/styles/components/page/inputs";
-@import "../../../../assets/styles/components/page/panels";
-@import "../../../../assets/styles/definitions/units";
-
-.choosing-character {
-  &__list {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 2rem;
-    width: 500px;
-    margin-top: 2rem;
-    gap: 0.5rem;
-    align-items: flex-start;
-    align-content: flex-start;
-  }
-
-  &__list-item {
-    position: relative;
-    padding: $px-16;
-    margin-top: $px-64;
-    border: $color-primary-3 $px-2 dashed;
-    border-radius: $px-48;
-    flex-grow: 1;
-    width: 33%;
-    text-align: center;
-
-    &--secondary {
-      margin-top: $px-32;
-      opacity: 0.3;
-      border: transparent $px-2 dashed;
-    }
-  }
-
-  &__nav {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    margin-bottom: $px-16;
-  }
-
-  &__switch-icon {
-    cursor: pointer;
-
-    &:hover {
-      transform: scale(1.15);
-    }
-  }
-}
+@import 'lobby';
 </style>

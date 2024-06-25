@@ -52,12 +52,5 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "../../../../assets/styles/components/page/buttons";
-@import "../../../../assets/styles/components/page/inputs";
-
-.reminder-form {
-  &__btn {
-    margin-top: 0.25rem;
-  }
-}
+@import 'remind-password-form';
 </style>
