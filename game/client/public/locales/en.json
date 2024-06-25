@@ -1,4 +1,8 @@
 {
+  "generic": {
+    "hide": "Hide",
+    "show": "Show"
+  },
   "lang": {
     "pl": "Polish",
     "en": {
@@ -7,11 +11,27 @@
   },
   "login": {
     "headers": {
-      "signIn": "Sign in"
+      "sign-in": "Sign in",
+      "remind-password": "Remind password",
+      "register": "Register"
+    },
+    "fields": {
+      "enter-login": "Enter your Login",
+      "enter-login-email": "Enter your Login or E-mail",
+      "enter-password": "Enter your Password",
+      "login": "Log in",
+      "remind-me": "Remind me"
     },
     "min": "Login must be at least {min} characters long!",
     "max": "Login can be at most {max} characters long!",
     "required": "Login is required!"
+  },
+  "lobby-nav": {
+    "items": {
+      "play": "Play",
+      "documentation": "Documentation",
+      "knowledge-base": "Knowledge Base"
+    }
   },
   "password": {
     "min": "Password must be at least {min} characters long!",

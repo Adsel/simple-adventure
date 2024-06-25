@@ -1,12 +1,14 @@
 <template>
   <form>
     <div>
-      <h2>{{ $t('login.headers.signIn')}}</h2>
+      <h2>{{ $t('login.headers.sign-in')}}</h2>
     </div>
     <div>
       <div>
         <div class="input-text__wrapper">
-          <label for="login" class="input-text__label">Enter your Login</label>
+          <label for="login" class="input-text__label">
+            {{ $t('login.fields.enter-login')}}
+          </label>
           <input type="text"
                  name="login"
                  class="input-text__input"
@@ -20,7 +22,9 @@
       </div>
       <div>
         <div class="input-text__wrapper">
-          <label for="password" class="input-text__label">Enter your Password</label>
+          <label for="password" class="input-text__label">
+            {{ $t('login.fields.enter-password')}}
+          </label>
           <input :type="showPassword ? 'text' : 'password'"
                  name="password"
                  class="input-text__input input-text__input--icon"
@@ -31,6 +35,7 @@
                role="button"
                alt="Icon eye"
                :src="require('@/assets/icons/auth/' + (showPassword ? 'icon-eye-disabled-24x24.svg' : 'icon-eye-brown-24x24.svg'))"
+               :title="showPassword ? $t('generic.hide') : $t('generic.show')"
                @click="togglePwdVisibility"/>
         </div>
         <div v-if="errors.password" class="input-validator__wrapper">
@@ -38,7 +43,9 @@
         </div>
       </div>
     </div>
-    <SimpleButton text="Login" @click="onLoginSubmit" type="submit"/>
+    <SimpleButton :text="$t('login.fields.login')"
+                  @click="onLoginSubmit"
+                  type="submit"/>
   </form>
 </template>
 <script lang="ts">

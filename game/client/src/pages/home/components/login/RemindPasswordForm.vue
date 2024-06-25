@@ -1,13 +1,13 @@
 <template>
   <form>
     <div>
-      <h2>Remind password</h2>
+      <h2>{{ $t('login.headers.remind-password') }}</h2>
     </div>
     <div class="input-text__wrapper">
-      <label for="login" class="input-text__label">Enter your Login or E-mail</label>
+      <label for="login" class="input-text__label">{{ $t('login.fields.enter-login-email' )}}</label>
       <input type="text" name="login" class="input-text__input" id="login" v-model="loginOrMailInput">
     </div>
-    <SimpleButton text="Remind me" @click="remindPassword"/>
+    <SimpleButton :text="$t('login.fields.remind-me')" @click="remindPassword"/>
   </form>
 </template>
 <script lang="ts">

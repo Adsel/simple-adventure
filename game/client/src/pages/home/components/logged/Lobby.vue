@@ -33,7 +33,7 @@
         </div>
         <div>
           <SimpleButton text="+" @click="onLogout"></SimpleButton>
-          <SimpleButton text="Play" type="success" @click="onChooseCharacter"></SimpleButton>
+          <SimpleButton :text="$t('nav.items.play')" type="success" @click="onChooseCharacter"></SimpleButton>
           <SimpleButton text="Logout" type="error" @click="onLogout"></SimpleButton>
         </div>
       </div>

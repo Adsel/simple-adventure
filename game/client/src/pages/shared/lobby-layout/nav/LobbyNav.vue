@@ -9,34 +9,17 @@
         <div class="mobile-menu__item"></div>
       </div>
       <ul id="navMenu" class="desktop-menu__wrapper">
-        <li class="desktop-menu__item">
-          <RouterLink to="/" class="desktop-menu__link">
-            <img src="@/assets/icons/nav/icon-play-24x24.svg"
+        <li class="desktop-menu__item"
+            v-for="(navItem, index) in navItems"
+            :key="index">
+          <RouterLink :to="navItem.link"
+                      class="desktop-menu__link">
+            <img :src="require('@/assets/icons/nav/' + navItem.img)"
                  class=""
                  width="48"
                  height="48"
                  alt="Play icon"/>
-            Play
-          </RouterLink>
-        </li>
-        <li class="desktop-menu__item">
-          <RouterLink to="/knowledge-base" class="desktop-menu__link">
-            <img src="@/assets/icons/nav/icon-knowledge-book-24x24.svg"
-                 class=""
-                 width="48"
-                 height="48"
-                 alt="Book icon"/>
-            Knowledge Base
-          </RouterLink>
-        </li>
-        <li class="desktop-menu__item">
-          <RouterLink to="/documentation" class="desktop-menu__link">
-            <img src="@/assets/icons/nav/icon-scrolled-script-24x24.svg"
-                 class=""
-                 width="48"
-                 height="48"
-                 alt="Book icon"/>
-            Documentation
+            {{ $t(navItem.name) }}
           </RouterLink>
         </li>
       </ul>
@@ -46,6 +29,9 @@
 <script lang="ts">
 import GameTitle from "@/pages/shared/game-title/GameTitle.vue";
 import LangSwitcher from "@/pages/shared/components/nav/LangSwitcher.vue";
+import {ref} from "vue";
+import {INavItem} from "@/interfaces/nav/items.interface";
+import {NAV_ITEMS} from "@/constants/nav/items.constant";
 
 export default {
   name: 'LobbyNav',
@@ -54,11 +40,14 @@ export default {
     GameTitle
   },
   setup() {
+    const navItems = ref<INavItem[]>(NAV_ITEMS);
+
     const toggleMenu = () => {
       alert('TODO: toggle mobile menu')
     };
 
     return {
+      navItems,
       toggleMenu
     }
   }

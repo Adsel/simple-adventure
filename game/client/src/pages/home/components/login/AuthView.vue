@@ -11,7 +11,7 @@
                             @remind-password-error="onRemindPasswordRequestError"/>
         <div class="auth-view__extra-operations">
           <template v-for="link of links" :key="link.id">
-            <SimpleLink :text="link.name" @click="changeMode(link.mode)"/>
+            <SimpleLink :text="$t(link.name)" @click="changeMode(link.mode)"/>
           </template>
         </div>
       </form>
@@ -24,6 +24,7 @@ import SimpleLink from "@/pages/shared/components/links/SimpleLink.vue";
 import LoginForm from "@/pages/home/components/login/LoginForm.vue";
 import RemindPasswordForm from "@/pages/home/components/login/RemindPasswordForm.vue";
 import {AUTH_AVAILABLE_ACTIONS} from "@/constants/auth/modes/auth-view-mode.constant";
+import {IAuthMode, IAuthModes} from "@/interfaces/auth/auth-modes.interface";
 
 export default {
   name: 'AuthView',
@@ -35,13 +36,13 @@ export default {
   emits: ['login-error', 'login-success', 'remind-password-success', 'remind-password-error'],
   setup(props: any, context: any) {
     const mode = ref('login');
-    const links = ref([]);
+    const links = ref<IAuthMode[]>([]);
 
     onBeforeMount(() => {
       changeMode('login');
     });
 
-    const changeMode = (modeValue: string) => {
+    const changeMode = (modeValue: keyof IAuthModes) => {
       mode.value = modeValue;
       links.value = AUTH_AVAILABLE_ACTIONS[modeValue];
     };
