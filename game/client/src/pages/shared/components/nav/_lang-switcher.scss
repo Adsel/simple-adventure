@@ -1,51 +1,60 @@
 @import "../../../../assets/styles/components/page/buttons";
+@import "../../../../assets/styles/components/page/pixeled-image";
 @import "../../../../assets/styles/definitions/units";
 
 .language-selector {
-  position: relative;
-  display: inline-block;
+  &__wrapper {
+    position: relative;
+    display: inline-block;
+  }
 }
 
-.language-button {
-  background-color: #444;
-  color: #fff;
-  padding: 8px 12px;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
+.language-selector-toggler {
+  &__wrapper {
+    background-color: #444;
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  &__toggler {
+  }
+
+  &__image {
+    @include pixelArtImage();
+
+    &--open {
+      transform: rotate(180deg);
+    }
+  }
 }
 
-.arrow {
-  margin-left: 8px;
-}
+.language-selector-dropdown {
+  &__wrapper {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #333;
+    border: 1px solid #ccc;
+    width: 150px;
+    z-index: 10;
+  }
 
-.arrow.open {
-  transform: rotate(180deg);
-}
+  &__item {
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
 
-.dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: #333;
-  border: 1px solid #ccc;
-  width: 150px;
-  z-index: 10;
-}
+    &:hover {
+      background-color: #555;
+    }
+  }
 
-.dropdown-item {
-  padding: 10px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-
-.dropdown-item:hover {
-  background-color: #555;
-}
-
-.language-selector-option {
   &__flag {
     margin-right: $px-16;
   }
