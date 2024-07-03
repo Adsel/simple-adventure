@@ -1,3 +1,3 @@
 import {LanguageManagement} from "@/models/language/language.class";
 
-export const LanguageService = new LanguageManagement();
+export const LanguageService: LanguageManagement = new LanguageManagement();

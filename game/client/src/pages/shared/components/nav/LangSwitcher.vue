@@ -33,14 +33,16 @@ import {onMounted, ref} from "vue";
 import {useI18n} from "vue-i18n";
 import {APP_LANGUAGES} from "@/constants/nav/languages.constant";
 import {LanguageService} from "@/services/language.service";
+import {LanguageManagement} from "@/models/language/language.class";
+import {ILanguageSwitcherOption} from "@/interfaces/nav/languages.interface";
 
 export default {
   setup() {
     const {locale} = useI18n();
     const localeLabel = ref<string>('');
-    const languages = APP_LANGUAGES;
-    const isOpen = ref(false);
-    let LanguageServiceInstance = null;
+    const languages: ILanguageSwitcherOption[] = APP_LANGUAGES;
+    const isOpen = ref<boolean>(false);
+    let LanguageServiceInstance: LanguageManagement;
 
     onMounted(() => {
       LanguageServiceInstance = LanguageService;
