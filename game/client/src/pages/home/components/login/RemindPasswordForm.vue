@@ -1,16 +1,24 @@
 <template>
-  <LobbyForm title="login.headers.remind-password"
+  <LobbyForm title="auth.headers.remind-password"
+             id="loginForm"
              action-title="login.fields.remind-me"
              @submit="onSubmit">
-    <LobbyFormInput label="login.fields.enter-login-email" name="login" id="login" />
+    <LobbyFormInput :error-msg="errors.login ? errors.login : null"
+                    ref="loginOrMailInputRef"
+                    label="login.fields.enter-login-email"
+                    name="login"
+                    id="login"/>
   </LobbyForm>
 </template>
 <script lang="ts">
+import * as yup from "yup";
 import {ref} from "vue";
 import {apiMethodRemindPassword} from "@/api/auth/auth.api";
 import {LoaderService} from "@/services/loader.service";
+import {LoginSchema} from "@/schemas/validation/auth/login.schema";
 import LobbyForm from "@/pages/shared/lobby-layout/forms/LobbyForm.vue";
 import LobbyFormInput from "@/pages/shared/lobby-layout/forms/components/inputs/LobbyFormInput.vue";
+import {useI18n} from "vue-i18n";
 
 export default {
   name: 'RemindPasswordForm',
@@ -20,21 +28,38 @@ export default {
   },
   emits: ['remind-password-success', 'remind-password-error'],
   setup(setup: any, context: any) {
-    const loginOrMailInput = ref('');
+    const {t} = useI18n();
+    const errors = ref<any>({});
+    const loginOrMailInputRef = ref<any>(null);
 
-    const isInputValid = () => {
-      return loginOrMailInput.value !== '' && loginOrMailInput.value.trim().length > 0;
+    const validateForm = async () => {
+      try {
+        await yup.object().shape({
+          login: LoginSchema(yup, t),
+        }).validate({
+          login: loginOrMailInputRef.value.getValue() || '',
+        }, {abortEarly: false});
+        errors.value = {};
+      } catch (err: any) {
+        const validationErrors: any = {};
+        err.inner.forEach((error: any) => {
+          validationErrors[error.path] = error.message;
+        });
+
+        errors.value = validationErrors;
+      }
     };
 
-    const remindPassword = () => {
-      if (!isInputValid()) {
+    const remindPassword = async () => {
+      await validateForm();
+      if (Object.keys(errors.value).length !== 0) {
         context.emit('remind-password-error', {
-          message: 'Invalid login or e-mail!'
+          message: errors.value.login
         });
         return;
       }
 
-      apiMethodRemindPassword(loginOrMailInput.value.trim()).then((response: any) => {
+      apiMethodRemindPassword(loginOrMailInputRef.value.trim()).then((response: any) => {
         context.emit('remind-password-success', response);
       }).catch((error: any) => {
         context.emit('remind-password-error', error)
@@ -46,7 +71,8 @@ export default {
     };
 
     return {
-      loginOrMailInput,
+      errors,
+      loginOrMailInputRef,
       onSubmit,
       remindPassword
     };

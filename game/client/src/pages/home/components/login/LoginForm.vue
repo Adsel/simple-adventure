@@ -1,5 +1,5 @@
 <template>
-  <LobbyForm title="login.headers.sign-in"
+  <LobbyForm title="auth.headers.sign-in"
              id="loginForm"
              action-title="login.fields.login"
              @submit="onSubmit">
@@ -44,14 +44,13 @@ export default {
     const loginInputRef = ref<any>(null);
     const passwordInputRef = ref<any>(null);
     const showPassword = ref(false);
-    const errors = ref({});
+    const errors = ref<any>({});
 
     const onSubmit = async () => {
       await validateForm();
       if (Object.keys(errors.value).length === 0) {
         login();
       }
-      console.log('onLoginSubmit', loginInputRef.value.getValue(), errors.value);
     };
 
     const validateForm = async () => {
@@ -69,9 +68,8 @@ export default {
         err.inner.forEach((error: any) => {
           validationErrors[error.path] = error.message;
         });
-        console.log('errors', errors.value);
-        errors.value = validationErrors;
 
+        errors.value = validationErrors;
       }
     };
 

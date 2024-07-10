@@ -1,4 +1,12 @@
 {
+  "auth": {
+    "headers": {
+      "sign-in": "Sign in",
+      "remind-password": "Remind password",
+      "register": "Register",
+      "logout": "Logout"
+    }
+  },
   "characters": {
     "headers": {
       "choose": "Choose character"
@@ -23,12 +31,6 @@
     }
   },
   "login": {
-    "headers": {
-      "sign-in": "Sign in",
-      "remind-password": "Remind password",
-      "register": "Register",
-      "logout": "Logout"
-    },
     "fields": {
       "enter-login": "Enter your Login",
       "enter-login-email": "Enter your Login or E-mail",
