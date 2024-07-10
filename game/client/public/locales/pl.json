@@ -36,9 +36,11 @@
       "login": "Zaloguj się",
       "remind-me": "Przypomnij mi"
     },
-    "min": "Login musi mieć co najmniej {min} znaków!",
-    "max": "Login może mieć maksymalnie {max} znaków!",
-    "required": "Login jest wymagany!"
+    "validation": {
+      "min-length": "Login musi mieć co najmniej {length} znaków!",
+      "max-length": "Login może mieć maksymalnie {length} znaków!",
+      "required": "Login jest wymagany!"
+    }
   },
   "lobby-nav": {
     "items": {
@@ -48,11 +50,13 @@
     }
   },
   "password": {
-    "min": "Hasło musi mieć co najmniej {min} znaków!",
-    "max": "Hasło może mieć maksymalnie {max} znaków!",
-    "alpha": "Hasło musi zawierać co najmniej jedną literę!",
-    "number": "Hasło musi zawierać co najmniej jedną cyfrę!",
-    "char": "Hasło musi zawierać co najmniej jeden znak specjalny!",
-    "required": "Hasło jest wymagane!"
+    "validation": {
+      "min-length": "Hasło musi mieć co najmniej {length} znaków!",
+      "max-length": "Hasło może mieć maksymalnie {length} znaków!",
+      "one-letter": "Hasło musi zawierać co najmniej jedną literę!",
+      "one-number": "Hasło musi zawierać co najmniej jedną cyfrę!",
+      "one-special-char": "Hasło musi zawierać co najmniej jeden znak specjalnyr!",
+      "required": "Hasło jest wymagane!"
+    }
   }
 }

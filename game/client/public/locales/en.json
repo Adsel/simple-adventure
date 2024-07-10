@@ -36,9 +36,11 @@
       "login": "Log in",
       "remind-me": "Remind me"
     },
-    "min": "Login must be at least {min} characters long!",
-    "max": "Login can be at most {max} characters long!",
-    "required": "Login is required!"
+    "validation": {
+      "min-length": "Login must be at least {length} characters long!",
+      "max-length": "Login can be at most {length} characters long!",
+      "required": "Login is required!"
+    }
   },
   "lobby-nav": {
     "items": {
@@ -48,11 +50,13 @@
     }
   },
   "password": {
-    "min": "Password must be at least {min} characters long!",
-    "max": "Password can be at most {max} characters long!",
-    "alpha": "Password must contain at least one letter!",
-    "number": "Password must contain at least one number!",
-    "char": "Password must contain at least one special character!",
-    "required": "Password is required!"
+    "validation": {
+      "min-length": "Password must be at least {length} characters long!",
+      "max-length": "Password can be at most {length} characters long!",
+      "one-letter": "Password must contain at least one letter!",
+      "one-number": "Password must contain at least one number!",
+      "one-special-char": "Password must contain at least one special character!",
+      "required": "Password is required!"
+    }
   }
 }

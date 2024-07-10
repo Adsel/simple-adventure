@@ -30,6 +30,7 @@ import {LoginSchema} from "@/schemas/validation/auth/login.schema";
 import {PasswordSchema} from "@/schemas/validation/auth/password.schema";
 import LobbyFormInput from "@/pages/shared/lobby-layout/forms/components/inputs/LobbyFormInput.vue";
 import LobbyForm from "@/pages/shared/lobby-layout/forms/LobbyForm.vue";
+import {useI18n} from "vue-i18n";
 
 export default {
   name: 'LoginForm',
@@ -39,14 +40,11 @@ export default {
   },
   emits: ['login-error', 'login-success'],
   setup(props: any, context: any) {
+    const {t} = useI18n();
     const loginInputRef = ref<any>(null);
     const passwordInputRef = ref<any>(null);
     const showPassword = ref(false);
     const errors = ref({});
-    const schema = yup.object().shape({
-      login: LoginSchema(yup),
-      password: PasswordSchema(yup),
-    });
 
     const onSubmit = async () => {
       await validateForm();
@@ -58,7 +56,10 @@ export default {
 
     const validateForm = async () => {
       try {
-        await schema.validate({
+        await yup.object().shape({
+          login: LoginSchema(yup, t),
+          password: PasswordSchema(yup, t),
+        }).validate({
           login: loginInputRef.value.getValue() || '',
           password: passwordInputRef.value.getValue() || '',
         }, {abortEarly: false});

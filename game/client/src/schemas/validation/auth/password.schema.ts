@@ -1,11 +1,11 @@
 import {AUTH_REQUIREMENTS} from "@/config/auth.config";
 
-export const PasswordSchema = (yup: any) => {
+export const PasswordSchema = (yup: any, $t: any) => {
     return yup.string()
-        .min(AUTH_REQUIREMENTS.fields.password.min, `Password must be at least ${AUTH_REQUIREMENTS.fields.password.min} characters long!`)
-        .max(AUTH_REQUIREMENTS.fields.password.max, `Password can be at most ${AUTH_REQUIREMENTS.fields.password.max} characters long!`)
-        .matches(AUTH_REQUIREMENTS.fields.password.rules.alpha, 'Password must contain at least one letter!')
-        .matches(AUTH_REQUIREMENTS.fields.password.rules.number, 'Password must contain at least one number!')
-        .matches(AUTH_REQUIREMENTS.fields.password.rules.char, 'Password must contain at least one special character!')
-        .required('Password is required!')
+        .matches(AUTH_REQUIREMENTS.fields.password.rules.alpha, $t('password.validation.one-letter'))
+        .matches(AUTH_REQUIREMENTS.fields.password.rules.number, $t('password.validation.one-number'))
+        .matches(AUTH_REQUIREMENTS.fields.password.rules.char, $t('password.validation.one-special-char'))
+        .max(AUTH_REQUIREMENTS.fields.password.min, $t('password.validation.min-length', {length: AUTH_REQUIREMENTS.fields.password.min}))
+        .max(AUTH_REQUIREMENTS.fields.password.max, $t('password.validation.max-length', {length: AUTH_REQUIREMENTS.fields.password.max}))
+        .required($t('password.validation.required'))
 };
