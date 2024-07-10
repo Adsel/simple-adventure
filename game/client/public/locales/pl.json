@@ -59,7 +59,7 @@
       "max-length": "Hasło może mieć maksymalnie {length} znaków!",
       "one-letter": "Hasło musi zawierać co najmniej jedną literę!",
       "one-number": "Hasło musi zawierać co najmniej jedną cyfrę!",
-      "one-special-char": "Hasło musi zawierać co najmniej jeden znak specjalnyr!",
+      "one-special-char": "Hasło musi zawierać co najmniej jeden znak specjalny!",
       "required": "Hasło jest wymagane!",
       "not-identical": "Hasła nie są takie same!"
     }
