@@ -3,6 +3,7 @@
     "headers": {
       "sign-in": "Sign in",
       "remind-password": "Remind password",
+      "registration": "Registration",
       "register": "Register",
       "logout": "Logout"
     }
@@ -35,6 +36,7 @@
       "enter-login": "Enter your Login",
       "enter-login-email": "Enter your Login or E-mail",
       "enter-password": "Enter your Password",
+      "enter-password-repeat": "Enter your Password again",
       "login": "Log in",
       "remind-me": "Remind me"
     },
@@ -58,7 +60,8 @@
       "one-letter": "Password must contain at least one letter!",
       "one-number": "Password must contain at least one number!",
       "one-special-char": "Password must contain at least one special character!",
-      "required": "Password is required!"
+      "required": "Password is required!",
+      "not-identical": "The passwords are not the same!"
     }
   }
 }

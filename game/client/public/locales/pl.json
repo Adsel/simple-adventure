@@ -3,6 +3,7 @@
     "headers": {
       "sign-in": "Zaloguj się",
       "remind-password": "Przypomnij hasło",
+      "registration": "Rejestracja",
       "register": "Zarejestruj się",
       "logout": "Wyloguj się"
     }
@@ -35,6 +36,7 @@
       "enter-login": "Wprowadź swój Login",
       "enter-login-email": "Wprowadź swój Login lub hasło",
       "enter-password": "Wprowadź swoje Hasło",
+      "enter-password-repeat": "Wprowadź ponownie swoje Hasło",
       "login": "Zaloguj się",
       "remind-me": "Przypomnij mi"
     },
@@ -58,7 +60,8 @@
       "one-letter": "Hasło musi zawierać co najmniej jedną literę!",
       "one-number": "Hasło musi zawierać co najmniej jedną cyfrę!",
       "one-special-char": "Hasło musi zawierać co najmniej jeden znak specjalnyr!",
-      "required": "Hasło jest wymagane!"
+      "required": "Hasło jest wymagane!",
+      "not-identical": "Hasła nie są takie same!"
     }
   }
 }

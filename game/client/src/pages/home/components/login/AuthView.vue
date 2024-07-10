@@ -9,6 +9,9 @@
         <RemindPasswordForm v-if="mode === 'remind-password'"
                             @remind-password-success="onRemindPasswordRequest"
                             @remind-password-error="onRemindPasswordRequestError"/>
+        <RegistrationForm v-if="mode === 'registration'"
+                          @registration-success="onLoginSuccess"
+                          @registration-error="onLoginError"/>
         <div class="auth-view__extra-operations">
           <template v-for="link of links" :key="link.id">
             <SimpleLink :text="$t(link.name)" @click="changeMode(link.mode)"/>
@@ -25,10 +28,12 @@ import LoginForm from "@/pages/home/components/login/LoginForm.vue";
 import RemindPasswordForm from "@/pages/home/components/login/RemindPasswordForm.vue";
 import {AUTH_AVAILABLE_ACTIONS} from "@/constants/auth/modes/auth-view-mode.constant";
 import {IAuthMode, IAuthModes} from "@/interfaces/auth/auth-modes.interface";
+import RegistrationForm from "@/pages/home/components/login/RegistrationForm.vue";
 
 export default {
   name: 'AuthView',
   components: {
+    RegistrationForm,
     RemindPasswordForm,
     SimpleLink,
     LoginForm
