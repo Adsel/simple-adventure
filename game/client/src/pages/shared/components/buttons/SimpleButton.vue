@@ -27,7 +27,7 @@ export default {
   setup(props: any, context: any) {
     const onClick = (event: any) => {
       event.preventDefault();
-      context.emit('click');
+      context.emit('click', event);
     };
 
     return {onClick};

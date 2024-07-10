@@ -9,7 +9,12 @@
     "show": "Ukryj",
     "empty": "Pusto",
     "level": "Poziom",
-    "loader": "Loader"
+    "loader": "Loader",
+    "form": {
+      "input": {
+        "invalid": "Pole jest nieprawidłowe"
+      }
+    }
   },
   "lang": {
     "pl": "Polski",

@@ -1,25 +1,22 @@
 <template>
-  <form>
-    <div>
-      <h2>{{ $t('login.headers.remind-password') }}</h2>
-    </div>
-    <div class="input-text__wrapper">
-      <label for="login" class="input-text__label">{{ $t('login.fields.enter-login-email' )}}</label>
-      <input type="text" name="login" class="input-text__input" id="login" v-model="loginOrMailInput">
-    </div>
-    <SimpleButton :text="$t('login.fields.remind-me')" @click="remindPassword"/>
-  </form>
+  <LobbyForm title="login.headers.remind-password"
+             action-title="login.fields.remind-me"
+             @submit="onSubmit">
+    <LobbyFormInput label="login.fields.enter-login-email" name="login" id="login" />
+  </LobbyForm>
 </template>
 <script lang="ts">
 import {ref} from "vue";
-import SimpleButton from "@/pages/shared/components/buttons/SimpleButton.vue";
 import {apiMethodRemindPassword} from "@/api/auth/auth.api";
 import {LoaderService} from "@/services/loader.service";
+import LobbyForm from "@/pages/shared/lobby-layout/forms/LobbyForm.vue";
+import LobbyFormInput from "@/pages/shared/lobby-layout/forms/components/inputs/LobbyFormInput.vue";
 
 export default {
   name: 'RemindPasswordForm',
   components: {
-    SimpleButton
+    LobbyForm,
+    LobbyFormInput,
   },
   emits: ['remind-password-success', 'remind-password-error'],
   setup(setup: any, context: any) {
@@ -44,9 +41,14 @@ export default {
       }).finally(() => LoaderService.hideLoader());
     };
 
+    const onSubmit = () => {
+      remindPassword();
+    };
+
     return {
-      remindPassword,
-      loginOrMailInput
+      loginOrMailInput,
+      onSubmit,
+      remindPassword
     };
   }
 }

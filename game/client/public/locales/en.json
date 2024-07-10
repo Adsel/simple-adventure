@@ -9,7 +9,12 @@
     "show": "Show",
     "empty": "Empty",
     "level": "Level",
-    "loader": "Loader"
+    "loader": "Loader",
+    "form": {
+      "input": {
+        "invalid": "Input is invalid"
+      }
+    }
   },
   "lang": {
     "pl": "Polish",

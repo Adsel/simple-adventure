@@ -1,117 +1,85 @@
 <template>
-  <form>
-    <div>
-      <h2>{{ $t('login.headers.sign-in')}}</h2>
-    </div>
-    <div>
-      <div>
-        <div class="input-text__wrapper">
-          <label for="login" class="input-text__label">
-            {{ $t('login.fields.enter-login')}}
-          </label>
-          <input type="text"
-                 name="login"
-                 class="input-text__input"
-                 :class="{ 'input-text__input--invalid' : errors.password }"
-                 id="login"
-                 v-model="form.login">
-        </div>
-        <div v-if="errors.login" class="input-validator__wrapper">
-          <span>{{ errors.login }}</span>
-        </div>
-      </div>
-      <div>
-        <div class="input-text__wrapper">
-          <label for="password" class="input-text__label">
-            {{ $t('login.fields.enter-password')}}
-          </label>
-          <input :type="showPassword ? 'text' : 'password'"
-                 name="password"
-                 class="input-text__input input-text__input--icon"
-                 :class="{ 'input-text__input--invalid' : errors.password }"
-                 id="password"
-                 v-model="form.password">
-          <img class="input-text__icon input-text__icon--btn"
-               role="button"
-               alt="Icon eye"
-               :src="require('@/assets/icons/auth/' + (showPassword ? 'icon-eye-disabled-24x24.svg' : 'icon-eye-brown-24x24.svg'))"
-               :title="showPassword ? $t('generic.hide') : $t('generic.show')"
-               @click="togglePwdVisibility"/>
-        </div>
-        <div v-if="errors.password" class="input-validator__wrapper">
-          <span>{{ errors.password }}</span>
-        </div>
-      </div>
-    </div>
-    <SimpleButton :text="$t('login.fields.login')"
-                  @click="onLoginSubmit"
-                  type="submit"/>
-  </form>
+  <LobbyForm title="login.headers.sign-in"
+             id="loginForm"
+             action-title="login.fields.login"
+             @submit="onSubmit">
+    <LobbyFormInput :error-msg="errors.login ? errors.login : null"
+                    ref="loginInputRef"
+                    label="login.fields.enter-login"
+                    name="login"
+                    id="login"/>
+    <LobbyFormInput :error-msg="errors.password ? errors.password : null"
+                    :show-password="showPassword"
+                    ref="passwordInputRef"
+                    label="login.fields.enter-password"
+                    name="password"
+                    type="password"
+                    id="password"
+                    @toggle-visibility="togglePwdVisibility"/>
+  </LobbyForm>
 </template>
 <script lang="ts">
+import * as yup from 'yup';
 import {ref} from "vue";
 import {apiMethodLogin} from "@/api/auth/auth.api";
 import {IAuthLoginResponse} from "@/interfaces/api/auth.interface";
 import {saveIntoLocalStorage} from "@/pages/game/helpers/local-storage.helper";
 import {LocalStorageKeyEnum} from "@/enums/local-storage-key.enum";
-import SimpleButton from "@/pages/shared/components/buttons/SimpleButton.vue";
 import {LoaderService} from "@/services/loader.service";
-import * as yup from 'yup';
-import {AUTH_REQUIREMENTS} from "@/config/auth.config";
+import {LoginSchema} from "@/schemas/validation/auth/login.schema";
+import {PasswordSchema} from "@/schemas/validation/auth/password.schema";
+import LobbyFormInput from "@/pages/shared/lobby-layout/forms/components/inputs/LobbyFormInput.vue";
+import LobbyForm from "@/pages/shared/lobby-layout/forms/LobbyForm.vue";
 
 export default {
   name: 'LoginForm',
   components: {
-    SimpleButton
+    LobbyForm,
+    LobbyFormInput,
   },
   emits: ['login-error', 'login-success'],
   setup(props: any, context: any) {
-    const form = ref({
-      login: '',
-      password: '',
-    });
-    const errors = ref({});
+    const loginInputRef = ref<any>(null);
+    const passwordInputRef = ref<any>(null);
     const showPassword = ref(false);
-    // TODO:
-    // split into separated definitions (to registration usage)
+    const errors = ref({});
     const schema = yup.object().shape({
-      login: yup.string()
-          .min(AUTH_REQUIREMENTS.fields.login.min, `Login must be at least ${AUTH_REQUIREMENTS.fields.login.min} characters long!`)
-          .max(AUTH_REQUIREMENTS.fields.login.max, `Login can be at most ${AUTH_REQUIREMENTS.fields.login.max} characters long!`)
-          .required('Login is required!'),
-      password: yup.string()
-          .min(AUTH_REQUIREMENTS.fields.password.min, `Password must be at least ${AUTH_REQUIREMENTS.fields.password.min} characters long!`)
-          .max(AUTH_REQUIREMENTS.fields.password.max, `Password can be at most ${AUTH_REQUIREMENTS.fields.password.max} characters long!`)
-          .matches(AUTH_REQUIREMENTS.fields.password.rules.alpha, 'Password must contain at least one letter!')
-          .matches(AUTH_REQUIREMENTS.fields.password.rules.number, 'Password must contain at least one number!')
-          .matches(AUTH_REQUIREMENTS.fields.password.rules.char, 'Password must contain at least one special character!')
-          .required('Password is required!'),
+      login: LoginSchema(yup),
+      password: PasswordSchema(yup),
     });
+
+    const onSubmit = async () => {
+      await validateForm();
+      if (Object.keys(errors.value).length === 0) {
+        login();
+      }
+      console.log('onLoginSubmit', loginInputRef.value.getValue(), errors.value);
+    };
 
     const validateForm = async () => {
       try {
-        await schema.validate(form.value, {abortEarly: false});
+        await schema.validate({
+          login: loginInputRef.value.getValue() || '',
+          password: passwordInputRef.value.getValue() || '',
+        }, {abortEarly: false});
         errors.value = {};
       } catch (err: any) {
         const validationErrors: any = {};
         err.inner.forEach((error: any) => {
           validationErrors[error.path] = error.message;
         });
+        console.log('errors', errors.value);
         errors.value = validationErrors;
-      }
-    };
 
-    const onLoginSubmit = async () => {
-      await validateForm();
-      if (Object.keys(errors.value).length === 0) {
-        login();
       }
     };
 
     const login = () => {
-      // event.preventDefault();
       LoaderService.showLoader();
-      apiMethodLogin(form.value.login, form.value.password).then((response: IAuthLoginResponse) => {
+      apiMethodLogin(
+          loginInputRef.value.getValue(),
+          passwordInputRef.value.getValue()
+      ).then((response: IAuthLoginResponse) => {
         saveIntoLocalStorage(LocalStorageKeyEnum.AuthToken, response.token);
         saveIntoLocalStorage(LocalStorageKeyEnum.PlayerId, response.playerId);
         context.emit('login-success', response);
@@ -126,9 +94,10 @@ export default {
 
     return {
       errors,
-      form,
+      loginInputRef,
+      passwordInputRef,
       showPassword,
-      onLoginSubmit,
+      onSubmit,
       togglePwdVisibility
     };
   }
