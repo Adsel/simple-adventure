@@ -18,6 +18,17 @@
            :title="showPassword ? $t('generic.hide') : $t('generic.show')"
            @click="emitPwdVisibility"/>
     </template>
+    <template v-else-if="type === 'checkbox'">
+      <input :type="type"
+             :name="name"
+             :id="id"
+             class="input-text__input"
+             :class="{ 'input-text__input--invalid' : errorMsg }"
+             v-model="input">
+      <span v-if="text">
+        {{ $t(text) }}
+      </span>
+    </template>
     <template v-else>
       <input :type="type"
              :name="name"

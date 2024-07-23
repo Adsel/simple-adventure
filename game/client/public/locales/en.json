@@ -63,5 +63,25 @@
       "required": "Password is required!",
       "not-identical": "The passwords are not the same!"
     }
+  },
+  "email": {
+    "headers": {
+      "enter-email": "Enter your E-mail"
+    },
+    "validation": {
+      "format": "Enter valid e-mail address!",
+      "required": "E-mail is required!"
+    }
+  },
+  "terms": {
+    "headers": {
+      "accept-terms": "Accept the regulations"
+    },
+    "fields": {
+      "content": "TODO: content"
+    },
+    "validation": {
+      "required": "Consent is required!"
+    }
   }
 }

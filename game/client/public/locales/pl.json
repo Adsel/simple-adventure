@@ -34,7 +34,7 @@
   "login": {
     "fields": {
       "enter-login": "Wprowadź swój Login",
-      "enter-login-email": "Wprowadź swój Login lub hasło",
+      "enter-login-email": "Wprowadź swój Login lub E-mail",
       "enter-password": "Wprowadź swoje Hasło",
       "enter-password-repeat": "Wprowadź ponownie swoje Hasło",
       "login": "Zaloguj się",
@@ -62,6 +62,26 @@
       "one-special-char": "Hasło musi zawierać co najmniej jeden znak specjalny!",
       "required": "Hasło jest wymagane!",
       "not-identical": "Hasła nie są takie same!"
+    }
+  },
+  "email": {
+    "headers": {
+      "enter-email": "Wprowadź swój E-mail"
+    },
+    "validation": {
+      "format": "Wprowadź poprawny adres E-mail!",
+      "required": "E-mail jest wymagany!!"
+    }
+  },
+  "terms": {
+    "headers": {
+      "accept-terms": "Zaakceptuj regulamin"
+    },
+    "fields": {
+      "content": "TODO: treść"
+    },
+    "validation": {
+      "required": "Zgoda jest wymagana!"
     }
   }
 }

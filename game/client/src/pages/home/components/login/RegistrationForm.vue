@@ -3,12 +3,18 @@
              id="registerForm"
              action-title="auth.headers.register"
              @submit="onSubmit">
-    <LobbyFormInput :error-msg="errors.login ? errors.login : null"
+    <LobbyFormInput :error-msg="errors?.email"
+                    ref="emailInputRef"
+                    label="email.headers.enter-email"
+                    name="email"
+                    id="email"
+                    type="email"/>
+    <LobbyFormInput :error-msg="errors?.login"
                     ref="loginInputRef"
                     label="login.fields.enter-login"
                     name="login"
                     id="login"/>
-    <LobbyFormInput :error-msg="errors.password ? errors.password : null"
+    <LobbyFormInput :error-msg="errors?.password"
                     :show-password="showPassword"
                     ref="passwordInputRef"
                     label="login.fields.enter-password"
@@ -16,7 +22,7 @@
                     id="password"
                     type="password"
                     @toggle-visibility="togglePwdVisibility"/>
-    <LobbyFormInput :error-msg="errors.passwordRepeat ? errors.passwordRepeat : null"
+    <LobbyFormInput :error-msg="errors?.passwordRepeat"
                     :show-password="showPassword"
                     ref="passwordRepeatInputRef"
                     label="login.fields.enter-password-repeat"
@@ -24,6 +30,13 @@
                     id="passwordRepeat"
                     type="password"
                     @toggle-visibility="togglePwdVisibility"/>
+    <LobbyFormInput :error-msg="errors?.terms"
+                    ref="termsInputRef"
+                    label="terms.headers.accept-terms"
+                    text="terms.fields.content"
+                    name="terms"
+                    id="terms"
+                    type="checkbox"/>
   </LobbyForm>
 </template>
 <script lang="ts">
@@ -39,6 +52,8 @@ import {PasswordSchema} from "@/schemas/validation/auth/password.schema";
 import LobbyFormInput from "@/pages/shared/lobby-layout/forms/components/inputs/LobbyFormInput.vue";
 import LobbyForm from "@/pages/shared/lobby-layout/forms/LobbyForm.vue";
 import {useI18n} from "vue-i18n";
+import {EMailSchema} from "@/schemas/validation/auth/e-mail.schema";
+import {TermsSchema} from "@/schemas/validation/auth/terms.schema";
 
 export default {
   name: 'RegistrationForm',
@@ -49,11 +64,13 @@ export default {
   emits: ['login-error', 'login-success'],
   setup(props: any, context: any) {
     const {t} = useI18n();
+    const emailInputRef = ref<any>(null);
+    const errors = ref<any>({});
     const loginInputRef = ref<any>(null);
     const passwordInputRef = ref<any>(null);
     const passwordRepeatInputRef = ref<any>(null);
     const showPassword = ref(false);
-    const errors = ref<any>({});
+    const termsInputRef = ref<any>(null);
 
     const onSubmit = async () => {
       await validateForm();
@@ -74,10 +91,14 @@ export default {
           login: LoginSchema(yup, t),
           password: PasswordSchema(yup, t),
           passwordRepeat: PasswordSchema(yup, t),
+          email: EMailSchema(yup, t),
+          terms: TermsSchema(yup, t),
         }).validate({
           login: loginInputRef.value.getValue() || '',
           password: passwordInputRef.value.getValue() || '',
           passwordRepeat: passwordRepeatInputRef.value.getValue() || '',
+          email: emailInputRef.value.getValue() || '',
+          terms: termsInputRef.value.getValue() || false,
         }, {abortEarly: false});
       } catch (err: any) {
         const validationErrors: any = {};
@@ -109,6 +130,7 @@ export default {
 
     return {
       errors,
+      emailInputRef,
       loginInputRef,
       passwordInputRef,
       passwordRepeatInputRef,
