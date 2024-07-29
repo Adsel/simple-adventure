@@ -1,0 +1,58 @@
+@import "../../../../assets/styles/components/page/buttons";
+@import "../../../../assets/styles/components/page/pixeled-image";
+@import "../../../../assets/styles/definitions/units";
+
+.language-selector {
+  &__wrapper {
+    position: relative;
+    display: inline-block;
+  }
+}
+
+.language-selector-toggler {
+  &__wrapper {
+    background-color: $color-gray-444;
+    color: $color-white;
+    padding: $px-8 $px-12;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: $px-12;
+  }
+
+  &__image {
+    @include pixelArtImage();
+
+    &--open {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.language-selector-dropdown {
+  &__wrapper {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: $color-gray-333;
+    border: $px-1 solid $color-gray-CCC;
+    width: 150px;
+    z-index: 10;
+  }
+
+  &__item {
+    padding: $px-10;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      background-color: $color-gray-555;
+    }
+  }
+
+  &__flag {
+    margin-right: $px-16;
+  }
+}

@@ -1,0 +1,6 @@
+@import '../../definitions/images';
+
+.pixel-image__img {
+  @include pixelArtImage();
+  pointer-events: none;
+}

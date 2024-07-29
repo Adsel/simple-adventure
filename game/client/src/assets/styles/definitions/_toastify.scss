@@ -1,0 +1,27 @@
+@import 'borders-radius';
+@import 'colors';
+
+.Toastify__toast-container {
+  background-color: $color-primary-2;
+  border: 2px solid $color-black;
+  padding: 0.375rem;
+  border-radius: $border-radius-input-standard;
+}
+
+.Toastify__toast {
+  background-color: $color-secondary-1;
+  border: 2px solid $color-black;
+  color: $color-white;
+  padding: 1rem;
+  border-radius: $border-radius-input-standard;
+  margin-bottom: 0;
+}
+
+.Toastify__close-button {
+  color: white;
+  opacity: 0.6;
+}
+
+:root {
+  --toastify-color-error: #d04648;
+}

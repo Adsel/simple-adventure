@@ -1,0 +1,88 @@
+{
+  "auth": {
+    "headers": {
+      "sign-in": "Sign in",
+      "remind-password": "Remind password",
+      "registration": "Registration",
+      "register": "Register",
+      "logout": "Logout"
+    }
+  },
+  "characters": {
+    "headers": {
+      "choose": "Choose character"
+    }
+  },
+  "generic": {
+    "hide": "Hide",
+    "show": "Show",
+    "empty": "Empty",
+    "level": "Level",
+    "loader": "Loader",
+    "form": {
+      "input": {
+        "invalid": "Input is invalid"
+      }
+    }
+  },
+  "lang": {
+    "pl": "Polish",
+    "en": {
+      "us": "English (US)"
+    }
+  },
+  "login": {
+    "fields": {
+      "enter-login": "Enter your Login",
+      "enter-login-email": "Enter your Login or E-mail",
+      "enter-password": "Enter your Password",
+      "enter-password-repeat": "Enter your Password again",
+      "login": "Log in",
+      "remind-me": "Remind me"
+    },
+    "validation": {
+      "min-length": "Login must be at least {length} characters long!",
+      "max-length": "Login can be at most {length} characters long!",
+      "required": "Login is required!"
+    }
+  },
+  "lobby-nav": {
+    "items": {
+      "play": "Play",
+      "documentation": "Documentation",
+      "knowledge-base": "Knowledge Base"
+    }
+  },
+  "password": {
+    "validation": {
+      "min-length": "Password must be at least {length} characters long!",
+      "max-length": "Password can be at most {length} characters long!",
+      "one-letter": "Password must contain at least one letter!",
+      "one-number": "Password must contain at least one number!",
+      "one-special-char": "Password must contain at least one special character!",
+      "required": "Password is required!",
+      "not-identical": "The passwords are not the same!"
+    }
+  },
+  "email": {
+    "headers": {
+      "enter-email": "Enter your E-mail"
+    },
+    "validation": {
+      "format": "Enter valid e-mail address!",
+      "required": "E-mail is required!"
+    }
+  },
+  "terms": {
+    "headers": {
+      "accept-terms": "Accept the regulations"
+    },
+    "fields": {
+      "content": "I accept the Terms of Service and Privacy Policy{link}.",
+      "privacy": "I consent to the processing of my personal data by{name}."
+    },
+    "validation": {
+      "required": "Consent is required!"
+    }
+  }
+}

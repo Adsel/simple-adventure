@@ -1,0 +1,45 @@
+version: "3"
+services:
+  simple-adventure-db:
+    image: "mariadb:10.3.11"
+    container_name: simple-adventure-db
+    volumes:
+      - ~/docker/simple-adventure-db:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+
+  simple-adventure-phpmyadmin:
+    image: "phpmyadmin/phpmyadmin"
+    container_name: simple-adventure-phpmyadmin
+    depends_on:
+      - simple-adventure-db
+    links:
+      - simple-adventure-db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    ports:
+      - "3333:80"
+
+  simple-adventure-socket-io:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: simple-adventure-socket-io
+    environment:
+      - DB_NAME=SimpleAdventure
+    depends_on:
+      - simple-adventure-db
+    links:
+      - simple-adventure-db
+    volumes:
+      - ~/www/simple-adventure/game/server/:/app
+    ports:
+      - "3002:8080"
+    stdin_open: true
+    tty: true
+    env_file:
+      - ./src/socket-io/.env
