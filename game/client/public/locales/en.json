@@ -78,7 +78,8 @@
       "accept-terms": "Accept the regulations"
     },
     "fields": {
-      "content": "TODO: content"
+      "content": "I accept the Terms of Service and Privacy Policy{link}.",
+      "privacy": "I consent to the processing of my personal data by{name}."
     },
     "validation": {
       "required": "Consent is required!"

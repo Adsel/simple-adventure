@@ -1,6 +1,7 @@
 <template>
   <div class="input-text__wrapper">
     <label :for="id"
+           v-if="type !== 'checkbox'"
            class="input-text__label">
       {{ $t(label) }}
     </label>
@@ -19,15 +20,18 @@
            @click="emitPwdVisibility"/>
     </template>
     <template v-else-if="type === 'checkbox'">
-      <input :type="type"
-             :name="name"
-             :id="id"
-             class="input-text__input"
-             :class="{ 'input-text__input--invalid' : errorMsg }"
-             v-model="input">
-      <span v-if="text">
-        {{ $t(text) }}
-      </span>
+      <label class="input-checkbox__wrapper">
+        <input type="checkbox"
+               :name="name"
+               :id="id"
+               class="input-checkbox__input"
+               :class="{ 'input-checkbox__input--invalid' : errorMsg }"
+               v-model="input">
+        <span v-if="text"
+              class="input-checkbox__label">
+          {{ $t(text) }}
+        </span>
+      </label>
     </template>
     <template v-else>
       <input :type="type"
@@ -38,7 +42,8 @@
              v-model="input">
     </template>
   </div>
-  <div v-if="errorMsg" class="input-validator__wrapper">
+  <div v-if="errorMsg"
+       class="input-validator__wrapper">
     <span>{{ errorMsg }}</span>
   </div>
 </template>

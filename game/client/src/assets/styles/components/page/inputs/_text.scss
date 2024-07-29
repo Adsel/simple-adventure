@@ -1,0 +1,51 @@
+@import '../../../definitions/colors';
+@import '../../../definitions/units';
+
+.input-text {
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+  }
+
+  &__input {
+    border: 3px solid black;
+    background-color: $color-primary-2;
+    color: $color-white;
+    font-weight: 600;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    font-family: inherit;
+
+    &--icon {
+      padding-right: $px-64;
+    }
+
+    &--invalid {
+      border-color: $color-error-validation-1-border;
+    }
+  }
+
+  &__label {
+    color: $color-primary-3;
+  }
+
+  &__icon {
+    position: absolute;
+    width: $px-48;
+    height: $px-48;
+    padding: $px-8;
+    right: 0;
+    top: $px-16;
+
+    &--btn {
+      cursor: pointer;
+      transition: transform .2s;
+
+      &:hover {
+        transform: scale(1.15);
+      }
+    }
+  }
+}

@@ -10,7 +10,7 @@ export const LobbyFormInputProps = {
     },
     label: {
         type: String,
-        required: true,
+        required: false,
     },
     name: {
         type: String,

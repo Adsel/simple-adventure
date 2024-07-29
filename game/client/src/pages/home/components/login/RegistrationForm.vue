@@ -32,10 +32,15 @@
                     @toggle-visibility="togglePwdVisibility"/>
     <LobbyFormInput :error-msg="errors?.terms"
                     ref="termsInputRef"
-                    label="terms.headers.accept-terms"
                     text="terms.fields.content"
                     name="terms"
                     id="terms"
+                    type="checkbox"/>
+    <LobbyFormInput :error-msg="errors?.privacy"
+                    ref="termsPrivacyInputRef"
+                    text="terms.fields.privacy"
+                    name="termsPrivacy"
+                    id="termsPrivacy"
                     type="checkbox"/>
   </LobbyForm>
 </template>
@@ -71,6 +76,7 @@ export default {
     const passwordRepeatInputRef = ref<any>(null);
     const showPassword = ref(false);
     const termsInputRef = ref<any>(null);
+    const termsPrivacyInputRef = ref<any>(null);
 
     const onSubmit = async () => {
       await validateForm();
@@ -93,12 +99,14 @@ export default {
           passwordRepeat: PasswordSchema(yup, t),
           email: EMailSchema(yup, t),
           terms: TermsSchema(yup, t),
+          privacy: TermsSchema(yup, t),
         }).validate({
           login: loginInputRef.value.getValue() || '',
           password: passwordInputRef.value.getValue() || '',
           passwordRepeat: passwordRepeatInputRef.value.getValue() || '',
           email: emailInputRef.value.getValue() || '',
           terms: termsInputRef.value.getValue() || false,
+          privacy: termsPrivacyInputRef.value.getValue() || false,
         }, {abortEarly: false});
       } catch (err: any) {
         const validationErrors: any = {};
@@ -135,6 +143,8 @@ export default {
       passwordInputRef,
       passwordRepeatInputRef,
       showPassword,
+      termsInputRef,
+      termsPrivacyInputRef,
       onSubmit,
       togglePwdVisibility
     };

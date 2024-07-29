@@ -78,7 +78,8 @@
       "accept-terms": "Zaakceptuj regulamin"
     },
     "fields": {
-      "content": "TODO: treść"
+      "content": "Akceptuję Regulamin i Politykę Prywatności{link}.",
+      "privacy": "Wyrażam zgodę na przetwarzanie moich danych osobowych przez{name}."
     },
     "validation": {
       "required": "Zgoda jest wymagana!"
