@@ -1,0 +1,74 @@
+@import '../../../assets/styles/definitions/borders-radius';
+@import '../../../assets/styles/definitions/colors';
+@import '../../../assets/styles/definitions/game-board-definitions';
+@import '../../../assets/styles/definitions/images';
+@import '../../../assets/styles/definitions/units';
+@import '../../../assets/styles/definitions/typography';
+
+$mainBorder: $px-3 solid $color-black;
+%rightRow {
+  padding: $px-8;
+  background-color: $color-primary-3-30;
+  align-self: flex-start;
+  border-right: $mainBorder;
+  border-top: $mainBorder;
+  border-bottom: $mainBorder;
+  border-radius: 0 $px-10 $px-10 0;
+}
+
+.game-board {
+  &__overlay {
+    background-color: $color-background;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+  }
+
+  &__center {
+    display: flex;
+  }
+
+  &__wrapper {
+    background-color: $color-primary-2;
+    border: $mainBorder;
+    padding: $gamePadding;
+    border-radius: $border-radius-input-standard;
+    width: calc(#{$gameBoardX} + (2 * #{$gamePadding}));
+    height: calc(#{$gameBoardY} + (2 * #{$gamePadding}));
+    position: relative;
+  }
+
+  &__canvas {
+    @include pixelArtImage();
+    display: block;
+    width: $gameBoardX;
+    height: $gameBoardY;
+    margin: $gamePadding;
+    position: absolute;
+    left: auto;
+    top: auto;
+    outline: $px-3 solid $color-black;
+  }
+
+  &__right-column {
+    margin-top: $px-16;
+    gap: $px-4;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__stats-header {
+    @include font-weight-semi-bold();
+    @extend %rightRow;
+    font-size: $px-20;
+  }
+
+  &__stats-desc {
+    @extend %rightRow;
+    font-size: $px-16;
+    display: flex;
+    flex-direction: column;
+  }
+}

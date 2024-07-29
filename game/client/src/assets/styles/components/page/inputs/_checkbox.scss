@@ -6,25 +6,25 @@
     display: flex;
     align-items: center;
     cursor: pointer;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
+    gap: $px-8;
+    margin-top: $px-8;
   }
 
   &__input {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    width: 20px;
-    height: 20px;
+    width: $px-20;
+    height: $px-20;
     border-radius: 0;
     cursor: pointer;
     position: relative;
-    border: 3px solid black;
+    border: $px-3 solid black;
     background-color: $color-white;
     color: $color-white;
     font-weight: 600;
-    font-size: 1.5rem;
-    padding: 0.5rem;
+    font-size: $px-24;
+    padding: $px-8;
     font-family: inherit;
     margin: 0;
 
@@ -38,12 +38,12 @@
       &::after {
         content: '';
         position: absolute;
-        left: 4px;
-        top: 2px;
-        width: 4px;
-        height: 8px;
+        left: $px-4;
+        top: $px-2;
+        width: $px-4;
+        height: $px-8;
         border: solid white;
-        border-width: 0 3px 3px 0;
+        border-width: 0 $px-3 $px-3 0;
         transform: rotate(45deg);
       }
     }

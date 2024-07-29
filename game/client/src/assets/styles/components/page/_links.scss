@@ -1,11 +1,12 @@
 @import '../../definitions/colors';
+@import '../../definitions/units';
 
 .link {
   &__btn {
     width: 100%;
     height: 100%;
-    font-size: 14px;
-    margin: 5px;
+    font-size: $px-14;
+    margin: $px-5;
     color: $color-primary-2-lighten;
     text-decoration: none;
     display: inline-block;

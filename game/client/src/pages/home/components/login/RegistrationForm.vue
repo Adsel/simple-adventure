@@ -30,18 +30,20 @@
                     id="passwordRepeat"
                     type="password"
                     @toggle-visibility="togglePwdVisibility"/>
-    <LobbyFormInput :error-msg="errors?.terms"
-                    ref="termsInputRef"
-                    text="terms.fields.content"
-                    name="terms"
-                    id="terms"
-                    type="checkbox"/>
-    <LobbyFormInput :error-msg="errors?.privacy"
-                    ref="termsPrivacyInputRef"
-                    text="terms.fields.privacy"
-                    name="termsPrivacy"
-                    id="termsPrivacy"
-                    type="checkbox"/>
+    <div>
+      <LobbyFormInput :error-msg="errors?.terms"
+                      ref="termsInputRef"
+                      text="terms.fields.content"
+                      name="terms"
+                      id="terms"
+                      type="checkbox"/>
+      <LobbyFormInput :error-msg="errors?.privacy"
+                      ref="termsPrivacyInputRef"
+                      text="terms.fields.privacy"
+                      name="termsPrivacy"
+                      id="termsPrivacy"
+                      type="checkbox"/>
+    </div>
   </LobbyForm>
 </template>
 <script lang="ts">

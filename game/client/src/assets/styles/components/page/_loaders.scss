@@ -1,4 +1,6 @@
+@import '../../definitions/borders-radius';
 @import '../../definitions/colors';
+@import '../../definitions/units';
 @import '../../definitions/game-board-definitions';
 
 .dot-elastic {
@@ -8,34 +10,34 @@
   width: $dotSize;
   height: $dotSize;
   border-radius: 50%;
-  background-color: white;//color;
-  color: white;//color;
+  background-color: $color-white;
+  color: $color-white;
   animation: dot-elastic 1s infinite linear;
 
   &::before, &::after {
-    content: "";
+    content: '';
     display: inline-block;
     position: absolute;
     top: 0;
   }
 
   &::before {
-    left: -15px;
+    left: -$px-15;
     width: $dotSize;
     height: $dotSize;
     border-radius: 50%;
-    background-color: white;//color;
-    color: white;//color;
+    background-color: $color-white;
+    color: $color-white;
     animation: dot-elastic-before 1s infinite linear;
   }
 
   &::after {
-    left: 15px;
+    left: $px-15;
     width: $dotSize;
     height: $dotSize;
-    border-radius: 5px;
-    background-color: white;//color;
-    color: white;//color;
+    border-radius: $px-5;
+    background-color: $color-white;
+    color: $color-white;
     animation: dot-elastic-after 1s infinite linear;
   }
 }
@@ -112,7 +114,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 1rem;
+    gap: $px-16;
   }
 
   &__wrapper {
@@ -120,16 +122,16 @@
     background-color: $color-primary-2;
     color: white;
     font-weight: 600;
-    font-size: 1.5rem;
-    padding: 0.25rem;
+    font-size: $px-24;
+    padding: $px-4;
     font-family: inherit;
-    border-radius: 10px;
+    border-radius: $border-radius-input-standard;
     width: 60%;
   }
 
   &__label {
     display: flex;
-    gap: 1.5rem;
+    gap: $px-24;
     justify-content: center;
     align-items: center;
   }
@@ -139,23 +141,23 @@
     background-color: $color-secondary-1;
     color: $color-white;
     font-weight: 600;
-    font-size: 1.5rem;
+    font-size: $px-24;
     font-family: inherit;
-    border-radius: 10px;
+    border-radius: $border-radius-input-standard;
     overflow: hidden;
   }
 
   &__progress {
     background: $color-bar-bg-red;
-    height: 22px;
+    height: $px-22;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-right: 2px solid $color-bar-border-red;
+    border-right: $px-2 solid $color-bar-border-red;
   }
 
   &__progress-value {
-    font-size: 1rem;
+    font-size: $px-16;
     font-weight: bold;
   }
 }

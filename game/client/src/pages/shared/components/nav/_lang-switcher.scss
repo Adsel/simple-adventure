@@ -13,15 +13,12 @@
   &__wrapper {
     background-color: $color-gray-444;
     color: $color-white;
-    padding: 8px 12px;
+    padding: $px-8 $px-12;
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: $px-12;
-  }
-
-  &__toggler {
   }
 
   &__image {
@@ -39,7 +36,7 @@
     top: 100%;
     left: 0;
     background-color: $color-gray-333;
-    border: 1px solid $color-gray-CCC;
+    border: $px-1 solid $color-gray-CCC;
     width: 150px;
     z-index: 10;
   }

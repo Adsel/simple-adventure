@@ -18,11 +18,12 @@ export default {
 </script>
 <style scoped lang="scss">
 @import "../../../assets/styles/components/page/pixeled-image";
+@import "../../../assets/styles/definitions/units";
 
 .game {
   &__title {
     display: flex;
-    gap: 10px;
+    gap: $px-10;
     align-items: center;
   }
 }
