@@ -1,50 +1,52 @@
 <template>
-  <div class="input-text__wrapper">
-    <label :for="id"
-           v-if="type !== 'checkbox'"
-           class="input-text__label">
-      {{ $t(label) }}
-    </label>
-    <template v-if="type === 'password'">
-      <input :type="showPassword ? 'text' : 'password'"
-             :name="name"
-             class="input-text__input input-text__input--icon"
-             :class="{ 'input-text__input--invalid' : errorMsg }"
-             id="password"
-             v-model="input">
-      <img class="input-text__icon input-text__icon--btn"
-           role="button"
-           alt="Icon eye"
-           :src="require('@/assets/icons/auth/' + (showPassword ? 'icon-eye-disabled-24x24.svg' : 'icon-eye-brown-24x24.svg'))"
-           :title="showPassword ? $t('generic.hide') : $t('generic.show')"
-           @click="emitPwdVisibility"/>
-    </template>
-    <template v-else-if="type === 'checkbox'">
-      <label class="input-checkbox__wrapper">
-        <input type="checkbox"
+  <div class="input-text">
+    <div class="input-text__wrapper">
+      <label :for="id"
+             v-if="type !== 'checkbox'"
+             class="input-text__label">
+        {{ $t(label) }}
+      </label>
+      <template v-if="type === 'password'">
+        <input :type="showPassword ? 'text' : 'password'"
                :name="name"
-               :id="id"
-               class="input-checkbox__input"
-               :class="{ 'input-checkbox__input--invalid' : errorMsg }"
+               class="input-text__input input-text__input--icon"
+               :class="{ 'input-text__input--invalid' : errorMsg }"
+               id="password"
                v-model="input">
-        <span v-if="text"
-              class="input-checkbox__label">
+        <img class="input-text__icon input-text__icon--btn"
+             role="button"
+             alt="Icon eye"
+             :src="require('@/assets/icons/auth/' + (showPassword ? 'icon-eye-disabled-24x24.svg' : 'icon-eye-brown-24x24.svg'))"
+             :title="showPassword ? $t('generic.hide') : $t('generic.show')"
+             @click="emitPwdVisibility"/>
+      </template>
+      <template v-else-if="type === 'checkbox'">
+        <label class="input-checkbox__wrapper">
+          <input type="checkbox"
+                 :name="name"
+                 :id="id"
+                 class="input-checkbox__input"
+                 :class="{ 'input-checkbox__input--invalid' : errorMsg }"
+                 v-model="input">
+          <span v-if="text"
+                class="input-checkbox__label">
           {{ $t(text) }}
         </span>
-      </label>
-    </template>
-    <template v-else>
-      <input :type="type"
-             :name="name"
-             :id="id"
-             class="input-text__input"
-             :class="{ 'input-text__input--invalid' : errorMsg }"
-             v-model="input">
-    </template>
-  </div>
-  <div v-if="errorMsg"
-       class="input-validator__wrapper">
-    <span>{{ errorMsg }}</span>
+        </label>
+      </template>
+      <template v-else>
+        <input :type="type"
+               :name="name"
+               :id="id"
+               class="input-text__input"
+               :class="{ 'input-text__input--invalid' : errorMsg }"
+               v-model="input">
+      </template>
+    </div>
+    <div v-if="errorMsg"
+         class="input-validator__wrapper">
+      <span>{{ errorMsg }}</span>
+    </div>
   </div>
 </template>
 <script lang="ts">
