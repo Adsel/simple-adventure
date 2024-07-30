@@ -22,5 +22,11 @@
   "bugs": {
     "url": "https://github.com/Adsel/simple-adventure/issues"
   },
-  "homepage": "https://github.com/Adsel/simple-adventure#readme"
+  "homepage": "https://github.com/Adsel/simple-adventure#readme",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server",
+    "shared"
+  ]
 }

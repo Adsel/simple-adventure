@@ -13,12 +13,12 @@
 <script lang="ts">
 import * as yup from "yup";
 import {ref} from "vue";
+import {useI18n} from "vue-i18n";
 import {apiMethodRemindPassword} from "@/api/auth/auth.api";
 import {LoaderService} from "@/services/loader.service";
-import {LoginSchema} from "@/schemas/validation/auth/login.schema";
+import {LoginSchema} from "shared/schemas/validation/auth/login.schema";
 import LobbyForm from "@/pages/shared/lobby-layout/forms/LobbyForm.vue";
 import LobbyFormInput from "@/pages/shared/lobby-layout/forms/components/inputs/LobbyFormInput.vue";
-import {useI18n} from "vue-i18n";
 
 export default {
   name: 'RemindPasswordForm',

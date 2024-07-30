@@ -54,13 +54,13 @@ import {IAuthLoginResponse} from "@/interfaces/api/auth.interface";
 import {saveIntoLocalStorage} from "@/pages/game/helpers/local-storage.helper";
 import {LocalStorageKeyEnum} from "@/enums/local-storage-key.enum";
 import {LoaderService} from "@/services/loader.service";
-import {LoginSchema} from "@/schemas/validation/auth/login.schema";
-import {PasswordSchema} from "@/schemas/validation/auth/password.schema";
+import {LoginSchema} from "shared/schemas/validation/auth/login.schema";
+import {PasswordSchema} from "shared/schemas/validation/auth/password.schema";
 import LobbyFormInput from "@/pages/shared/lobby-layout/forms/components/inputs/LobbyFormInput.vue";
 import LobbyForm from "@/pages/shared/lobby-layout/forms/LobbyForm.vue";
 import {useI18n} from "vue-i18n";
-import {EMailSchema} from "@/schemas/validation/auth/e-mail.schema";
-import {TermsSchema} from "@/schemas/validation/auth/terms.schema";
+import {EMailSchema} from "shared/schemas/validation/auth/e-mail.schema";
+import {TermsSchema} from "shared/schemas/validation/auth/terms.schema";
 
 export default {
   name: 'RegistrationForm',
