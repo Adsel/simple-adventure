@@ -4,6 +4,7 @@ import {API_METHOD_REGISTER} from "../../api/auth/register";
 import {API_METHOD_GET_SUMMONERS} from "../../api/player/summoners";
 import {middleware} from "../../middlewares";
 import {API_METHOD_REMIND_PASSWORD} from "../../api/auth/remind-password";
+import {SimpleAdventureASCII} from "../../constants/ascii/simple-adventure-ascii.constant";
 
 export abstract class SocketServerAbstract {
     protected httpServer: any;
@@ -59,7 +60,7 @@ export abstract class SocketServerAbstract {
     }
 
     public loadApiRoutes(): void {
-        this.appServer.get('/', (req: any, res: any) => res.send('SimpleAdventure API - version 1.0.0'));
+        this.appServer.get('/', (req: any, res: any) => res.send(`SimpleAdventure API - version 1.0.0<br><pre>${SimpleAdventureASCII}</pre>`));
         this.appServer.post('/api/auth/login', async (req: any, res: any, next: any) => await API_METHOD_LOGIN(req, res, next));
         this.appServer.post('/api/auth/remind-password', async (req: any, res: any, next: any) => await API_METHOD_REMIND_PASSWORD(req, res, next));
         this.appServer.post('/api/auth/register', async (req: any, res: any, next: any) => await API_METHOD_REGISTER(req, res, next));
