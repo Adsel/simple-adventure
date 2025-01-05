@@ -19,7 +19,7 @@ help:
 
 game:
 	docker compose -f database/docker-compose.yml up -d
-	docker compose -f game/server/docker-compose-sock-js.yml up -d
+	docker compose -f game/server/docker-compose-socket-io.yml up -d
 	docker compose -f game/client/docker-compose.yml up -d
 
 list:
@@ -34,5 +34,5 @@ stop:
 	docker compose -f database/docker-compose.yml down
 	docker compose -f tools/map-collision-setter/backend/docker-compose.yml down
 	docker compose -f tools/map-collision-setter/frontend/docker-compose.yml down
-	docker compose -f game/server/docker-compose-sock-js.yml down
+	docker compose -f game/server/docker-compose-socket-io.yml down
 	docker compose -f game/client/docker-compose.yml down

@@ -9,5 +9,6 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
+      - ../shared:/app/shared
     environment:
       - NODE_ENV=development
