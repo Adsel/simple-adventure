@@ -5,11 +5,15 @@ import {API_METHOD_GET_SUMMONERS} from "../../api/player/summoners";
 import {middleware} from "../../middlewares";
 import {API_METHOD_REMIND_PASSWORD} from "../../api/auth/remind-password";
 import {SimpleAdventureASCII} from "../../constants/ascii/simple-adventure-ascii.constant";
+import * as path from "node:path";
 
 export abstract class SocketServerAbstract {
     protected httpServer: any;
     protected appServer: any;
     protected connectedPlayers: IConnectedPlayer[] = [];
+    public alias = {
+        shared: path.resolve(__dirname, '../shared/')
+    };
 
     protected constructor(httpServer: any, appServer: any) {
         this.httpServer = httpServer;
@@ -25,6 +29,7 @@ export abstract class SocketServerAbstract {
     protected abstract loadRoutes(): void;
 
     protected abstract loadSocket(): void;
+
     protected abstract disconnectPlayer(player: IConnectedPlayer): void;
 
     public abstract start(port: number): void;

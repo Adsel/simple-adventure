@@ -1,0 +1,19 @@
+services:
+  simple-adventure-collisions-tool:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: simple-adventure-collisions-tool
+    env_file:
+      - ./.env
+    volumes:
+      - ~/www/simple-adventure/tools/map-collision-setter/backend/:/app
+    ports:
+      - "4001:8080"
+    stdin_open: true
+    tty: true
+
+networks:
+  default:
+    name: simple-adventure-network
+    external: true

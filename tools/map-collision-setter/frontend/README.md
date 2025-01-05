@@ -1,3 +1,8 @@
+# TODO
+    setup env with Makefile
+***
+
+
 # Simple Adventure - Management Tool - Frontend
 
 ```
@@ -26,3 +31,6 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+Local Env:
+- `http://localhost:4000/`

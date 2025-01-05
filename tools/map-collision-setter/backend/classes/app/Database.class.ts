@@ -6,6 +6,10 @@ export class DatabaseClass {
 
     constructor() {
         this.dataSource = new DataSource(CONNECTION_CONFIGURATION);
+        // TODO:
+        // make isDev helper method
+        // if (isDev()) {}
+        console.log(CONNECTION_CONFIGURATION);
     }
 
     public initDbConnection = async (): Promise<DataSource> => {

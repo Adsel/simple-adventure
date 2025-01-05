@@ -1,0 +1,13 @@
+services:
+  simple-adventure-game-fe:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: simple-adventure-game-fe
+    ports:
+      - "3000:8080"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development

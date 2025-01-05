@@ -9,6 +9,5 @@ export const CONNECTION_CONFIGURATION: IConnectionConfiguration = {
     database: process.env.SERVER_DB_DATABASE ?? '',
     entities: [__dirname + "/../**/*.entity.{js,ts}"],
     logging: true,
-    synchronize: true,
+    synchronize: false,
 };
-console.log(CONNECTION_CONFIGURATION);

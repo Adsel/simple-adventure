@@ -1,6 +1,7 @@
 --
 -- Database: `SimpleAdventure`
 --
+use SimpleAdventure;
 
 -- --------------------------------------------------------
 

@@ -49,7 +49,7 @@
 <script lang="ts">
 import * as yup from 'yup';
 import {ref} from "vue";
-import {apiMethodLogin} from "@/api/auth/auth.api";
+import {apiMethodRegister} from "@/api/auth/auth.api";
 import {IAuthLoginResponse} from "@/interfaces/api/auth.interface";
 import {saveIntoLocalStorage} from "@/pages/game/helpers/local-storage.helper";
 import {LocalStorageKeyEnum} from "@/enums/local-storage-key.enum";
@@ -122,9 +122,13 @@ export default {
 
     const register = () => {
       LoaderService.showLoader();
-      apiMethodLogin(
+      apiMethodRegister(
           loginInputRef.value.getValue(),
-          passwordInputRef.value.getValue()
+          passwordInputRef.value.getValue(),
+          passwordRepeatInputRef.value.getValue(),
+          emailInputRef.value.getValue(),
+          termsInputRef.value.getValue(),
+          termsPrivacyInputRef.value.getValue(),
       ).then((response: IAuthLoginResponse) => {
         saveIntoLocalStorage(LocalStorageKeyEnum.AuthToken, response.token);
         saveIntoLocalStorage(LocalStorageKeyEnum.PlayerId, response.playerId);

@@ -9,6 +9,8 @@ export class APIClass {
 
     public async appendRoutes(server: any): Promise<any> {
         server.get('/api/maps', async (req: any, res: any, next: any) => {
+            await this.database.initDbConnection();
+
             return await apiMethodGetMaps(this.database, req, res, next)
         });
         server.get('/api/users', async (req: any, res: any) => {

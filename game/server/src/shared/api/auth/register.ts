@@ -5,6 +5,10 @@ import {okResponse} from "../response/ok-response";
 import {badRequestResponse} from "../response/bad-request-response";
 
 const isValid = (req: any) => {
+    
+    // try {
+    //     await registrationSchema.validate(req.body, { abortEarly: false });
+    // }
     return (
         req.body &&
         req.body.login &&

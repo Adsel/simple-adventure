@@ -1,0 +1,13 @@
+services:
+  simple-adventure-collisions-tool:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: simple-adventure-collisions-tool
+    ports:
+      - "4000:8080"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development

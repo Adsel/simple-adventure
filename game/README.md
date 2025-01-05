@@ -1,3 +1,8 @@
+# TODO
+    setup env with Makefile
+***
+
+
 # Simple Adventure
 Simple MMO RPG pixel game based on websocket.
 
@@ -9,28 +14,6 @@ Simple MMO RPG pixel game based on websocket.
 - `docker 20.10.21`
 - `docker-compose 1.29.2`
 - `node 14.17`
-
-### Build docker infrastructure
-
-1. Create require directory structure
-    ```bash
-    mkdir ~/docker/simple-adventure-db -p
-    mkdir ~/docker/simple-adventure-db2 -p
-    sudo chmod -R 777 ~/docker
-    ```
-2.  Build docker infrastructure for both servers
-   ```bash
-   docker-compose -f server/docker-compose-sock-js.yml build --build-arg serverMode=sock-js --no-cache
-   af
-   ```
-### Load database structure from migration
-
-Load migration file
-   ```bash
-   cd migrations
-   sudo docker exec -i simple-adventure-db mysql -uroot -p123456 < 15-04-2023-initial-data.sql
-   sudo docker exec -i simple-adventure-db2 mysql -uroot -p123456 < 15-04-2023-initial-data.sql
-   ```
 
 ### Running 
 

@@ -1,6 +1,6 @@
-import {BaseEntity, Column, Entity, PrimaryGeneratedColumn} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BaseEntity } from 'typeorm';
 
-@Entity()
+@Entity('map')
 export class Map extends BaseEntity {
     @PrimaryGeneratedColumn()
     map_id: number;
@@ -17,9 +17,9 @@ export class Map extends BaseEntity {
     @Column()
     map_url: string;
 
-    @Column({ type: 'timestamp', default: () => "CURRENT_TIMESTAMP" })
+    @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     created_at: Date;
 
-    @Column({ type: 'timestamp', default: () => "CURRENT_TIMESTAMP" })
+    @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
     updated_at: Date;
 }
