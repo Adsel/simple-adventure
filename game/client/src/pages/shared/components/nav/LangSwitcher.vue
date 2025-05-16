@@ -39,6 +39,9 @@ import {ILanguageSwitcherOption} from "@/interfaces/nav/languages.interface";
 export default {
   setup() {
     const {locale} = useI18n();
+    // TODO:
+    // 1. read locale lang at start app from browser
+    // 2. make overlay/glass for selects/modals
     const localeLabel = ref<string>('');
     const languages: ILanguageSwitcherOption[] = APP_LANGUAGES;
     const isOpen = ref<boolean>(false);

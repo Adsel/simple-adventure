@@ -25,7 +25,7 @@ CREATE TABLE `player`
 
 INSERT INTO `player` (`player_id`, `player_login`, `player_password`, `player_status`, `player_email`, `created_at`,
                       `updated_at`)
-VALUES (1, 'Adsel', 'adsel', 1, 'konto.pomocnicze12@gmail.com', '2023-10-19 15:08:38', '2023-10-19 15:08:38');
+VALUES (1, 'Adsel', 'adselek1324!', 1, 'konto.pomocnicze12@gmail.com', '2023-10-19 15:08:38', '2023-10-19 15:08:38');
 
 --
 -- Indexes for dumped tables
