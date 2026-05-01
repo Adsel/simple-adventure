@@ -8,14 +8,20 @@ services:
       - DB_NAME=SimpleAdventure
     volumes:
       - ~/www/simple-adventure/game/server/:/app
+      - simple-adventure-game-be-node-modules:/app/node_modules
     ports:
       - "3002:8080"
     stdin_open: true
     tty: true
     env_file:
       - ./.env
+    command: >
+      sh -lc "npm ci && npm run dev"
 
 networks:
   default:
     name: simple-adventure-network
     external: true
+
+volumes:
+  simple-adventure-game-be-node-modules:

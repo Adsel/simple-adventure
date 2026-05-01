@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "Simple MMO RPG pixel game based on websocket.",
   "main": "index.js",
+  "engines": {
+    "node": ">=22.0.0 <23",
+    "npm": ">=10.0.0"
+  },
   "scripts": {
-    "serve": "docker-compose -f docker-compose.yml up",
+    "serve": "docker compose -f docker-compose.yml up",
     "dev": "npx ts-node-dev --respawn src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -20,21 +24,19 @@
   "homepage": "https://github.com/Adsel/simple-adventure#readme",
   "devDependencies": {
     "shared": "*",
-    "@types/bcrypt": "^5.0.1",
+    "@types/bcrypt": "^5.0.2",
     "@types/express": "^4.17.21",
-    "@types/jsonwebtoken": "^9.0.4",
+    "@types/jsonwebtoken": "^9.0.7",
     "bcrypt": "^5.1.1",
-    "express": "^4.19.2",
-    "i": "^0.3.7",
+    "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "mysql": "^2.18.1",
-    "nodemon": "^3.1.4",
-    "npm": "^10.8.1",
-    "reflect-metadata": "^0.1.13",
-    "socket.io": "^4.6.1",
+    "nodemon": "^3.1.9",
+    "reflect-metadata": "^0.2.2",
+    "socket.io": "^4.8.1",
     "ts-node-dev": "^2.0.0",
     "typeorm": "^0.3.20",
-    "typescript": "^5.4.5"
+    "typescript": "^5.7.3"
   },
   "keywords": []
 }

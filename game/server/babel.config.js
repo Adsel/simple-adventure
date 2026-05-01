@@ -5,6 +5,6 @@ module.exports = {
     ],
     plugins: [
         '@babel/plugin-transform-private-methods',
-        '@babel/plugin-proposal-class-properties'
+        '@babel/plugin-transform-class-properties'
     ]
 }

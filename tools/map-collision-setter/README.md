@@ -1,5 +1,7 @@
-# Simple Adventure - Tool
+# Simple Adventure — narzędzie (map collision setter)
 
-## 1. [Server](./simple-adventure-tool-backend/README.md)
+**Node.js:** 22.x LTS (jak w głównej grze — patrz `game/.nvmrc`). Przed `npm install` ustaw wersję Node, np. `nvm use` w katalogu `game/`.
 
-## 2. [Client](./simple-adventure-tool-frontend/README.md)
+## 1. [Backend](./backend/README.md)
+
+## 2. [Frontend](./frontend/README.md)

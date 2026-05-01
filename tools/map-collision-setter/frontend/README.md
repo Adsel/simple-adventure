@@ -3,10 +3,12 @@
 ***
 
 
-# Simple Adventure - Management Tool - Frontend
+# Simple Adventure — Management Tool — Frontend
+
+**Node.js:** 22.x LTS (np. `nvm use` po wejściu w `game/` i wczytaniu `game/.nvmrc`).
 
 ```
-cd simple-adventure-tool-frontend
+cd frontend
 ```
 
 ## Project setup

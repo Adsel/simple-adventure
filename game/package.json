@@ -2,6 +2,10 @@
   "name": "simple-adventure",
   "version": "1.0.0",
   "description": "Simple MMO RPG pixel game based on websocket.",
+  "engines": {
+    "node": ">=22.0.0 <23",
+    "npm": ">=10.0.0"
+  },
   "scripts": {
     "client:serve": "cd ./client && npm run serve",
     "client:build": "cd ./client && npm run build",

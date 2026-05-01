@@ -1,13 +1,10 @@
-# TODO
-    setup env with Makefile
-***
+# Simple Adventure — Management Tool — Backend
 
-``` 
+**Node.js:** 22.x LTS — przed pracą lokalną ustaw wersję Node (np. `nvm use` w katalogu `game/`, który ma plik `.nvmrc`).
+
+```bash
 docker compose build --no-cache
-```
-``` 
 docker compose up -d
 ```
 
-Local Env API:
-- `http://localhost:4001/`
+**API (lokalnie):** `http://localhost:4001/`

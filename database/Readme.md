@@ -15,8 +15,8 @@ Database is shared for multiple sub applications around Simple Adventure
    docker network create simple-adventure-network
    ```
 3. Build docker infrastructure
-   ```bash
-   docker-compose -f docker-compose.yml build --no-cache
+    ```bash
+   docker compose -f docker-compose.yml build --no-cache
    ```
 
 ### Load database structure from migration

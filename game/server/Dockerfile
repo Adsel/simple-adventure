@@ -1,13 +1,12 @@
-FROM node:20.13.1
+FROM node:22-bookworm
 
 WORKDIR /app
 
-COPY . ./
+COPY package*.json ./
+RUN npm ci
 
-RUN ls -la
-RUN echo "Building server with mode: "
-RUN echo "socket"
+COPY . ./
 
 EXPOSE 8080 80
 
-CMD npm install && npm run dev
+CMD ["npm", "run", "dev"]

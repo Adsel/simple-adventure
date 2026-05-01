@@ -1,5 +1,9 @@
 {
   "name": "shared",
   "version": "1.0.0",
-  "main": "index.ts"
+  "main": "index.ts",
+  "engines": {
+    "node": ">=22.0.0 <23",
+    "npm": ">=10.0.0"
+  }
 }

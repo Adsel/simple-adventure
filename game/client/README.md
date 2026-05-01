@@ -1,4 +1,9 @@
-# Simple Adventure Client
+# Simple Adventure — klient (Vue)
+
+## Wymagania
+
+- **Node.js 22.x LTS** — w katalogu nadrzędnym `game/` jest [`.nvmrc`](../.nvmrc); uruchom tam `nvm install` i `nvm use`, potem wróć do `client/`.
+- **npm 10+** (z Node 22).
 
 ## Project setup
 ```
