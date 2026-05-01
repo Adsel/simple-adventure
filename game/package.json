@@ -13,6 +13,8 @@
     "server:build": "cd ./server && npm run build",
     "client:dev": "cd ./client && npm run serve",
     "server:dev": "cd ./server && npm run dev",
+    "lint": "npm run lint --workspace server && npm run lint --workspace client",
+    "lint:fix": "npm run lint:fix --workspace server && npm run lint --workspace client",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

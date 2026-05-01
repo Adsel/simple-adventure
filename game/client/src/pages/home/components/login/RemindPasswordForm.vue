@@ -11,7 +11,6 @@
   </LobbyForm>
 </template>
 <script lang="ts">
-import * as yup from "yup";
 import {ref} from "vue";
 import {useI18n} from "vue-i18n";
 import {apiMethodRemindPassword} from "@/api/auth/auth.api";

@@ -1,11 +1,7 @@
-
-import {failedValidationResponse} from "../response/failed-validation-response";
 import {Player} from "../../database/entities/player.entity";
-import {getHashedString} from "../../services/auth-hash.service";
 import {okResponse} from "../response/ok-response";
 import {badRequestResponse} from "../response/bad-request-response";
 import {myDataSource} from "../../database/type-orm/data-source";
-import {unauthorizedResponse} from "../response/unauthorized-response";
 import {remindPasswordFormSchema} from "shared/schemas/auth";
 import {validateOrFail} from "../../validation/yup-validate";
 

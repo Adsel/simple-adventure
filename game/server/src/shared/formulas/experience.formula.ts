@@ -1,7 +1,7 @@
-export const getLevel = (exp: number) => {
+export const getLevel = (_exp: number) => {
     return 0;
 }
 
-export const getRequiredExpToLevelUp = (exp: number) => {
+export const getRequiredExpToLevelUp = (_exp: number) => {
     return 100;
 }

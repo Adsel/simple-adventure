@@ -47,7 +47,6 @@
   </LobbyForm>
 </template>
 <script lang="ts">
-import * as yup from 'yup';
 import {ref} from "vue";
 import {apiMethodRegister} from "@/api/auth/auth.api";
 import {IAuthLoginResponse} from "@/interfaces/api/auth.interface";
