@@ -3,20 +3,8 @@ import {Player} from "../../database/entities/player.entity";
 import {getHashedString} from "../../services/auth-hash.service";
 import {okResponse} from "../response/ok-response";
 import {badRequestResponse} from "../response/bad-request-response";
-
-const isValid = (req: any) => {
-    
-    // try {
-    //     await registrationSchema.validate(req.body, { abortEarly: false });
-    // }
-    return (
-        req.body &&
-        req.body.login &&
-        req.body.password &&
-        req.body.repeatedPassword &&
-        req.body.password === req.body.repeatedPassword
-    );
-};
+import {registerFormSchema} from "shared/schemas/auth";
+import {validateOrFail} from "../../validation/yup-validate";
 
 const createUser = async (login: string, password: string): Promise<Player> => {
     const user = new Player();
@@ -27,8 +15,8 @@ const createUser = async (login: string, password: string): Promise<Player> => {
 };
 
 export const API_METHOD_REGISTER = async (req: any, res: any, next: any): Promise<void> => {
-    if (!isValid(req)) {
-        failedValidationResponse(res);
+    const ok = await validateOrFail(res, registerFormSchema(), req.body || {});
+    if (!ok) {
         return;
     }
 

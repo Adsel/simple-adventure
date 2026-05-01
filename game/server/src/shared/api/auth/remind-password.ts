@@ -6,15 +6,8 @@ import {okResponse} from "../response/ok-response";
 import {badRequestResponse} from "../response/bad-request-response";
 import {myDataSource} from "../../database/type-orm/data-source";
 import {unauthorizedResponse} from "../response/unauthorized-response";
-
-const isValid = (req: any) => {
-    return (
-        req.body &&
-        req.body.emailOrLogin &&
-        req.body.emailOrLogin !== '' &&
-        req.body.emailOrLogin.trim().length > 0
-    );
-};
+import {remindPasswordFormSchema} from "shared/schemas/auth";
+import {validateOrFail} from "../../validation/yup-validate";
 
 const searchUserByMailOrLogin = async (emailOrLogin: string): Promise<Player|null> => {
     return myDataSource.getRepository(Player).findOne({
@@ -26,8 +19,9 @@ const searchUserByMailOrLogin = async (emailOrLogin: string): Promise<Player|nul
 };
 
 export const API_METHOD_REMIND_PASSWORD = async (req: any, res: any, next: any): Promise<void> => {
-    if (!isValid(req)) {
-        failedValidationResponse(res);
+    // client sends `login`; server internally calls it emailOrLogin
+    const ok = await validateOrFail(res, remindPasswordFormSchema(), {login: req.body?.emailOrLogin});
+    if (!ok) {
         return;
     }
 

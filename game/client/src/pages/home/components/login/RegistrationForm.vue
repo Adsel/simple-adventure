@@ -54,13 +54,10 @@ import {IAuthLoginResponse} from "@/interfaces/api/auth.interface";
 import {saveIntoLocalStorage} from "@/pages/game/helpers/local-storage.helper";
 import {LocalStorageKeyEnum} from "@/enums/local-storage-key.enum";
 import {LoaderService} from "@/services/loader.service";
-import {LoginSchema} from "shared/schemas/validation/auth/login.schema";
-import {PasswordSchema} from "shared/schemas/validation/auth/password.schema";
 import LobbyFormInput from "@/pages/shared/lobby-layout/forms/components/inputs/LobbyFormInput.vue";
 import LobbyForm from "@/pages/shared/lobby-layout/forms/LobbyForm.vue";
 import {useI18n} from "vue-i18n";
-import {EMailSchema} from "shared/schemas/validation/auth/e-mail.schema";
-import {TermsSchema} from "shared/schemas/validation/auth/terms.schema";
+import {registerFormSchema} from "shared/schemas/auth";
 
 export default {
   name: 'RegistrationForm',
@@ -88,21 +85,9 @@ export default {
     };
 
     const validateForm = async () => {
-      if (passwordRepeatInputRef.value.getValue() !== passwordInputRef.value.getValue()) {
-        errors.value['password'] = t('password.validation.not-identical');
-        errors.value['passwordRepeat'] = t('password.validation.not-identical');
-      }
-
       try {
         errors.value = {};
-        await yup.object().shape({
-          login: LoginSchema(yup, t),
-          password: PasswordSchema(yup, t),
-          passwordRepeat: PasswordSchema(yup, t),
-          email: EMailSchema(yup, t),
-          terms: TermsSchema(yup, t),
-          privacy: TermsSchema(yup, t),
-        }).validate({
+        await registerFormSchema(t).validate({
           login: loginInputRef.value.getValue() || '',
           password: passwordInputRef.value.getValue() || '',
           passwordRepeat: passwordRepeatInputRef.value.getValue() || '',

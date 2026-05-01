@@ -26,8 +26,7 @@ import {IAuthLoginResponse} from "@/interfaces/api/auth.interface";
 import {saveIntoLocalStorage} from "@/pages/game/helpers/local-storage.helper";
 import {LocalStorageKeyEnum} from "@/enums/local-storage-key.enum";
 import {LoaderService} from "@/services/loader.service";
-import {LoginSchema} from "shared/schemas/validation/auth/login.schema";
-import {PasswordSchema} from "shared/schemas/validation/auth/password.schema";
+import {loginFormSchema} from "shared/schemas/auth";
 import LobbyFormInput from "@/pages/shared/lobby-layout/forms/components/inputs/LobbyFormInput.vue";
 import LobbyForm from "@/pages/shared/lobby-layout/forms/LobbyForm.vue";
 import {useI18n} from "vue-i18n";
@@ -55,10 +54,7 @@ export default {
 
     const validateForm = async () => {
       try {
-        await yup.object().shape({
-          login: LoginSchema(yup, t),
-          password: PasswordSchema(yup, t),
-        }).validate({
+        await loginFormSchema(t).validate({
           login: loginInputRef.value.getValue() || '',
           password: passwordInputRef.value.getValue() || '',
         }, {abortEarly: false});

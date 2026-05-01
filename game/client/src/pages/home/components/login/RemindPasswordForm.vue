@@ -16,7 +16,7 @@ import {ref} from "vue";
 import {useI18n} from "vue-i18n";
 import {apiMethodRemindPassword} from "@/api/auth/auth.api";
 import {LoaderService} from "@/services/loader.service";
-import {LoginSchema} from "shared/schemas/validation/auth/login.schema";
+import {remindPasswordFormSchema} from "shared/schemas/auth";
 import LobbyForm from "@/pages/shared/lobby-layout/forms/LobbyForm.vue";
 import LobbyFormInput from "@/pages/shared/lobby-layout/forms/components/inputs/LobbyFormInput.vue";
 
@@ -34,9 +34,7 @@ export default {
 
     const validateForm = async () => {
       try {
-        await yup.object().shape({
-          login: LoginSchema(yup, t),
-        }).validate({
+        await remindPasswordFormSchema(t).validate({
           login: loginOrMailInputRef.value.getValue() || '',
         }, {abortEarly: false});
         errors.value = {};

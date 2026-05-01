@@ -1,22 +1,22 @@
 services:
   simple-adventure-game-be:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
+    image: node:22-bookworm
     container_name: simple-adventure-game-be
     environment:
       - DB_NAME=SimpleAdventure
     volumes:
-      - ~/www/simple-adventure/game/server/:/app
+      - ~/www/simple-adventure/game/:/app
       - simple-adventure-game-be-node-modules:/app/node_modules
+      - simple-adventure-game-be-server-node-modules:/app/server/node_modules
     ports:
       - "3002:8080"
     stdin_open: true
     tty: true
     env_file:
       - ./.env
+    working_dir: /app
     command: >
-      sh -lc "npm ci && npm run dev"
+      sh -lc "npm install && npm run server:dev"
 
 networks:
   default:
@@ -25,3 +25,4 @@ networks:
 
 volumes:
   simple-adventure-game-be-node-modules:
+  simple-adventure-game-be-server-node-modules:

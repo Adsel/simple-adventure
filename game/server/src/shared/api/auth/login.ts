@@ -5,20 +5,14 @@ import {isEqualToHashedString} from "../../services/auth-hash.service";
 import {unauthorizedResponse} from "../response/unauthorized-response";
 import {okResponse} from "../response/ok-response";
 import {generateAuthToken} from "../../services/auth.service";
-
-const isValid = (req: any) => {
-    return (
-        req.body &&
-        req.body.login &&
-        req.body.password
-    );
-};
+import {loginFormSchema} from "shared/schemas/auth";
+import {validateOrFail} from "../../validation/yup-validate";
 
 // TODO:
 // types for res.body
 export const API_METHOD_LOGIN = async (req: any, res: any, next: any) => {
-    if (!isValid(req)) {
-        failedValidationResponse(res);
+    const ok = await validateOrFail(res, loginFormSchema(), req.body || {});
+    if (!ok) {
         return;
     }
 
