@@ -13,7 +13,7 @@ module.exports = defineConfig({
     pages: {
         index: {
             entry: 'src/main.ts',
-            title: `[${process.env.VUE_APP_MODE}] Simple Adventure`
+            title: `Simple Adventure`
         }
     }
 })

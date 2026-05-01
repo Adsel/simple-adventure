@@ -1,7 +1,7 @@
 import {io} from "socket.io-client";
 import {SocketClient} from "@/socket/shared/socket-client.abstract";
 
-export class SocketIOClient extends SocketClient {
+export class GameSocketClient extends SocketClient {
     constructor(context: any) {
         super(context);
         this.socket = io(process.env.VUE_APP_WS_URL || '');
@@ -31,5 +31,4 @@ export class SocketIOClient extends SocketClient {
         console.log('[CLIENT - PLAYER EXIT]');
         this.socket.disconnect();
     }
-
 }

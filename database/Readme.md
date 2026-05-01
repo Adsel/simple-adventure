@@ -3,6 +3,7 @@
 ***
 
 ## Standalone mode
+Database is shared for multiple sub applications around Simple Adventure
 
 1. Create require directory structure
     ```bash

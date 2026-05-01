@@ -3,7 +3,7 @@ import {SocketGameServerAbstract} from "../shared/abstracts/socket-game-server.a
 
 import {Server} from "socket.io";
 
-class SocketIOServer extends SocketGameServerAbstract {
+class SocketServer extends SocketGameServerAbstract {
     private io: any = null;
 
     protected send(conn: any, data: any): void {
@@ -53,9 +53,9 @@ class SocketIOServer extends SocketGameServerAbstract {
         this.httpServer.listen(port, HOST, () => {
             this.loadSocket();
             this.loadRoutes();
-            console.log(`[socket-io] Now listening on port ${port}`);
+            console.log(`[socket] Now listening on port ${port}`);
         });
     };
 }
 
-module.exports = {SocketIOServer};
+module.exports = {SocketServer};

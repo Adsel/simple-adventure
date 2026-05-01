@@ -1,6 +1,5 @@
 node_modules
-docker-compose-socket-io.yml
-docker-compose-sock-js.yml
+docker-compose*.yml
 .gitignore
 .dockerignore
 .git

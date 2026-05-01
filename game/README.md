@@ -17,28 +17,36 @@ Simple MMO RPG pixel game based on websocket.
 
 ### Running 
 
-Select backend instance to run:
-- `socket-io`
-    ```bash
-    docker-compose -f server/docker-compose-socket-io.yml up 
-    ```
-- `sock-js`
-    ```bash
-    docker-compose -f server/docker-compose-sock-js.yml up 
-    ```
+## 0. Shared database:
+
+1. Run database instance
+   ```bash
+   cd ../database
+   docker-compose up -d
+   cd ../game
+   ```
+2. PHPMyAdmin
+- URL: http://localhost:3333/
+- Server: SERVER_DB_HOST
+- User: SERVER_DB_USER
+- Password: SERVER_DB_PASSWORD
+
+## 1. Run backend instance:
+```bash
+docker-compose -f server/docker-compose.yml up
+```
 
 ## 2. Frontend app
-1. Install npm packages 
+1. Set target node version
+   ```bash
+   nvm use 14.17.6 
+   ```
+2. Install npm packages 
     ```bash
     cd client
     npm install 
     ```
-2. Run frontend instance
-- `socket-io`
+3. Run frontend instance
     ```bash
-    npm run client:socket-io:serve 
-    ```
-- `sock-js`
-    ```bash
-    npm run client:sock-js:serve 
+    npm run client:serve
     ```
